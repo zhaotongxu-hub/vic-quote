@@ -194,25 +194,26 @@
 
     /* middle connector line */
     .itinerary-item .middle-line {
-      border-bottom: 1px solid #777;
-      height: 12px;
-      align-self: end;
+      border-bottom: 1px solid #888;
+      height: 0;
+      width: 100%;
+      margin-bottom: 3px;
     }
     .itinerary-item {
       display: grid;
-      grid-template-columns: 1fr 1fr 100px; /* left | line | price */
-      gap: 10px;
-      align-items: end;
+      grid-template-columns: auto 1fr 90px; /* text | line | price */
+      gap: 12px;
+      align-items: center;
     }
     .itinerary-left {
       white-space: pre-line;
       line-height: 1.15;
     }
     .itinerary-right {
-      text-align: right; /* align prices vertically */
+      text-align: right;
       font-size: 18px;
       font-weight: 700;
-      white-space: nowrap;
+      width: 90px; /* force perfect alignment */
     }
     .dotted-line {
       border-bottom: 2px dotted rgba(0,0,0,.78);
