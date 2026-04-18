@@ -93,7 +93,7 @@
     }
     .fit-text { word-break: break-word; overflow-wrap: anywhere; }
 
-    /* ====== RIGHT HEADER ====== */
+    /* HEADER */
     .header-grid {
       display: grid;
       grid-template-columns: 36% 64%;
@@ -101,48 +101,58 @@
     }
     .header-right {
       text-align: right;
-      padding-top: 2mm;
-      padding-right: 4mm;
+      padding-top: 1.5mm;
+      padding-right: 1mm;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
     }
     .doc-title {
       font-size: 40px;
       line-height: 1;
       font-weight: 700;
-      letter-spacing: .2px;
+      letter-spacing: .15px;
+      text-align: right;
+      width: 100%;
     }
     .vehicle-title {
       font-size: 28px;
       line-height: 1.08;
-      margin-top: 5mm;
+      margin-top: 2.4mm;
       font-weight: 700;
+      text-align: right;
+      width: 100%;
     }
     .meta {
-      margin-top: 4mm;
+      margin-top: 3.2mm;
       font-size: 15px;
-      line-height: 1.15;
+      line-height: 1.08;
       text-align: right;
+      width: 100%;
     }
-    .meta div + div { margin-top: 1.2mm; }
+    .meta div + div { margin-top: 0.8mm; }
     .meta strong {
       font-family: Georgia, "Times New Roman", serif;
       font-size: 16px;
       font-weight: 700;
     }
     .client-name {
-      margin-top: 4mm;
+      margin-top: 3mm;
       font-size: 16px;
       text-align: right;
-      line-height: 1.15;
+      line-height: 1.1;
+      width: 100%;
     }
     .client-address {
-      margin-top: 1.6mm;
+      margin-top: 1.1mm;
       font-size: 14px;
-      line-height: 1.25;
+      line-height: 1.18;
       text-align: right;
       white-space: pre-line;
+      width: 100%;
     }
 
-    /* ====== MIDDLE FIXED FRAME ====== */
+    /* MIDDLE FRAME */
     .itinerary-frame {
       position: absolute;
       left: 17mm;
@@ -156,30 +166,29 @@
       --content-scale: 1;
       transform: scale(var(--content-scale));
       width: calc(100% / var(--content-scale));
-      height: auto;
     }
     .summary {
       font-size: 13px;
-      line-height: 1.28;
+      line-height: 1.24;
     }
-    .summary div { margin-bottom: 1.8mm; }
+    .summary div { margin-bottom: 1.5mm; }
     .itinerary-title {
-      margin-top: 5mm;
+      margin-top: 4.2mm;
       text-align: center;
       font-size: 22px;
       font-weight: 700;
       line-height: 1;
     }
     .service-note {
-      margin-top: 2.2mm;
+      margin-top: 2mm;
       font-size: 11px;
-      line-height: 1.25;
+      line-height: 1.2;
     }
     .itinerary-list {
-      margin-top: 4mm;
+      margin-top: 3mm;
       display: flex;
       flex-direction: column;
-      gap: 1.7mm;
+      gap: 0.9mm;
       font-size: 11px;
     }
     .itinerary-item {
@@ -190,7 +199,7 @@
     }
     .itinerary-left {
       white-space: pre-line;
-      line-height: 1.18;
+      line-height: 1.05;
     }
     .itinerary-right {
       text-align: right;
@@ -205,7 +214,7 @@
       transform: translateY(6px);
     }
 
-    /* ====== SERVICES ZONE, MOVES UP WHEN ITINERARY IS SHORT ====== */
+    /* SERVICES */
     .services-zone {
       position: absolute;
       left: 17mm;
@@ -225,7 +234,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 34px;
       font-size: 11px;
-      line-height: 1.18;
+      line-height: 1.15;
     }
     .services-grid h4 {
       margin: 0 0 3px 0;
@@ -238,7 +247,7 @@
     }
     .services-grid li { margin-bottom: 1.4px; }
 
-    /* ====== TOTAL ALWAYS FIXED ABOVE FOOTER ====== */
+    /* TOTAL */
     .total-row {
       position: absolute;
       left: 17mm;
@@ -309,32 +318,31 @@
         <div class="panel">
           <div id="basicTitle" style="font-size:28px;font-weight:600;margin-bottom:16px;">Informations générales</div>
           <label id="labelQuotationNo" class="field-label">N° de devis</label>
-          <input id="quotationNo" class="input" value="ZX04042604" />
+          <input id="quotationNo" class="input" value="" />
           <div style="height:14px;"></div>
           <label id="labelDate" class="field-label">Date</label>
-          <input id="quoteDate" class="input" value="04/04/2026" />
+          <input id="quoteDate" class="input" value="" />
           <div style="height:14px;"></div>
           <label id="labelClientName" class="field-label">Nom du client</label>
-          <input id="clientName" class="input" value="CFA Voyage" />
+          <input id="clientName" class="input" value="" />
           <div style="height:14px;"></div>
           <label id="labelClientAddress" class="field-label">Adresse du client</label>
-          <textarea id="clientAddress" class="textarea">13 Rue des Frères d'Astier de la Vigeries 75013
-France</textarea>
+          <textarea id="clientAddress" class="textarea"></textarea>
           <div style="height:14px;"></div>
           <label id="labelPeriod" class="field-label">Période</label>
-          <input id="period" class="input" value="09/07/2026 - 20/07/2026" />
+          <input id="period" class="input" value="" />
           <div style="height:14px;"></div>
           <label class="field-label">PAX</label>
-          <input id="pax" class="input" value="36+1" />
+          <input id="pax" class="input" value="" />
           <div style="height:14px;"></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div>
               <label id="labelCoachQty" class="field-label">Nb de coach</label>
-              <input id="coachQty" class="input" value="1" />
+              <input id="coachQty" class="input" value="" />
             </div>
             <div>
               <label id="labelCoachSeats" class="field-label">Places coach</label>
-              <input id="coachSeats" class="input" value="44-55" />
+              <input id="coachSeats" class="input" value="" />
             </div>
             <div>
               <label id="labelSprinterQty" class="field-label">Nb de sprinter</label>
@@ -342,17 +350,17 @@ France</textarea>
             </div>
             <div>
               <label id="labelSprinterSeats" class="field-label">Places sprinter</label>
-              <input id="sprinterSeats" class="input" value="19" />
+              <input id="sprinterSeats" class="input" value="" />
             </div>
           </div>
           <div style="height:14px;"></div>
           <label id="labelVehicleType" class="field-label">Type de véhicule</label>
-          <input id="vehicleType" class="input" value="1 Coach 44-55 places" />
+          <input id="vehicleType" class="input" value="" />
           <div style="height:14px;"></div>
           <div style="display:grid;grid-template-columns:1fr 140px;gap:12px;align-items:end;">
             <div>
               <label id="labelTotalPrice" class="field-label">Prix total</label>
-              <input id="totalPrice" class="input" value="7,500" />
+              <input id="totalPrice" class="input" value="" />
             </div>
             <div>
               <label id="labelCurrency" class="field-label">Devise</label>
@@ -396,7 +404,7 @@ France</textarea>
               <div></div>
               <div class="header-right">
                 <div id="previewDocTitle" class="serif doc-title">DEVIS</div>
-                <div id="previewTitle" class="serif vehicle-title">1 COACH 44-55 PLACES</div>
+                <div id="previewTitle" class="serif vehicle-title"></div>
                 <div class="meta">
                   <div><strong id="previewNoLabel">ND:</strong> <span id="previewNo"></span></div>
                   <div><strong id="previewDateLabel">DATE:</strong> <span id="previewDate"></span></div>
@@ -409,8 +417,8 @@ France</textarea>
             <div class="itinerary-frame">
               <div class="frame-content" id="frameContent">
                 <div class="summary fit-text">
-                  <div><span id="previewPeriodLabel">Periode</span> : <span id="previewPeriod"></span></div>
-                  <div><span id="previewVehicleTypeLabel">Type of vehicule</span> : <span id="previewVehicleType"></span></div>
+                  <div><span id="previewPeriodLabel">Période</span> : <span id="previewPeriod"></span></div>
+                  <div><span id="previewVehicleTypeLabel">Type de véhicule</span> : <span id="previewVehicleType"></span></div>
                   <div>PAX : <span id="previewPax"></span></div>
                 </div>
 
@@ -441,7 +449,7 @@ France</textarea>
 
             <div class="total-row" id="totalRow">
               <div id="previewTotalLabel" class="serif total-label">PRIX TOTAL</div>
-              <div id="previewTotal" class="serif total-value">7,500€</div>
+              <div id="previewTotal" class="serif total-value"></div>
             </div>
 
             <div id="previewNotesWrap" class="notes-row hidden">
@@ -468,7 +476,7 @@ France</textarea>
         period: 'Période', vehicleType: 'Type de véhicule', currency: 'Devise', totalPrice: 'Prix total', serviceStart: 'Note de début de service', notes: 'Remarques',
         coachQty: 'Nb de coach', coachSeats: 'Places coach', sprinterQty: 'Nb de sprinter', sprinterSeats: 'Places sprinter', basicInfo: 'Informations générales', itinerary: 'Programme quotidien',
         addItem: 'Ajouter', options: 'Options incluses / non incluses', optionHint: 'Chaque poste ne peut avoir qu’un seul état actif : Inclus ou Non inclus.',
-        included: 'Inclus :', excluded: 'Non inclus :', total: 'PRIX TOTAL', previewPeriod: 'Periode', previewVehicle: 'Type of vehicule', previewItinerary: 'DAILY ITINERARY', previewNo: 'ND:', previewDate: 'DATE:', previewNotes: 'Remarques :'
+        included: 'Inclus :', excluded: 'Non inclus :', total: 'PRIX TOTAL', previewPeriod: 'Période', previewVehicle: 'Type de véhicule', previewItinerary: 'DAILY ITINERARY', previewNo: 'ND:', previewDate: 'DATE:', previewNotes: 'Remarques :'
       },
       zh: {
         docTitle: '报价单', quotationNo: '报价编号', date: '日期', clientName: '客户名称', clientAddress: '客户地址',
@@ -493,39 +501,29 @@ France</textarea>
       'Road tolls',
       'City access / ZTL',
       'Meet & greet sign',
-      'Drinks on board'
+      'Drinks on board',
+      'Other'
     ];
 
     const data = {
-      itinerary: [
-        { left: '09/07 Paris', right: '650 €' },
-        { left: '10/07 Paris', right: '650 €' },
-        { left: '11/07 Paris - Lyon', right: '650 €' },
-        { left: '12/07 Lyon - Marseille / Toulon', right: '650 €' },
-        { left: '13/07 Marseille / Toulon – Clermont-Ferrand', right: '650 €' },
-        { left: '14/07 Clermont-Ferrand – Orléans', right: '650 €' },
-        { left: '15/07 Orléans', right: '650 €' },
-        { left: '16/07 Orléans', right: '650 €' },
-        { left: '17/07 Orléans – Paris', right: '650 €' },
-        { left: '18/07 Paris', right: '650 €' },
-        { left: '19/07 Paris', right: '650 €' },
-        { left: '20/07 Paris - CDG Transfer', right: '350 €' }
-      ],
+      itinerary: [{ left: '', right: '' }],
       options: {
-        'Professional English speaking driver': 'included',
-        'Complete vehicle insurance': 'included',
-        'Service 11h/day': 'included',
-        'Extra hours : 80 € / h / coach': 'excluded',
-        'Tips : 2 € / day / passenger / vehicle': 'excluded',
-        'Paid directly to the driver': 'excluded',
-        'Driver accommodation': 'excluded',
-        'Driver meal expenses 20€/meal': 'excluded',
-        'Parking fees': 'excluded',
+        'Professional English speaking driver': 'none',
+        'Complete vehicle insurance': 'none',
+        'Service 11h/day': 'none',
+        'Extra hours : 80 € / h / coach': 'none',
+        'Tips : 2 € / day / passenger / vehicle': 'none',
+        'Paid directly to the driver': 'none',
+        'Driver accommodation': 'none',
+        'Driver meal expenses 20€/meal': 'none',
+        'Parking fees': 'none',
         'Road tolls': 'none',
         'City access / ZTL': 'none',
         'Meet & greet sign': 'none',
-        'Drinks on board': 'none'
-      }
+        'Drinks on board': 'none',
+        'Other': 'none'
+      },
+      otherText: ''
     };
 
     const $ = (id) => document.getElementById(id);
@@ -538,7 +536,7 @@ France</textarea>
       const parts = [];
       if (coachQty) parts.push(`${coachQty} COACH ${coachSeats} ${currentLang === 'fr' ? 'PLACES' : 'SEATS'}`);
       if (sprinterQty) parts.push(`${sprinterQty} SPRINTER ${sprinterSeats} ${currentLang === 'fr' ? 'PLACES' : 'SEATS'}`);
-      return parts.join(' + ') || texts[currentLang].docTitle;
+      return parts.join(' + ');
     }
 
     function localizeOption(item) {
@@ -556,7 +554,8 @@ France</textarea>
           'Road tolls': 'Road tolls',
           'City access / ZTL': 'City access / ZTL',
           'Meet & greet sign': 'Meet & greet sign',
-          'Drinks on board': 'Drinks on board'
+          'Drinks on board': 'Drinks on board',
+          'Other': 'Autre'
         },
         zh: {
           'Professional English speaking driver': '英文司机服务',
@@ -571,7 +570,8 @@ France</textarea>
           'Road tolls': '过路费',
           'City access / ZTL': '进城费 / ZTL',
           'Meet & greet sign': '接站牌',
-          'Drinks on board': '车上饮品'
+          'Drinks on board': '车上饮品',
+          'Other': '其他'
         }
       };
       return (map[currentLang] && map[currentLang][item]) || item;
@@ -637,6 +637,19 @@ France</textarea>
         };
         wrap.appendChild(row);
       });
+
+      const otherRow = document.createElement('div');
+      otherRow.style.marginTop = '12px';
+      otherRow.innerHTML = `
+        <label class="field-label">${currentLang === 'fr' ? 'Autre (texte libre)' : currentLang === 'zh' ? '其他（自定义）' : 'Other (custom text)'}</label>
+        <input id="otherTextInput" class="input" value="${data.otherText || ''}" ${data.options['Other'] === 'none' ? 'disabled' : ''} />
+      `;
+      wrap.appendChild(otherRow);
+      const otherInput = document.getElementById('otherTextInput');
+      otherInput.addEventListener('input', (e) => {
+        data.otherText = e.target.value;
+        renderPreview();
+      });
     }
 
     function renderItineraryEditor() {
@@ -654,6 +667,7 @@ France</textarea>
         row.querySelector('.right').oninput = (e) => { data.itinerary[index].right = e.target.value; renderPreview(); };
         row.querySelector('.remove').onclick = () => {
           data.itinerary.splice(index, 1);
+          if (data.itinerary.length === 0) data.itinerary.push({ left: '', right: '' });
           renderItineraryEditor();
           renderPreview();
         };
@@ -711,7 +725,7 @@ France</textarea>
       $('previewPeriod').textContent = $('period').value;
       $('previewVehicleType').textContent = $('vehicleType').value;
       $('previewPax').textContent = $('pax').value;
-      $('previewTotal').textContent = `${$('totalPrice').value}${$('currency').value === '€' ? '€' : ' ' + $('currency').value}`;
+      $('previewTotal').textContent = $('totalPrice').value ? `${$('totalPrice').value}${$('currency').value === '€' ? ' €' : ' ' + $('currency').value}` : '';
 
       const serviceStart = $('serviceStart').value.trim();
       $('previewServiceStart').textContent = serviceStart;
@@ -727,17 +741,17 @@ France</textarea>
         const row = document.createElement('div');
         row.className = 'itinerary-item';
         row.innerHTML = `
-          <div class="itinerary-left fit-text">${item.left.replace(/</g,'&lt;')}</div>
+          <div class="itinerary-left fit-text">${(item.left || '').replace(/</g,'&lt;')}</div>
           <div class="dotted-line"></div>
-          <div class="itinerary-right">${item.right}</div>
+          <div class="itinerary-right">${item.right || ''}</div>
         `;
         itineraryWrap.appendChild(row);
       });
 
       const included = optionCatalog.filter(x => data.options[x] === 'included');
       const excluded = optionCatalog.filter(x => data.options[x] === 'excluded');
-      $('previewIncluded').innerHTML = included.map(x => `<li>${localizeOption(x)}</li>`).join('');
-      $('previewExcluded').innerHTML = excluded.map(x => `<li>${localizeOption(x)}</li>`).join('');
+      $('previewIncluded').innerHTML = included.map(x => `<li>${x === 'Other' && data.otherText ? data.otherText : localizeOption(x)}</li>`).join('');
+      $('previewExcluded').innerHTML = excluded.map(x => `<li>${x === 'Other' && data.otherText ? data.otherText : localizeOption(x)}</li>`).join('');
 
       requestAnimationFrame(() => {
         fitFrame();
