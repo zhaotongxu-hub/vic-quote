@@ -188,21 +188,27 @@
       margin-top: 6mm;
       display: flex;
       flex-direction: column;
-      gap: 1.6mm;
+      gap: 2mm;
       font-size: 16px;
+    }
+
+    /* short dash style */
+    .itinerary-item .middle-line::after {
+      content: "—";
+      color: #666;
+      font-weight: 500;
+      margin: 0 6px;
     }
 
     /* middle connector line */
     .itinerary-item .middle-line {
-      border-bottom: 1px solid #888;
-      height: 0;
-      width: 100%;
-      margin-bottom: 3px;
+      border-bottom: none;
+      width: auto;
     }
     .itinerary-item {
       display: grid;
-      grid-template-columns: auto 1fr 90px; /* text | line | price */
-      gap: 12px;
+      grid-template-columns: auto auto 90px; /* text | dash | price */
+      gap: 8px;
       align-items: center;
     }
     .itinerary-left {
@@ -213,7 +219,7 @@
       text-align: right;
       font-size: 18px;
       font-weight: 700;
-      width: 90px; /* force perfect alignment */
+      width: 90px;
     }
     .dotted-line {
       border-bottom: 2px dotted rgba(0,0,0,.78);
