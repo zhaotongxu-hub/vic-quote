@@ -132,6 +132,7 @@
       overflow-wrap: anywhere;
     }
 
+    /* HEADER */
     .header-grid {
       display: grid;
       grid-template-columns: 36% 64%;
@@ -199,6 +200,7 @@
       min-height: 32px;
     }
 
+    /* MAIN FRAME */
     .itinerary-frame {
       position: absolute;
       left: 17mm;
@@ -248,7 +250,7 @@
 
     .itinerary-item {
       display: grid;
-      grid-template-columns: auto minmax(160px, 1fr) 90px;
+      grid-template-columns: auto 260px 90px;
       gap: 12px;
       align-items: center;
     }
@@ -260,14 +262,15 @@
       line-height: 1.05;
       font-size: 16px;
       font-weight: 400;
+      min-width: 0;
     }
 
     .middle-line {
       display: block;
-      width: 100%;
-      min-width: 160px;
+      width: 260px;
       border-bottom: 1.5px solid #777;
       transform: translateY(-1px);
+      justify-self: end;
     }
 
     .itinerary-right {
@@ -282,6 +285,7 @@
       text-align: right;
     }
 
+    /* SERVICES */
     .services-zone {
       position: absolute;
       left: 17mm;
@@ -321,6 +325,7 @@
       margin-bottom: 1.4px;
     }
 
+    /* TOTAL */
     .total-row {
       position: absolute;
       left: 17mm;
@@ -393,7 +398,7 @@
       <div class="no-print">
         <div class="panel">
           <div style="font-size:32px;font-weight:700;">VIC Quote Generator</div>
-          <div style="color:#64748b;margin-top:8px;">Fixed gray frame, aligned itinerary and automatic total.</div>
+          <div style="color:#64748b;margin-top:8px;">Full version with editable fields, auto total and fixed included items.</div>
           <div style="margin-top:16px;display:flex;gap:8px;">
             <button class="btn lang-btn" data-lang="en">EN</button>
             <button class="btn lang-btn active" data-lang="fr">FR</button>
@@ -449,8 +454,8 @@
           </div>
 
           <div style="height:14px;"></div>
-          <label id="labelVehicleType" class="field-label">Type de véhicule</label>
-          <input id="vehicleType" class="input" value="" />
+          <label id="labelProjectName" class="field-label">项目名称</label>
+          <input id="projectName" class="input" value="" />
 
           <div style="height:14px;"></div>
           <div style="display:grid;grid-template-columns:1fr 140px;gap:12px;align-items:end;">
@@ -517,9 +522,9 @@
             <div class="itinerary-frame">
               <div class="frame-content" id="frameContent">
                 <div class="summary fit-text">
-                  <div><span id="previewPeriodLabel">Période</span> : <span id="previewPeriod"></span></div>
-                  <div><span id="previewVehicleTypeLabel">Type de véhicule</span> : <span id="previewVehicleType"></span></div>
-                  <div>PAX : <span id="previewPax"></span></div>
+                  <div><span id="previewProjectLabel">项目名称</span> : <span id="previewProjectName"></span></div>
+                  <div><span id="previewPeriodLabel">period</span> : <span id="previewPeriod"></span></div>
+                  <div><span id="previewPaxLabel">pax</span> : <span id="previewPax"></span></div>
                 </div>
 
                 <div id="previewItineraryTitle" class="itinerary-title">DAILY ITINERARY</div>
@@ -570,8 +575,8 @@
         date: 'Date',
         clientName: 'Client Name',
         clientAddress: 'Client Address',
-        period: 'Period',
-        vehicleType: 'Vehicle Type',
+        period: 'period',
+        projectName: 'Project name',
         currency: 'Currency',
         totalPrice: 'Total Price (auto)',
         serviceStart: 'Service Start Note',
@@ -589,13 +594,15 @@
         included: 'Included :',
         excluded: 'Not included :',
         total: 'TOTAL PRICE',
-        previewPeriod: 'Period',
-        previewVehicle: 'Type of vehicle',
+        previewProject: 'Project name',
+        previewPeriod: 'period',
+        previewPax: 'pax',
         previewItinerary: 'DAILY ITINERARY',
         previewNo: 'ND:',
         previewDate: 'DATE:',
         previewNotes: 'Notes:',
-        alwaysIncluded: 'Always included'
+        alwaysIncluded: 'Always included',
+        customOther: 'Other (custom text)'
       },
       fr: {
         docTitle: 'DEVIS',
@@ -603,13 +610,13 @@
         date: 'Date',
         clientName: 'Nom du client',
         clientAddress: 'Adresse du client',
-        period: 'Période',
-        vehicleType: 'Type de véhicule',
+        period: 'period',
+        projectName: '项目名称',
         currency: 'Devise',
         totalPrice: 'Prix total (auto)',
         serviceStart: 'Note de début de service',
         notes: 'Remarques',
-        serviceHours: 'Heures de service',
+        serviceHours: 'Service hours',
         coachQty: 'Nb de coach',
         coachSeats: 'Places coach',
         sprinterQty: 'Nb de sprinter',
@@ -622,13 +629,15 @@
         included: 'Inclus :',
         excluded: 'Non inclus :',
         total: 'PRIX TOTAL',
-        previewPeriod: 'Période',
-        previewVehicle: 'Type de véhicule',
+        previewProject: '项目名称',
+        previewPeriod: 'period',
+        previewPax: 'pax',
         previewItinerary: 'DAILY ITINERARY',
         previewNo: 'ND:',
         previewDate: 'DATE:',
         previewNotes: 'Remarques :',
-        alwaysIncluded: 'Toujours inclus'
+        alwaysIncluded: 'Toujours inclus',
+        customOther: 'Autre (texte libre)'
       },
       zh: {
         docTitle: '报价单',
@@ -636,13 +645,13 @@
         date: '日期',
         clientName: '客户名称',
         clientAddress: '客户地址',
-        period: '服务期间',
-        vehicleType: '车型',
+        period: 'period',
+        projectName: '项目名称',
         currency: '货币',
         totalPrice: '总价（自动）',
         serviceStart: '服务开始说明',
         notes: '备注',
-        serviceHours: '服务时长',
+        serviceHours: 'Service hours',
         coachQty: '大巴数量',
         coachSeats: '大巴座位',
         sprinterQty: '商务车数量',
@@ -655,13 +664,15 @@
         included: '包含：',
         excluded: '不包含：',
         total: '总价',
-        previewPeriod: '服务期间',
-        previewVehicle: '车型',
+        previewProject: '项目名称',
+        previewPeriod: 'period',
+        previewPax: 'pax',
         previewItinerary: '每日行程',
         previewNo: '编号：',
         previewDate: '日期：',
         previewNotes: '备注：',
-        alwaysIncluded: '固定包含'
+        alwaysIncluded: '固定包含',
+        customOther: '其他（自定义）'
       }
     };
 
@@ -740,7 +751,7 @@
           'Tips : 2 € / day / passenger': 'Pourboires : 2 € / jour / passager',
           'Paid directly to the driver': 'Payé directement au conducteur',
           'Driver accommodation': 'Hébergement du conducteur',
-          'Driver meal expenses': state === 'included' ? 'Repas du conducteur' : 'Repas du conducteur 20 € / repas',
+          'Driver meal expenses': state === 'included' ? 'Driver meal expenses' : 'Driver meal expenses 20 € / meal',
           'Parking fees': 'Frais de stationnement',
           'Road tolls': 'Péages',
           'City access / ZTL': 'Accès ville / ZTL',
@@ -755,7 +766,7 @@
           'Tips : 2 € / day / passenger': '小费：2 € / 人 / 天',
           'Paid directly to the driver': '直接支付给司机',
           'Driver accommodation': '司机住宿',
-          'Driver meal expenses': state === 'included' ? '司机餐费' : '司机餐费 20 € / 餐',
+          'Driver meal expenses': state === 'included' ? 'Driver meal expenses' : 'Driver meal expenses 20 € / meal',
           'Parking fees': '停车费',
           'Road tolls': '过路费',
           'City access / ZTL': '进城费 / ZTL',
@@ -819,7 +830,7 @@
           <div class="input" style="background:#f8fafc;">${displayOption('Professional English speaking driver', 'included')}</div>
           <div class="input" style="background:#f8fafc;">${displayOption('Complete vehicle insurance', 'included')}</div>
           <div style="display:grid;grid-template-columns:140px 1fr;gap:10px;align-items:center;">
-            <div class="field-label" style="margin:0;">${texts[currentLang].serviceHours}</div>
+            <div class="field-label" style="margin:0;">Service hours</div>
             <select id="serviceHours" class="select">
               <option value="11 h / day" ${data.serviceHours === '11 h / day' ? 'selected' : ''}>11 h / day</option>
               <option value="12 h / day" ${data.serviceHours === '12 h / day' ? 'selected' : ''}>12 h / day</option>
@@ -838,7 +849,7 @@
       const otherRow = document.createElement('div');
       otherRow.style.marginTop = '12px';
       otherRow.innerHTML = `
-        <label class="field-label">${currentLang === 'fr' ? 'Autre (texte libre)' : currentLang === 'zh' ? '其他（自定义）' : 'Other (custom text)'}</label>
+        <label class="field-label">${texts[currentLang].customOther}</label>
         <input id="otherTextInput" class="input" value="${data.otherText || ''}" ${data.options['Other'] === 'none' ? 'disabled' : ''} />
       `;
       wrap.appendChild(otherRow);
@@ -932,8 +943,8 @@
       $('previewDate').textContent = $('quoteDate').value;
       $('previewClient').textContent = $('clientName').value;
       $('previewAddress').textContent = $('clientAddress').value;
+      $('previewProjectName').textContent = $('projectName').value;
       $('previewPeriod').textContent = $('period').value;
-      $('previewVehicleType').textContent = $('vehicleType').value;
       $('previewPax').textContent = $('pax').value;
 
       const serviceStart = $('serviceStart').value.trim();
@@ -980,7 +991,7 @@
       const fixedIncluded = [
         displayOption('Professional English speaking driver', 'included'),
         displayOption('Complete vehicle insurance', 'included'),
-        data.serviceHours
+        `Service hours: ${data.serviceHours}`
       ];
 
       const included = optionalCatalog.filter(x => data.options[x] === 'included');
@@ -1008,7 +1019,7 @@
       $('labelClientName').textContent = t.clientName;
       $('labelClientAddress').textContent = t.clientAddress;
       $('labelPeriod').textContent = t.period;
-      $('labelVehicleType').textContent = t.vehicleType;
+      $('labelProjectName').textContent = t.projectName;
       $('labelCurrency').textContent = t.currency;
       $('labelTotalPrice').textContent = t.totalPrice;
       $('labelServiceStart').textContent = t.serviceStart;
@@ -1026,8 +1037,9 @@
       $('previewIncludedTitle').textContent = t.included;
       $('previewExcludedTitle').textContent = t.excluded;
       $('previewTotalLabel').textContent = t.total;
+      $('previewProjectLabel').textContent = t.previewProject;
       $('previewPeriodLabel').textContent = t.previewPeriod;
-      $('previewVehicleTypeLabel').textContent = t.previewVehicle;
+      $('previewPaxLabel').textContent = t.previewPax;
       $('previewItineraryTitle').textContent = t.previewItinerary;
       $('previewNoLabel').textContent = t.previewNo;
       $('previewDateLabel').textContent = t.previewDate;
@@ -1056,8 +1068,8 @@
 
     [
       'quotationNo', 'quoteDate', 'clientName', 'clientAddress',
-      'period', 'pax', 'coachQty', 'coachSeats', 'sprinterQty',
-      'sprinterSeats', 'vehicleType', 'currency', 'serviceStart', 'notes'
+      'projectName', 'period', 'pax', 'coachQty', 'coachSeats',
+      'sprinterQty', 'sprinterSeats', 'currency', 'serviceStart', 'notes'
     ].forEach(id => {
       $(id).addEventListener('input', renderPreview);
       $(id).addEventListener('change', renderPreview);
