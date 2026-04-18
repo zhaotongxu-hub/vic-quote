@@ -7,423 +7,70 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --page-w: 210mm;
-      --page-h: 297mm;
-    }
-
+    :root { --page-w: 210mm; --page-h: 297mm; }
     * { box-sizing: border-box; }
+    body { margin: 0; background: #eef2f7; font-family: 'Open Sans', Arial, sans-serif; color: #111; }
+    .shell { min-height: 100vh; padding: 16px; }
+    .layout { max-width: 1800px; margin: 0 auto; display: grid; grid-template-columns: 520px 1fr; gap: 24px; align-items: start; }
+    .panel { background: #fff; border: 1px solid #e2e8f0; border-radius: 24px; padding: 24px; box-shadow: 0 1px 2px rgba(0,0,0,.04); margin-bottom: 20px; }
+    .field-label { display:block; font-size:14px; color:#475569; margin-bottom:6px; font-weight:600; }
+    .input,.textarea,.select { width:100%; border:1px solid #cbd5e1; border-radius:14px; padding:12px 14px; font-size:15px; background:#fff; font-family:'Open Sans', Arial, sans-serif; }
+    .textarea { resize: vertical; min-height: 84px; }
+    .btn { border:1px solid #cbd5e1; border-radius:12px; padding:10px 14px; background:#fff; cursor:pointer; font-size:14px; font-family:'Open Sans', Arial, sans-serif; }
+    .btn-dark { background:#111; color:#fff; border-color:#111; }
+    .lang-btn.active { background:#111; color:#fff; border-color:#111; }
+    .editor-row { display:grid; grid-template-columns:1fr 140px 52px; gap:12px; align-items:start; }
+    .option-row { display:grid; grid-template-columns:1fr 120px 140px; gap:12px; align-items:center; border:1px solid #e2e8f0; border-radius:16px; padding:12px; }
+    .preview-wrap { overflow:auto; }
+    .a4 { width:var(--page-w); height:var(--page-h); margin:0 auto; position:relative; overflow:hidden; background:url('./bg.png') center top / 100% 100% no-repeat; box-shadow:0 24px 60px rgba(0,0,0,.12); border-radius:24px; }
+    .page-inner { position:absolute; inset:0; padding:16mm 13mm 14mm 13mm; }
+    .fit-text { word-break: break-word; overflow-wrap: anywhere; }
 
-    body {
-      margin: 0;
-      background: #eef2f7;
-      font-family: 'Open Sans', Arial, sans-serif;
-      color: #111;
-    }
+    .header-grid { display:grid; grid-template-columns:36% 64%; align-items:start; }
+    .header-right { text-align:right; padding-top:1.5mm; padding-right:1mm; display:flex; flex-direction:column; align-items:flex-end; }
+    .doc-title { font-size:40px; line-height:1; font-weight:700; letter-spacing:.1px; width:100%; text-align:right; }
+    .vehicle-title { font-size:28px; line-height:1.08; margin-top:2.4mm; font-weight:700; width:100%; text-align:right; min-height:30px; }
+    .meta { margin-top:3.2mm; font-size:15px; line-height:1.08; text-align:right; width:100%; font-weight:600; }
+    .meta div + div { margin-top:.8mm; }
+    .client-name { margin-top:3mm; font-size:16px; line-height:1.1; width:100%; text-align:right; font-weight:600; min-height:18px; }
+    .client-address { margin-top:1.1mm; font-size:14px; line-height:1.18; width:100%; text-align:right; white-space:pre-line; min-height:32px; }
 
-    .shell {
-      min-height: 100vh;
-      padding: 16px;
-    }
+    .itinerary-frame { position:absolute; left:17mm; right:17mm; top:81mm; height:122mm; overflow:hidden; }
+    .frame-content { transform-origin: top left; --content-scale:1; transform:scale(var(--content-scale)); width:calc(100% / var(--content-scale)); }
+    .summary { font-size:13px; line-height:1.24; }
+    .summary div { margin-bottom:1.5mm; }
+    .itinerary-title { margin-top:8.4mm; text-align:center; font-size:24px; font-weight:700; line-height:1; }
+    .service-note { margin-top:2mm; font-size:11px; line-height:1.2; }
+    .itinerary-list { margin-top:6mm; display:flex; flex-direction:column; gap:2mm; font-size:16px; }
+    .itinerary-item { display:grid; grid-template-columns:auto minmax(120px, 1fr) 90px; gap:12px; align-items:center; }
+    .itinerary-left { display:flex; align-items:center; white-space:pre-line; line-height:1.05; font-size:16px; font-weight:400; }
+    .middle-line { display:block; width:100%; min-width:120px; border-bottom:1.5px solid #777; transform:translateY(-1px); }
+    .itinerary-right { display:flex; align-items:center; justify-content:flex-end; width:90px; font-size:18px; font-weight:700; white-space:nowrap; line-height:1; text-align:right; }
 
-    .layout {
-      max-width: 1800px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 520px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
+    .services-zone { position:absolute; left:17mm; right:17mm; top:213mm; height:28mm; overflow:hidden; }
+    .services-content { transform-origin: top left; --services-scale:1; transform:scale(var(--services-scale)); width:calc(100% / var(--services-scale)); }
+    .services-grid { display:grid; grid-template-columns:1fr 1fr; gap:34px; font-size:11px; line-height:1.15; }
+    .services-grid h4 { margin:0 0 4px 0; font-size:18px; font-weight:700; }
+    .services-grid ul { margin:0; padding-left:15px; }
+    .services-grid li { margin-bottom:1.4px; }
 
-    .panel {
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 1px 2px rgba(0,0,0,.04);
-      margin-bottom: 20px;
-    }
+    .total-row { position:absolute; left:17mm; right:23mm; bottom:62mm; display:flex; justify-content:space-between; align-items:flex-end; }
+    .total-label { font-size:23px; line-height:1; font-weight:700; }
+    .total-value { font-size:31px; line-height:1; font-weight:700; min-width:120px; text-align:right; }
+    .notes-row { position:absolute; left:17mm; right:17mm; bottom:34mm; font-size:9px; line-height:1.2; }
 
-    .field-label {
-      display: block;
-      font-size: 14px;
-      color: #475569;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .input, .textarea, .select {
-      width: 100%;
-      border: 1px solid #cbd5e1;
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-size: 15px;
-      background: #fff;
-      font-family: 'Open Sans', Arial, sans-serif;
-    }
-
-    .textarea {
-      resize: vertical;
-      min-height: 84px;
-    }
-
-    .btn {
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
-      padding: 10px 14px;
-      background: #fff;
-      cursor: pointer;
-      font-size: 14px;
-      font-family: 'Open Sans', Arial, sans-serif;
-    }
-
-    .btn-dark {
-      background: #111;
-      color: #fff;
-      border-color: #111;
-    }
-
-    .lang-btn.active {
-      background: #111;
-      color: #fff;
-      border-color: #111;
-    }
-
-    .editor-row {
-      display: grid;
-      grid-template-columns: 1fr 140px 52px;
-      gap: 12px;
-      align-items: start;
-    }
-
-    .option-row {
-      display: grid;
-      grid-template-columns: 1fr 120px 140px;
-      gap: 12px;
-      align-items: center;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 12px;
-    }
-
-    .preview-wrap {
-      overflow: auto;
-    }
-
-    .a4 {
-      width: var(--page-w);
-      height: var(--page-h);
-      margin: 0 auto;
-      position: relative;
-      overflow: hidden;
-      background: url('./bg.png') center top / 100% 100% no-repeat;
-      box-shadow: 0 24px 60px rgba(0,0,0,.12);
-      border-radius: 24px;
-    }
-
-    .page-inner {
-      position: absolute;
-      inset: 0;
-      padding: 16mm 13mm 14mm 13mm;
-    }
-
-    .fit-text {
-      word-break: break-word;
-      overflow-wrap: anywhere;
-    }
-
-    /* HEADER */
-    .header-grid {
-      display: grid;
-      grid-template-columns: 36% 64%;
-      align-items: start;
-    }
-
-    .header-right {
-      text-align: right;
-      padding-top: 1.5mm;
-      padding-right: 1mm;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    }
-
-    .doc-title {
-      font-size: 40px;
-      line-height: 1;
-      font-weight: 700;
-      letter-spacing: .1px;
-      text-align: right;
-      width: 100%;
-    }
-
-    .vehicle-title {
-      font-size: 28px;
-      line-height: 1.08;
-      margin-top: 2.4mm;
-      font-weight: 700;
-      text-align: right;
-      width: 100%;
-      min-height: 30px;
-    }
-
-    .meta {
-      margin-top: 3.2mm;
-      font-size: 15px;
-      line-height: 1.08;
-      text-align: right;
-      width: 100%;
-      font-weight: 600;
-    }
-
-    .meta div + div {
-      margin-top: 0.8mm;
-    }
-
-    .client-name {
-      margin-top: 3mm;
-      font-size: 16px;
-      text-align: right;
-      line-height: 1.1;
-      width: 100%;
-      font-weight: 600;
-      min-height: 18px;
-    }
-
-    .client-address {
-      margin-top: 1.1mm;
-      font-size: 14px;
-      line-height: 1.18;
-      text-align: right;
-      white-space: pre-line;
-      width: 100%;
-      min-height: 32px;
-    }
-
-    /* MIDDLE FRAME */
-    .itinerary-frame {
-      position: absolute;
-      left: 17mm;
-      right: 17mm;
-      top: 81mm;
-      height: 122mm;
-      overflow: hidden;
-    }
-
-    .frame-content {
-      transform-origin: top left;
-      --content-scale: 1;
-      transform: scale(var(--content-scale));
-      width: calc(100% / var(--content-scale));
-    }
-
-    .summary {
-      font-size: 13px;
-      line-height: 1.24;
-    }
-
-    .summary div {
-      margin-bottom: 1.5mm;
-    }
-
-    .itinerary-title {
-      margin-top: 4.2mm;
-      text-align: center;
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    .service-note {
-      margin-top: 2mm;
-      font-size: 11px;
-      line-height: 1.2;
-    }
-
-    .itinerary-list {
-      margin-top: 6mm;
-      display: flex;
-      flex-direction: column;
-      gap: 2mm;
-      font-size: 16px;
-    }
-
-    .itinerary-item {
-      display: grid;
-      grid-template-columns: auto auto 90px;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .itinerary-left {
-      display: flex;
-      align-items: center;
-      white-space: pre-line;
-      line-height: 1.05;
-      font-size: 16px;
-      font-weight: 400;
-    }
-
-    .middle-line {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 20px;
-    }
-
-    .middle-line::after {
-      content: "—";
-      color: #666;
-      font-weight: 600;
-      line-height: 1;
-      position: relative;
-      top: -0.5px;
-      margin: 0 4px;
-    }
-
-    .itinerary-right {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      width: 90px;
-      font-size: 18px;
-      font-weight: 700;
-      white-space: nowrap;
-      line-height: 1;
-      text-align: right;
-    }
-
-    /* SERVICES */
-    .services-zone {
-      position: absolute;
-      left: 17mm;
-      right: 17mm;
-      top: 213mm;
-      height: 28mm;
-      overflow: hidden;
-    }
-
-    .services-content {
-      transform-origin: top left;
-      --services-scale: 1;
-      transform: scale(var(--services-scale));
-      width: calc(100% / var(--services-scale));
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 34px;
-      font-size: 11px;
-      line-height: 1.15;
-    }
-
-    .services-grid h4 {
-      margin: 0 0 4px 0;
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .services-grid ul {
-      margin: 0;
-      padding-left: 15px;
-    }
-
-    .services-grid li {
-      margin-bottom: 1.4px;
-    }
-
-    /* TOTAL */
-    .total-row {
-      position: absolute;
-      left: 17mm;
-      right: 23mm;
-      bottom: 62mm;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-
-    .total-label {
-      font-size: 23px;
-      line-height: 1;
-      font-weight: 700;
-    }
-
-    .total-value {
-      font-size: 31px;
-      line-height: 1;
-      font-weight: 700;
-      min-width: 120px;
-      text-align: right;
-    }
-
-    .notes-row {
-      position: absolute;
-      left: 17mm;
-      right: 17mm;
-      bottom: 34mm;
-      font-size: 9px;
-      line-height: 1.2;
-    }
-
-    @media (max-width: 1280px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
+    @media (max-width: 1280px) { .layout { grid-template-columns:1fr; } }
     @media print {
-      @page {
-        size: A4 portrait;
-        margin: 0;
-      }
-
-      html, body {
-        width: 210mm;
-        height: 297mm;
-        background: #fff;
-      }
-
-      .shell {
-        padding: 0;
-      }
-
-      .no-print {
-        display: none !important;
-      }
-
-      .layout {
-        display: block;
-        max-width: none;
-      }
-
-      .preview-wrap {
-        overflow: visible;
-      }
-
-      .a4 {
-        width: 210mm;
-        height: 297mm;
-        border-radius: 0;
-        box-shadow: none;
-        page-break-after: avoid;
-        page-break-inside: avoid;
-      }
-
-      body * {
-        visibility: hidden;
-      }
-
-      .a4, .a4 * {
-        visibility: visible;
-      }
-
-      .a4 {
-        position: absolute;
-        left: 0;
-        top: 0;
-      }
+      @page { size:A4 portrait; margin:0; }
+      html, body { width:210mm; height:297mm; background:#fff; }
+      .shell { padding:0; }
+      .no-print { display:none !important; }
+      .layout { display:block; max-width:none; }
+      .preview-wrap { overflow:visible; }
+      .a4 { width:210mm; height:297mm; border-radius:0; box-shadow:none; page-break-after:avoid; page-break-inside:avoid; }
+      body * { visibility:hidden; }
+      .a4, .a4 * { visibility:visible; }
+      .a4 { position:absolute; left:0; top:0; }
     }
   </style>
 </head>
@@ -433,7 +80,7 @@
       <div class="no-print">
         <div class="panel">
           <div style="font-size:32px;font-weight:700;">VIC Quote Generator</div>
-          <div style="color:#64748b;margin-top:8px;">Full version with fixed gray frame, multilingual switch and automatic total.</div>
+          <div style="color:#64748b;margin-top:8px;">Fixed gray frame, aligned itinerary and automatic total.</div>
           <div style="margin-top:16px;display:flex;gap:8px;">
             <button class="btn lang-btn" data-lang="en">EN</button>
             <button class="btn lang-btn active" data-lang="fr">FR</button>
@@ -444,30 +91,23 @@
 
         <div class="panel">
           <div id="basicTitle" style="font-size:28px;font-weight:700;margin-bottom:16px;">Informations générales</div>
-
           <label id="labelQuotationNo" class="field-label">N° de devis</label>
           <input id="quotationNo" class="input" value="" />
-
           <div style="height:14px;"></div>
           <label id="labelDate" class="field-label">Date</label>
           <input id="quoteDate" class="input" value="" />
-
           <div style="height:14px;"></div>
           <label id="labelClientName" class="field-label">Nom du client</label>
           <input id="clientName" class="input" value="" />
-
           <div style="height:14px;"></div>
           <label id="labelClientAddress" class="field-label">Adresse du client</label>
           <textarea id="clientAddress" class="textarea"></textarea>
-
           <div style="height:14px;"></div>
           <label id="labelPeriod" class="field-label">Période</label>
           <input id="period" class="input" value="" />
-
           <div style="height:14px;"></div>
           <label class="field-label">PAX</label>
           <input id="pax" class="input" value="" />
-
           <div style="height:14px;"></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div>
@@ -487,11 +127,15 @@
               <input id="sprinterSeats" class="input" value="" />
             </div>
           </div>
-
           <div style="height:14px;"></div>
           <label id="labelVehicleType" class="field-label">Type de véhicule</label>
           <input id="vehicleType" class="input" value="" />
-
+          <div style="height:14px;"></div>
+          <label id="labelServiceHours" class="field-label">Heures de service</label>
+          <select id="serviceHours" class="select">
+            <option value="11 h / day">11 h / day</option>
+            <option value="12 h / day">12 h / day</option>
+          </select>
           <div style="height:14px;"></div>
           <div style="display:grid;grid-template-columns:1fr 140px;gap:12px;align-items:end;">
             <div>
@@ -510,11 +154,9 @@
               </select>
             </div>
           </div>
-
           <div style="height:14px;"></div>
           <label id="labelServiceStart" class="field-label">Note de début de service</label>
           <textarea id="serviceStart" class="textarea"></textarea>
-
           <div style="height:14px;"></div>
           <label id="labelNotes" class="field-label">Remarques</label>
           <textarea id="notes" class="textarea"></textarea>
@@ -543,12 +185,10 @@
               <div class="header-right">
                 <div id="previewDocTitle" class="doc-title">DEVIS</div>
                 <div id="previewTitle" class="vehicle-title"></div>
-
                 <div class="meta">
                   <div><strong id="previewNoLabel">ND:</strong> <span id="previewNo"></span></div>
                   <div><strong id="previewDateLabel">DATE:</strong> <span id="previewDate"></span></div>
                 </div>
-
                 <div id="previewClient" class="client-name fit-text"></div>
                 <div id="previewAddress" class="client-address fit-text"></div>
               </div>
@@ -561,13 +201,10 @@
                   <div><span id="previewVehicleTypeLabel">Type de véhicule</span> : <span id="previewVehicleType"></span></div>
                   <div>PAX : <span id="previewPax"></span></div>
                 </div>
-
                 <div id="previewItineraryTitle" class="itinerary-title">DAILY ITINERARY</div>
-
                 <div id="previewServiceStartWrap" class="service-note hidden">
                   <div id="previewServiceStart" class="fit-text" style="white-space:pre-line;"></div>
                 </div>
-
                 <div id="previewItinerary" class="itinerary-list"></div>
               </div>
             </div>
@@ -605,111 +242,24 @@
   <script>
     const texts = {
       en: {
-        docTitle: 'QUOTATION',
-        quotationNo: 'Quotation No.',
-        date: 'Date',
-        clientName: 'Client Name',
-        clientAddress: 'Client Address',
-        period: 'Period',
-        vehicleType: 'Vehicle Type',
-        currency: 'Currency',
-        totalPrice: 'Total Price (auto)',
-        serviceStart: 'Service Start Note',
-        notes: 'Notes',
-        coachQty: 'Coach Qty',
-        coachSeats: 'Coach Seats',
-        sprinterQty: 'Sprinter Qty',
-        sprinterSeats: 'Sprinter Seats',
-        basicInfo: 'Basic Information',
-        itinerary: 'Daily Itinerary',
-        addItem: 'Add item',
-        options: 'Included / Not Included Options',
-        optionHint: 'Each item can only have one active state: Included or Not Included.',
-        included: 'Included :',
-        excluded: 'Not included :',
-        total: 'TOTAL PRICE',
-        previewPeriod: 'Period',
-        previewVehicle: 'Type of vehicle',
-        previewItinerary: 'DAILY ITINERARY',
-        previewNo: 'ND:',
-        previewDate: 'DATE:',
-        previewNotes: 'Notes:'
+        docTitle:'QUOTATION', quotationNo:'Quotation No.', date:'Date', clientName:'Client Name', clientAddress:'Client Address', period:'Period', vehicleType:'Vehicle Type', currency:'Currency', totalPrice:'Total Price (auto)', serviceStart:'Service Start Note', notes:'Notes', serviceHours:'Service hours', coachQty:'Coach Qty', coachSeats:'Coach Seats', sprinterQty:'Sprinter Qty', sprinterSeats:'Sprinter Seats', basicInfo:'Basic Information', itinerary:'Daily Itinerary', addItem:'Add item', options:'Included / Not Included Options', optionHint:'Each item can only have one active state: Included or Not Included.', included:'Included :', excluded:'Not included :', total:'TOTAL PRICE', previewPeriod:'Period', previewVehicle:'Type of vehicle', previewItinerary:'DAILY ITINERARY', previewNo:'ND:', previewDate:'DATE:', previewNotes:'Notes:'
       },
       fr: {
-        docTitle: 'DEVIS',
-        quotationNo: 'N° de devis',
-        date: 'Date',
-        clientName: 'Nom du client',
-        clientAddress: 'Adresse du client',
-        period: 'Période',
-        vehicleType: 'Type de véhicule',
-        currency: 'Devise',
-        totalPrice: 'Prix total (auto)',
-        serviceStart: 'Note de début de service',
-        notes: 'Remarques',
-        coachQty: 'Nb de coach',
-        coachSeats: 'Places coach',
-        sprinterQty: 'Nb de sprinter',
-        sprinterSeats: 'Places sprinter',
-        basicInfo: 'Informations générales',
-        itinerary: 'Programme quotidien',
-        addItem: 'Ajouter',
-        options: 'Options incluses / non incluses',
-        optionHint: 'Chaque poste ne peut avoir qu’un seul état actif : Inclus ou Non inclus.',
-        included: 'Inclus :',
-        excluded: 'Non inclus :',
-        total: 'PRIX TOTAL',
-        previewPeriod: 'Période',
-        previewVehicle: 'Type de véhicule',
-        previewItinerary: 'DAILY ITINERARY',
-        previewNo: 'ND:',
-        previewDate: 'DATE:',
-        previewNotes: 'Remarques :'
+        docTitle:'DEVIS', quotationNo:'N° de devis', date:'Date', clientName:'Nom du client', clientAddress:'Adresse du client', period:'Période', vehicleType:'Type de véhicule', currency:'Devise', totalPrice:'Prix total (auto)', serviceStart:'Note de début de service', notes:'Remarques', serviceHours:'Heures de service', coachQty:'Nb de coach', coachSeats:'Places coach', sprinterQty:'Nb de sprinter', sprinterSeats:'Places sprinter', basicInfo:'Informations générales', itinerary:'Programme quotidien', addItem:'Ajouter', options:'Options incluses / non incluses', optionHint:'Chaque poste ne peut avoir qu’un seul état actif : Inclus ou Non inclus.', included:'Inclus :', excluded:'Non inclus :', total:'PRIX TOTAL', previewPeriod:'Période', previewVehicle:'Type de véhicule', previewItinerary:'DAILY ITINERARY', previewNo:'ND:', previewDate:'DATE:', previewNotes:'Remarques :'
       },
       zh: {
-        docTitle: '报价单',
-        quotationNo: '报价编号',
-        date: '日期',
-        clientName: '客户名称',
-        clientAddress: '客户地址',
-        period: '服务期间',
-        vehicleType: '车型',
-        currency: '货币',
-        totalPrice: '总价（自动）',
-        serviceStart: '服务开始说明',
-        notes: '备注',
-        coachQty: '大巴数量',
-        coachSeats: '大巴座位',
-        sprinterQty: '商务车数量',
-        sprinterSeats: '商务车座位',
-        basicInfo: '基础信息',
-        itinerary: '每日行程',
-        addItem: '新增一项',
-        options: '包含 / 不包含选项',
-        optionHint: '每个项目只能有一个状态：包含或不包含。',
-        included: '包含：',
-        excluded: '不包含：',
-        total: '总价',
-        previewPeriod: '服务期间',
-        previewVehicle: '车型',
-        previewItinerary: '每日行程',
-        previewNo: '编号：',
-        previewDate: '日期：',
-        previewNotes: '备注：'
+        docTitle:'报价单', quotationNo:'报价编号', date:'日期', clientName:'客户名称', clientAddress:'客户地址', period:'服务期间', vehicleType:'车型', currency:'货币', totalPrice:'总价（自动）', serviceStart:'服务开始说明', notes:'备注', serviceHours:'服务时长', coachQty:'大巴数量', coachSeats:'大巴座位', sprinterQty:'商务车数量', sprinterSeats:'商务车座位', basicInfo:'基础信息', itinerary:'每日行程', addItem:'新增一项', options:'包含 / 不包含选项', optionHint:'每个项目只能有一个状态：包含或不包含。', included:'包含：', excluded:'不包含：', total:'总价', previewPeriod:'服务期间', previewVehicle:'车型', previewItinerary:'每日行程', previewNo:'编号：', previewDate:'日期：', previewNotes:'备注：'
       }
     };
 
     let currentLang = 'fr';
 
-    const optionCatalog = [
-      'Professional English speaking driver',
-      'Complete vehicle insurance',
-      'Service 11h/day',
-      'Extra hours : 80 € / h / coach',
-      'Tips : 2 € / day / passenger / vehicle',
+    const optionalCatalog = [
+      'Extra hours : 80 € / h',
+      'Tips : 2 € / day / passenger',
       'Paid directly to the driver',
       'Driver accommodation',
-      'Driver meal expenses 20€/meal',
+      'Driver meal expenses',
       'Parking fees',
       'Road tolls',
       'City access / ZTL',
@@ -718,19 +268,19 @@
       'Other'
     ];
 
+    const fixedIncludedCatalog = [
+      'Professional English speaking driver',
+      'Complete vehicle insurance'
+    ];
+
     const data = {
-      itinerary: [
-        { left: '', right: '' }
-      ],
+      itinerary: [{ left:'', right:'' }],
       options: {
-        'Professional English speaking driver': 'none',
-        'Complete vehicle insurance': 'none',
-        'Service 11h/day': 'none',
-        'Extra hours : 80 € / h / coach': 'none',
-        'Tips : 2 € / day / passenger / vehicle': 'none',
+        'Extra hours : 80 € / h': 'none',
+        'Tips : 2 € / day / passenger': 'none',
         'Paid directly to the driver': 'none',
         'Driver accommodation': 'none',
-        'Driver meal expenses 20€/meal': 'none',
+        'Driver meal expenses': 'none',
         'Parking fees': 'none',
         'Road tolls': 'none',
         'City access / ZTL': 'none',
@@ -745,7 +295,8 @@
 
     function parsePrice(value) {
       if (!value) return 0;
-      const cleaned = String(value).replace(/[^\d.,-]/g, '').replace(',', '.');
+      const cleaned = String(value).replace(/[^
+        \d.,-]/g, '').replace(',', '.');
       const num = parseFloat(cleaned);
       return Number.isFinite(num) ? num : 0;
     }
@@ -763,46 +314,58 @@
       const coachSeats = $('coachSeats').value.trim();
       const sprinterQty = $('sprinterQty').value.trim();
       const sprinterSeats = $('sprinterSeats').value.trim();
-
       const parts = [];
       if (coachQty) parts.push(`${coachQty} COACH ${coachSeats} ${currentLang === 'fr' ? 'PLACES' : currentLang === 'zh' ? '座' : 'SEATS'}`);
       if (sprinterQty) parts.push(`${sprinterQty} SPRINTER ${sprinterSeats} ${currentLang === 'fr' ? 'PLACES' : currentLang === 'zh' ? '座' : 'SEATS'}`);
       return parts.join(' + ');
     }
 
-    function localizeOption(item) {
+    function displayOption(item, state='none') {
       const map = {
         fr: {
           'Professional English speaking driver': 'Professionnel English speaking driver',
           'Complete vehicle insurance': 'Assurance complète du véhicule',
-          'Service 11h/day': 'Service 11h/day',
-          'Extra hours : 80 € / h / coach': 'Extra hours : 80 € / h / coach',
-          'Tips : 2 € / day / passenger / vehicle': 'Tips : 2 € / day / passenger / vehicle',
-          'Paid directly to the driver': 'Paid directly to the driver',
-          'Driver accommodation': 'Driver accommodation',
-          'Driver meal expenses 20€/meal': 'Driver meal expenses 20€/meal',
-          'Parking fees': 'Parking fees',
-          'Road tolls': 'Road tolls',
-          'City access / ZTL': 'City access / ZTL',
-          'Meet & greet sign': 'Meet & greet sign',
-          'Drinks on board': 'Drinks on board',
+          'Extra hours : 80 € / h': 'Heures supplémentaires : 80 € / h',
+          'Tips : 2 € / day / passenger': 'Pourboires : 2 € / jour / passager',
+          'Paid directly to the driver': 'Payé directement au conducteur',
+          'Driver accommodation': 'Hébergement du conducteur',
+          'Driver meal expenses': state === 'included' ? 'Repas du conducteur' : 'Repas du conducteur 20 € / repas',
+          'Parking fees': 'Frais de stationnement',
+          'Road tolls': 'Péages',
+          'City access / ZTL': 'Accès ville / ZTL',
+          'Meet & greet sign': 'Pancarte d’accueil',
+          'Drinks on board': 'Boissons à bord',
           'Other': 'Autre'
         },
         zh: {
           'Professional English speaking driver': '英文司机服务',
           'Complete vehicle insurance': '车辆全险',
-          'Service 11h/day': '每日11小时服务',
-          'Extra hours : 80 € / h / coach': '超时费：80 € / 小时 / 车',
-          'Tips : 2 € / day / passenger / vehicle': '小费：2 € / 人 / 天 / 车',
+          'Extra hours : 80 € / h': '超时费：80 € / 小时',
+          'Tips : 2 € / day / passenger': '小费：2 € / 人 / 天',
           'Paid directly to the driver': '直接支付给司机',
           'Driver accommodation': '司机住宿',
-          'Driver meal expenses 20€/meal': '司机餐费 20€/餐',
+          'Driver meal expenses': state === 'included' ? '司机餐费' : '司机餐费 20 € / 餐',
           'Parking fees': '停车费',
           'Road tolls': '过路费',
           'City access / ZTL': '进城费 / ZTL',
           'Meet & greet sign': '接站牌',
           'Drinks on board': '车上饮品',
           'Other': '其他'
+        },
+        en: {
+          'Professional English speaking driver': 'Professional English speaking driver',
+          'Complete vehicle insurance': 'Complete vehicle insurance',
+          'Extra hours : 80 € / h': 'Extra hours : 80 € / h',
+          'Tips : 2 € / day / passenger': 'Tips : 2 € / day / passenger',
+          'Paid directly to the driver': 'Paid directly to the driver',
+          'Driver accommodation': 'Driver accommodation',
+          'Driver meal expenses': state === 'included' ? 'Driver meal expenses' : 'Driver meal expenses 20 € / meal',
+          'Parking fees': 'Parking fees',
+          'Road tolls': 'Road tolls',
+          'City access / ZTL': 'City access / ZTL',
+          'Meet & greet sign': 'Meet & greet sign',
+          'Drinks on board': 'Drinks on board',
+          'Other': 'Other'
         }
       };
       return (map[currentLang] && map[currentLang][item]) || item;
@@ -810,7 +373,6 @@
 
     function applyLanguage() {
       const t = texts[currentLang];
-
       $('basicTitle').textContent = t.basicInfo;
       $('labelQuotationNo').textContent = t.quotationNo;
       $('labelDate').textContent = t.date;
@@ -822,6 +384,7 @@
       $('labelTotalPrice').textContent = t.totalPrice;
       $('labelServiceStart').textContent = t.serviceStart;
       $('labelNotes').textContent = t.notes;
+      $('labelServiceHours').textContent = t.serviceHours;
       $('labelCoachQty').textContent = t.coachQty;
       $('labelCoachSeats').textContent = t.coachSeats;
       $('labelSprinterQty').textContent = t.sprinterQty;
@@ -830,7 +393,6 @@
       $('addItinerary').textContent = t.addItem;
       $('optionTitle').textContent = t.options;
       $('optionHint').textContent = t.optionHint;
-
       $('previewDocTitle').textContent = t.docTitle;
       $('previewIncludedTitle').textContent = t.included;
       $('previewExcludedTitle').textContent = t.excluded;
@@ -841,11 +403,7 @@
       $('previewNoLabel').textContent = t.previewNo;
       $('previewDateLabel').textContent = t.previewDate;
       $('previewNotesLabel').textContent = t.previewNotes;
-
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === currentLang);
-      });
-
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === currentLang));
       renderOptionEditor();
       renderPreview();
     }
@@ -853,31 +411,38 @@
     function renderOptionEditor() {
       const wrap = $('optionEditor');
       wrap.innerHTML = '';
-
-      optionCatalog.forEach(item => {
+      optionalCatalog.forEach(item => {
         const state = data.options[item] || 'none';
         const row = document.createElement('div');
         row.className = 'option-row';
         row.innerHTML = `
-          <div style="font-size:14px;color:#1e293b;">${localizeOption(item)}</div>
+          <div style="font-size:14px;color:#1e293b;">${displayOption(item, state)}</div>
           <button class="includedBtn btn ${state === 'included' ? 'btn-dark' : ''}">Included</button>
           <button class="excludedBtn btn ${state === 'excluded' ? 'btn-dark' : ''}">Not Included</button>
         `;
-
         row.querySelector('.includedBtn').onclick = () => {
           data.options[item] = data.options[item] === 'included' ? 'none' : 'included';
           renderOptionEditor();
           renderPreview();
         };
-
         row.querySelector('.excludedBtn').onclick = () => {
           data.options[item] = data.options[item] === 'excluded' ? 'none' : 'excluded';
           renderOptionEditor();
           renderPreview();
         };
-
         wrap.appendChild(row);
       });
+
+      const fixedWrap = document.createElement('div');
+      fixedWrap.style.marginTop = '14px';
+      fixedWrap.innerHTML = `
+        <label class="field-label">${currentLang === 'fr' ? 'Toujours inclus' : currentLang === 'zh' ? '固定包含' : 'Always included'}</label>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="input" style="background:#f8fafc;">${displayOption('Professional English speaking driver', 'included')}</div>
+          <div class="input" style="background:#f8fafc;">${displayOption('Complete vehicle insurance', 'included')}</div>
+        </div>
+      `;
+      wrap.appendChild(fixedWrap);
 
       const otherRow = document.createElement('div');
       otherRow.style.marginTop = '12px';
@@ -886,18 +451,13 @@
         <input id="otherTextInput" class="input" value="${data.otherText || ''}" ${data.options['Other'] === 'none' ? 'disabled' : ''} />
       `;
       wrap.appendChild(otherRow);
-
       const otherInput = document.getElementById('otherTextInput');
-      otherInput.addEventListener('input', (e) => {
-        data.otherText = e.target.value;
-        renderPreview();
-      });
+      otherInput.addEventListener('input', (e) => { data.otherText = e.target.value; renderPreview(); });
     }
 
     function renderItineraryEditor() {
       const wrap = $('itineraryEditor');
       wrap.innerHTML = '';
-
       data.itinerary.forEach((item, index) => {
         const row = document.createElement('div');
         row.className = 'editor-row';
@@ -906,24 +466,14 @@
           <input class="input right" value="${item.right}">
           <button class="btn remove">×</button>
         `;
-
-        row.querySelector('.left').oninput = (e) => {
-          data.itinerary[index].left = e.target.value;
-          renderPreview();
-        };
-
-        row.querySelector('.right').oninput = (e) => {
-          data.itinerary[index].right = e.target.value;
-          renderPreview();
-        };
-
+        row.querySelector('.left').oninput = (e) => { data.itinerary[index].left = e.target.value; renderPreview(); };
+        row.querySelector('.right').oninput = (e) => { data.itinerary[index].right = e.target.value; renderPreview(); };
         row.querySelector('.remove').onclick = () => {
           data.itinerary.splice(index, 1);
-          if (data.itinerary.length === 0) data.itinerary.push({ left: '', right: '' });
+          if (data.itinerary.length === 0) data.itinerary.push({ left:'', right:'' });
           renderItineraryEditor();
           renderPreview();
         };
-
         wrap.appendChild(row);
       });
     }
@@ -931,7 +481,6 @@
     function fitFrame() {
       const content = $('frameContent');
       content.style.setProperty('--content-scale', '1');
-
       requestAnimationFrame(() => {
         const box = document.querySelector('.itinerary-frame');
         const available = box.clientHeight;
@@ -948,7 +497,6 @@
       const zone = $('servicesZone');
       const totalRow = $('totalRow');
       content.style.setProperty('--services-scale', '1');
-
       requestAnimationFrame(() => {
         const available = zone.clientHeight;
         const needed = content.scrollHeight;
@@ -990,7 +538,6 @@
 
       const itineraryWrap = $('previewItinerary');
       itineraryWrap.innerHTML = '';
-
       let total = 0;
 
       data.itinerary.forEach(item => {
@@ -1021,16 +568,19 @@
       $('previewTotal').textContent = totalFormatted;
       $('totalPrice').value = totalFormatted;
 
-      const included = optionCatalog.filter(x => data.options[x] === 'included');
-      const excluded = optionCatalog.filter(x => data.options[x] === 'excluded');
+      const fixedIncluded = [
+        displayOption('Professional English speaking driver', 'included'),
+        displayOption('Complete vehicle insurance', 'included'),
+        $('serviceHours').value
+      ];
 
-      $('previewIncluded').innerHTML = included
-        .map(x => `<li>${x === 'Other' && data.otherText ? data.otherText : localizeOption(x)}</li>`)
-        .join('');
+      const included = optionalCatalog.filter(x => data.options[x] === 'included');
+      const excluded = optionalCatalog.filter(x => data.options[x] === 'excluded');
 
-      $('previewExcluded').innerHTML = excluded
-        .map(x => `<li>${x === 'Other' && data.otherText ? data.otherText : localizeOption(x)}</li>`)
-        .join('');
+      $('previewIncluded').innerHTML = fixedIncluded.map(x => `<li>${x}</li>`).join('') +
+        included.map(x => `<li>${x === 'Other' && data.otherText ? data.otherText : displayOption(x, 'included')}</li>`).join('');
+
+      $('previewExcluded').innerHTML = excluded.map(x => `<li>${x === 'Other' && data.otherText ? data.otherText : displayOption(x, 'excluded')}</li>`).join('');
 
       requestAnimationFrame(() => {
         fitFrame();
@@ -1039,7 +589,7 @@
     }
 
     $('addItinerary').onclick = () => {
-      data.itinerary.push({ left: '', right: '' });
+      data.itinerary.push({ left:'', right:'' });
       renderItineraryEditor();
       renderPreview();
     };
@@ -1051,20 +601,50 @@
       };
     });
 
-    [
-      'quotationNo', 'quoteDate', 'clientName', 'clientAddress',
-      'period', 'pax', 'coachQty', 'coachSeats', 'sprinterQty',
-      'sprinterSeats', 'vehicleType', 'currency', 'serviceStart', 'notes'
-    ].forEach(id => {
+    ['quotationNo','quoteDate','clientName','clientAddress','period','pax','coachQty','coachSeats','sprinterQty','sprinterSeats','vehicleType','currency','serviceStart','notes','serviceHours'].forEach(id => {
       $(id).addEventListener('input', renderPreview);
       $(id).addEventListener('change', renderPreview);
     });
 
     $('printBtn').onclick = () => window.print();
-    window.addEventListener('resize', () => {
-      fitFrame();
-      fitServicesAndPosition();
-    });
+    window.addEventListener('resize', () => { fitFrame(); fitServicesAndPosition(); });
+
+    function applyLanguage() {
+      const t = texts[currentLang];
+      $('basicTitle').textContent = t.basicInfo;
+      $('labelQuotationNo').textContent = t.quotationNo;
+      $('labelDate').textContent = t.date;
+      $('labelClientName').textContent = t.clientName;
+      $('labelClientAddress').textContent = t.clientAddress;
+      $('labelPeriod').textContent = t.period;
+      $('labelVehicleType').textContent = t.vehicleType;
+      $('labelCurrency').textContent = t.currency;
+      $('labelTotalPrice').textContent = t.totalPrice;
+      $('labelServiceStart').textContent = t.serviceStart;
+      $('labelNotes').textContent = t.notes;
+      $('labelServiceHours').textContent = t.serviceHours;
+      $('labelCoachQty').textContent = t.coachQty;
+      $('labelCoachSeats').textContent = t.coachSeats;
+      $('labelSprinterQty').textContent = t.sprinterQty;
+      $('labelSprinterSeats').textContent = t.sprinterSeats;
+      $('itineraryTitle').textContent = t.itinerary;
+      $('addItinerary').textContent = t.addItem;
+      $('optionTitle').textContent = t.options;
+      $('optionHint').textContent = t.optionHint;
+      $('previewDocTitle').textContent = t.docTitle;
+      $('previewIncludedTitle').textContent = t.included;
+      $('previewExcludedTitle').textContent = t.excluded;
+      $('previewTotalLabel').textContent = t.total;
+      $('previewPeriodLabel').textContent = t.previewPeriod;
+      $('previewVehicleTypeLabel').textContent = t.previewVehicle;
+      $('previewItineraryTitle').textContent = t.previewItinerary;
+      $('previewNoLabel').textContent = t.previewNo;
+      $('previewDateLabel').textContent = t.previewDate;
+      $('previewNotesLabel').textContent = t.previewNotes;
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === currentLang));
+      renderOptionEditor();
+      renderPreview();
+    }
 
     renderItineraryEditor();
     renderOptionEditor();
@@ -1072,3 +652,4 @@
   </script>
 </body>
 </html>
+```
