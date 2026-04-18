@@ -1,32 +1,447 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>VIC Quote</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VIC Quote Generator</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <style>
+    body { background:#eef2f7; }
+    .a4 {
+      width: 210mm;
+      min-height: 297mm;
+      background: #f4f4f4;
+      position: relative;
+      overflow: hidden;
+    }
+    .watermark-box {
+      position:absolute;
+      left:16px;
+      right:16px;
+      top:180px;
+      height:560px;
+      border:6px solid rgba(0,0,0,0.05);
+      border-radius:18px;
+      pointer-events:none;
+    }
+    .watermark-main {
+      position:absolute;
+      top:230px;
+      left:40px;
+      right:40px;
+      text-align:center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size:260px;
+      color:rgba(0,0,0,0.045);
+      letter-spacing:6px;
+      pointer-events:none;
+      user-select:none;
+      line-height:0.9;
+    }
+    .watermark-sub {
+      display:block;
+      font-size:72px;
+      letter-spacing:1px;
+      margin-top:18px;
+      font-family: Arial, sans-serif;
+      font-weight:300;
+    }
+    .watermark-paris {
+      position:absolute;
+      top:760px;
+      left:0;
+      right:0;
+      text-align:center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size:120px;
+      color:rgba(0,0,0,0.035);
+      letter-spacing:52px;
+      pointer-events:none;
+      user-select:none;
+    }
+    .logo-box {
+      border:2px solid #222;
+      width:220px;
+      padding:10px 12px 6px;
+      line-height:1;
+      background:#f4f4f4;
+    }
+    .logo-vic {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size:92px;
+      letter-spacing:-4px;
+    }
+    .logo-transport {
+      text-align:right;
+      font-size:18px;
+      margin-top:-6px;
+    }
+    .logo-paris {
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing:18px;
+      font-size:26px;
+      margin-top:10px;
+      padding-left:8px;
+    }
+    .footer-black {
+      background:#000;
+      color:#fff;
+      width:170px;
+      padding:10px 10px 8px;
+      border-radius:2px;
+      text-align:center;
+    }
+    .footer-black .vic { font-family: Georgia, serif; font-size:68px; line-height:1; }
+    .footer-black .paris { font-size:14px; letter-spacing:12px; margin-top:4px; padding-left:12px; }
+    .dotted-line {
+      border-bottom: 3px dotted rgba(0,0,0,0.7);
+      width: 100%;
+      min-width: 140px;
+      transform: translateY(14px);
+    }
+    @media print {
+      body { background:#fff; }
+      .no-print { display:none !important; }
+      .print-wrap { padding:0 !important; margin:0 !important; }
+      .a4 { width:100%; min-height:auto; box-shadow:none !important; margin:0 !important; }
+    }
+  </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div class="min-h-screen p-4 md:p-6 print-wrap">
+    <div class="max-w-[1800px] mx-auto grid grid-cols-1 xl:grid-cols-[520px_1fr] gap-6">
+      <div class="no-print space-y-5">
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6">
+          <div class="text-3xl font-semibold">VIC Quote Generator</div>
+          <div class="text-slate-500 mt-2">English advanced version for Vercel + Google Sites.</div>
+          <button id="printBtn" class="mt-5 w-full rounded-2xl bg-black text-white py-3 text-lg">Print / Save PDF</button>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 space-y-4">
+          <div class="text-2xl font-semibold">Basic Information</div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Quotation No.</label>
+            <input id="quotationNo" class="w-full border rounded-xl px-4 py-3" value="ZX11042601" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Date</label>
+            <input id="quoteDate" class="w-full border rounded-xl px-4 py-3" value="11/04/2026" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Client Name</label>
+            <input id="clientName" class="w-full border rounded-xl px-4 py-3" value="VIC CHINA" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Client Address</label>
+            <textarea id="clientAddress" class="w-full border rounded-xl px-4 py-3 h-24">9 zhonghe str,B.D.A,Beijing,China</textarea>
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Period</label>
+            <input id="period" class="w-full border rounded-xl px-4 py-3" value="15 April 2026 - 17 April 2026" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">PAX</label>
+            <input id="pax" class="w-full border rounded-xl px-4 py-3" value="17+1" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm text-slate-600 mb-1">Coach Qty</label>
+              <input id="coachQty" class="w-full border rounded-xl px-4 py-3" value="1" />
+            </div>
+            <div>
+              <label class="block text-sm text-slate-600 mb-1">Coach Seats</label>
+              <input id="coachSeats" class="w-full border rounded-xl px-4 py-3" value="45-55" />
+            </div>
+            <div>
+              <label class="block text-sm text-slate-600 mb-1">Sprinter Qty</label>
+              <input id="sprinterQty" class="w-full border rounded-xl px-4 py-3" value="" />
+            </div>
+            <div>
+              <label class="block text-sm text-slate-600 mb-1">Sprinter Seats</label>
+              <input id="sprinterSeats" class="w-full border rounded-xl px-4 py-3" value="19" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Vehicle Type Line</label>
+            <input id="vehicleType" class="w-full border rounded-xl px-4 py-3" value="Coach 45-55 places" />
+          </div>
+          <div class="grid grid-cols-[1fr_140px] gap-3 items-end">
+            <div>
+              <label class="block text-sm text-slate-600 mb-1">Total Price</label>
+              <input id="totalPrice" class="w-full border rounded-xl px-4 py-3" value="1,950" />
+            </div>
+            <div>
+              <label class="block text-sm text-slate-600 mb-1">Currency</label>
+              <select id="currency" class="w-full border rounded-xl px-4 py-3 bg-white">
+                <option>€</option>
+                <option>EUR</option>
+                <option>USD</option>
+                <option>GBP</option>
+                <option>CHF</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Service Start Note</label>
+            <textarea id="serviceStart" class="w-full border rounded-xl px-4 py-3 h-24"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Notes</label>
+            <textarea id="notes" class="w-full border rounded-xl px-4 py-3 h-24"></textarea>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="text-2xl font-semibold">Daily Itinerary</div>
+            <button id="addItinerary" class="rounded-xl border px-4 py-2">Add item</button>
+          </div>
+          <div id="itineraryEditor" class="space-y-3"></div>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 space-y-4">
+          <div class="text-2xl font-semibold">Included / Not Included Options</div>
+          <div class="text-sm text-slate-500">Each item can only have one active state: Included or Not Included.</div>
+          <div id="optionEditor" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <div class="overflow-auto">
+        <div class="a4 mx-auto shadow-2xl rounded-[28px] p-[24mm] text-[#111]">
+          <div class="watermark-box"></div>
+          <div class="watermark-main">VIC<span class="watermark-sub">TRANSPORT</span></div>
+          <div class="watermark-paris">- PARIS -</div>
+
+          <div class="relative z-10">
+            <div class="grid grid-cols-2 gap-8 items-start">
+              <div>
+                <div class="logo-box">
+                  <div class="logo-vic">VIC</div>
+                  <div class="logo-transport">TRANSPORT</div>
+                </div>
+                <div class="logo-paris">- PARIS -</div>
+              </div>
+              <div class="text-right">
+                <div class="font-serif text-[34px] md:text-[38px] tracking-wide">QUOTATION</div>
+                <div id="previewTitle" class="mt-5 font-serif text-[28px] leading-tight">1 COACH 45-55 SEATS</div>
+                <div class="mt-5 text-[18px] leading-8">
+                  <div><span class="font-semibold">ND:</span> <span id="previewNo"></span></div>
+                  <div><span class="font-semibold">DATE:</span> <span id="previewDate"></span></div>
+                </div>
+                <div id="previewClient" class="mt-5 text-[20px]"></div>
+                <div id="previewAddress" class="mt-2 text-[16px] leading-7 whitespace-pre-line"></div>
+              </div>
+            </div>
+
+            <div class="mt-12 rounded-[20px] border-[6px] border-black/5 p-8">
+              <div class="text-[18px] leading-9">
+                <div>Period : <span id="previewPeriod"></span></div>
+                <div>Type of vehicle : <span id="previewVehicleType"></span></div>
+                <div>PAX : <span id="previewPax"></span></div>
+              </div>
+
+              <div class="mt-8 text-center font-serif text-[30px] tracking-wide">DAILY ITINERARY</div>
+
+              <div id="previewServiceStartWrap" class="mt-8 text-[17px] leading-8 hidden">
+                <div id="previewServiceStart" class="whitespace-pre-line"></div>
+              </div>
+
+              <div id="previewItinerary" class="mt-6 space-y-7 text-[17px]"></div>
+            </div>
+
+            <div class="mt-10 grid grid-cols-2 gap-12 text-[17px]">
+              <div>
+                <div class="font-bold text-[18px]">Included :</div>
+                <ul id="previewIncluded" class="list-disc pl-6 mt-2 space-y-2"></ul>
+              </div>
+              <div>
+                <div class="font-bold text-[18px]">Not included:</div>
+                <ul id="previewExcluded" class="list-disc pl-6 mt-2 space-y-2"></ul>
+              </div>
+            </div>
+
+            <div class="mt-20 flex items-end justify-between">
+              <div class="font-serif text-[34px] tracking-wide">PRIX TOTAL</div>
+              <div id="previewTotal" class="font-serif text-[40px]">1,950 €</div>
+            </div>
+
+            <div id="previewNotesWrap" class="mt-8 hidden border-t border-black/10 pt-4 text-[14px] leading-7">
+              <span class="font-semibold">Notes: </span><span id="previewNotes"></span>
+            </div>
+
+            <div class="mt-20 flex items-end gap-5">
+              <div class="footer-black">
+                <div class="vic">VIC</div>
+                <div style="font-size:11px; margin-top:-4px;">TRANSPORT</div>
+                <div class="paris">- PARIS -</div>
+              </div>
+              <div>
+                <div class="font-serif text-[22px]">VIC TRANSPORT PARIS</div>
+                <div class="font-serif text-[18px] mt-3">48 Chemin de Groslay 93140 Bondy</div>
+                <div class="text-[12px] mt-3 max-w-[740px] leading-6">Copyright © 2024 VIC TRANSPORT PARIS. Tous les produits, vidéos, contenus visuels, articles et logos nous appartiennent.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
-    function App() {
-      return React.createElement(
-        "div",
-        { style: { padding: "40px", fontFamily: "Arial" } },
-        [
-          React.createElement("h1", {}, "VIC Quote System"),
-          React.createElement("p", {}, "System is working ✅"),
-          React.createElement("button", {
-            onClick: () => alert("Next step: build full quote system")
-          }, "Test Button")
-        ]
-      );
+    const optionCatalog = [
+      "Professional English speaking driver",
+      "Complete vehicle insurance",
+      "Service 11h/day",
+      "Extra hours : 80 € / h / coach",
+      "Tips : 2 € / day / passenger / vehicle",
+      "Paid directly to the driver",
+      "Driver accommodation",
+      "Driver's meal 20*2*3=120 €",
+      "Parking fees",
+      "Road tolls",
+      "City access / ZTL",
+      "Meet & greet sign",
+      "Drinks on board"
+    ];
+
+    const data = {
+      itinerary: [
+        { left: "15 Apr – Paris\n(Paris exhibition transfer, 30 seats coach)", right: "650 €" },
+        { left: "16 Apr – Paris\n(Paris exhibition transfer, 30 seats coach, possible Galeries Lafayette / Printemps / Seine cruise – TBC Sunday)", right: "650 €" },
+        { left: "17 Apr – Paris\n(09:00 Business meeting, 15 Rue Mozart 92110 Clichy, afternoon outlet shopping, 30 seats coach)", right: "650 €" }
+      ],
+      options: {
+        "Professional English speaking driver": "included",
+        "Complete vehicle insurance": "included",
+        "Service 11h/day": "included",
+        "Extra hours : 80 € / h / coach": "excluded",
+        "Tips : 2 € / day / passenger / vehicle": "excluded",
+        "Paid directly to the driver": "excluded",
+        "Driver accommodation": "excluded",
+        "Driver's meal 20*2*3=120 €": "excluded",
+        "Parking fees": "none",
+        "Road tolls": "none",
+        "City access / ZTL": "none",
+        "Meet & greet sign": "none",
+        "Drinks on board": "none"
+      }
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function buildTitle() {
+      const coachQty = $("coachQty").value.trim();
+      const coachSeats = $("coachSeats").value.trim();
+      const sprinterQty = $("sprinterQty").value.trim();
+      const sprinterSeats = $("sprinterSeats").value.trim();
+      const parts = [];
+      if (coachQty) parts.push(`${coachQty} COACH ${coachSeats} SEATS`);
+      if (sprinterQty) parts.push(`${sprinterQty} SPRINTER ${sprinterSeats} SEATS`);
+      return parts.join(" + ") || "QUOTATION";
     }
 
-    const root = ReactDOM.createRoot(document.getElementById("root"));
-    root.render(React.createElement(App));
+    function renderOptionEditor() {
+      const wrap = $("optionEditor");
+      wrap.innerHTML = "";
+      optionCatalog.forEach(item => {
+        const state = data.options[item] || "none";
+        const row = document.createElement("div");
+        row.className = "grid grid-cols-[1fr_120px_140px] gap-3 items-center border rounded-2xl p-3";
+        row.innerHTML = `
+          <div class="text-sm text-slate-800">${item}</div>
+          <button class="includedBtn rounded-xl px-3 py-2 border ${state === "included" ? "bg-black text-white border-black" : "bg-white"}">Included</button>
+          <button class="excludedBtn rounded-xl px-3 py-2 border ${state === "excluded" ? "bg-black text-white border-black" : "bg-white"}">Not Included</button>
+        `;
+        row.querySelector('.includedBtn').onclick = () => {
+          data.options[item] = data.options[item] === 'included' ? 'none' : 'included';
+          renderOptionEditor();
+          renderPreview();
+        };
+        row.querySelector('.excludedBtn').onclick = () => {
+          data.options[item] = data.options[item] === 'excluded' ? 'none' : 'excluded';
+          renderOptionEditor();
+          renderPreview();
+        };
+        wrap.appendChild(row);
+      });
+    }
+
+    function renderItineraryEditor() {
+      const wrap = $("itineraryEditor");
+      wrap.innerHTML = "";
+      data.itinerary.forEach((item, index) => {
+        const row = document.createElement("div");
+        row.className = "grid grid-cols-[1fr_140px_52px] gap-3 items-start";
+        row.innerHTML = `
+          <textarea class="left border rounded-xl px-4 py-3 h-28">${item.left}</textarea>
+          <input class="right border rounded-xl px-4 py-3" value="${item.right}">
+          <button class="remove border rounded-xl px-3 py-3">×</button>
+        `;
+        row.querySelector('.left').oninput = (e) => { data.itinerary[index].left = e.target.value; renderPreview(); };
+        row.querySelector('.right').oninput = (e) => { data.itinerary[index].right = e.target.value; renderPreview(); };
+        row.querySelector('.remove').onclick = () => {
+          data.itinerary.splice(index, 1);
+          renderItineraryEditor();
+          renderPreview();
+        };
+        wrap.appendChild(row);
+      });
+    }
+
+    function renderPreview() {
+      $("previewTitle").textContent = buildTitle();
+      $("previewNo").textContent = $("quotationNo").value;
+      $("previewDate").textContent = $("quoteDate").value;
+      $("previewClient").textContent = $("clientName").value;
+      $("previewAddress").textContent = $("clientAddress").value;
+      $("previewPeriod").textContent = $("period").value;
+      $("previewVehicleType").textContent = $("vehicleType").value;
+      $("previewPax").textContent = $("pax").value;
+      $("previewTotal").textContent = `${$("totalPrice").value} ${$("currency").value}`;
+
+      const serviceStart = $("serviceStart").value.trim();
+      $("previewServiceStart").textContent = serviceStart;
+      $("previewServiceStartWrap").classList.toggle('hidden', !serviceStart);
+
+      const notes = $("notes").value.trim();
+      $("previewNotes").textContent = notes;
+      $("previewNotesWrap").classList.toggle('hidden', !notes);
+
+      const itineraryWrap = $("previewItinerary");
+      itineraryWrap.innerHTML = "";
+      data.itinerary.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'grid grid-cols-[1fr_180px_110px] gap-5 items-start';
+        row.innerHTML = `
+          <div class="whitespace-pre-line leading-9">${item.left.replace(/</g,'&lt;')}</div>
+          <div class="dotted-line"></div>
+          <div class="text-right text-[18px] font-semibold whitespace-nowrap">${item.right}</div>
+        `;
+        itineraryWrap.appendChild(row);
+      });
+
+      const included = optionCatalog.filter(x => data.options[x] === 'included');
+      const excluded = optionCatalog.filter(x => data.options[x] === 'excluded');
+      $("previewIncluded").innerHTML = included.map(x => `<li>${x}</li>`).join('');
+      $("previewExcluded").innerHTML = excluded.map(x => `<li>${x}</li>`).join('');
+    }
+
+    $("addItinerary").onclick = () => {
+      data.itinerary.push({ left: "", right: "" });
+      renderItineraryEditor();
+      renderPreview();
+    };
+
+    ["quotationNo","quoteDate","clientName","clientAddress","period","pax","coachQty","coachSeats","sprinterQty","sprinterSeats","vehicleType","totalPrice","currency","serviceStart","notes"].forEach(id => {
+      $(id).addEventListener('input', renderPreview);
+      $(id).addEventListener('change', renderPreview);
+    });
+
+    $("printBtn").onclick = () => window.print();
+
+    renderItineraryEditor();
+    renderOptionEditor();
+    renderPreview();
   </script>
 </body>
 </html>
