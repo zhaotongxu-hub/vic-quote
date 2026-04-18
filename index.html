@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       min-height: 100vh;
@@ -18,7 +17,6 @@
       font-family: 'Open Sans', Arial, sans-serif;
       color: #111827;
     }
-
     .card {
       width: 100%;
       max-width: 420px;
@@ -28,14 +26,12 @@
       padding: 32px;
       box-shadow: 0 20px 60px rgba(15, 23, 42, 0.15);
     }
-
     .title {
       font-size: 28px;
       font-weight: 700;
       margin: 0 0 8px;
       text-align: center;
     }
-
     .subtitle {
       font-size: 14px;
       color: #64748b;
@@ -43,7 +39,6 @@
       margin-bottom: 24px;
       line-height: 1.5;
     }
-
     .label {
       display: block;
       font-size: 14px;
@@ -51,7 +46,6 @@
       margin-bottom: 8px;
       color: #334155;
     }
-
     .input {
       width: 100%;
       padding: 14px 16px;
@@ -61,12 +55,10 @@
       outline: none;
       background: #fff;
     }
-
     .input:focus {
       border-color: #111827;
       box-shadow: 0 0 0 3px rgba(17,24,39,0.08);
     }
-
     .btn {
       width: 100%;
       margin-top: 18px;
@@ -79,11 +71,9 @@
       font-weight: 600;
       cursor: pointer;
     }
-
     .btn:hover {
       background: #0f172a;
     }
-
     .error {
       margin-top: 14px;
       font-size: 14px;
@@ -91,7 +81,6 @@
       text-align: center;
       min-height: 20px;
     }
-
     .footer {
       margin-top: 18px;
       font-size: 12px;
@@ -103,18 +92,10 @@
 <body>
   <div class="card">
     <h1 class="title">Protected Access</h1>
-    <div class="subtitle">
-      This quotation system is password protected.
-    </div>
+    <div class="subtitle">This quotation system is password protected.</div>
 
     <label class="label" for="password">Password</label>
-    <input
-      id="password"
-      class="input"
-      type="password"
-      placeholder="Enter password"
-      autocomplete="current-password"
-    />
+    <input id="password" class="input" type="password" placeholder="Enter password" autocomplete="current-password" />
 
     <button class="btn" onclick="checkPassword()">Enter</button>
     <div id="error" class="error"></div>
@@ -123,7 +104,7 @@
   </div>
 
   <script>
-    const ACCESS_PASSWORD = "VIC2026"; 
+    const ACCESS_PASSWORD = "VIC2026";
     const TARGET_PAGE = "quote.html";
 
     function checkPassword() {
