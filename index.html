@@ -10,55 +10,14 @@
     .a4 {
       width: 210mm;
       min-height: 297mm;
-      background: #f4f4f4;
+      background: url('/Receipt%20-%2027292732026.png') center top / cover no-repeat;
       position: relative;
       overflow: hidden;
     }
-    .watermark-box {
-      position:absolute;
-      left:16px;
-      right:16px;
-      top:180px;
-      height:560px;
-      border:6px solid rgba(0,0,0,0.05);
-      border-radius:18px;
-      pointer-events:none;
-    }
-    .watermark-main {
-      position:absolute;
-      top:230px;
-      left:40px;
-      right:40px;
-      text-align:center;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size:260px;
-      color:rgba(0,0,0,0.045);
-      letter-spacing:6px;
-      pointer-events:none;
-      user-select:none;
-      line-height:0.9;
-    }
-    .watermark-sub {
-      display:block;
-      font-size:72px;
-      letter-spacing:1px;
-      margin-top:18px;
-      font-family: Arial, sans-serif;
-      font-weight:300;
-    }
-    .watermark-paris {
-      position:absolute;
-      top:760px;
-      left:0;
-      right:0;
-      text-align:center;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size:120px;
-      color:rgba(0,0,0,0.035);
-      letter-spacing:52px;
-      pointer-events:none;
-      user-select:none;
-    }
+    .watermark-box { display:none; }
+    .watermark-main { display:none; }
+    .watermark-sub { display:none; }
+    .watermark-paris { display:none; }
     .logo-box {
       border:2px solid #222;
       width:220px;
@@ -175,6 +134,7 @@
               <select id="currency" class="w-full border rounded-xl px-4 py-3 bg-white">
                 <option>€</option>
                 <option>EUR</option>
+                <option>CNY</option>
                 <option>USD</option>
                 <option>GBP</option>
                 <option>CHF</option>
@@ -296,7 +256,7 @@
       "Tips : 2 € / day / passenger / vehicle",
       "Paid directly to the driver",
       "Driver accommodation",
-      "Driver's meal 20*2*3=120 €",
+      "Driver meal expenses 20€/meal",
       "Parking fees",
       "Road tolls",
       "City access / ZTL",
@@ -318,7 +278,7 @@
         "Tips : 2 € / day / passenger / vehicle": "excluded",
         "Paid directly to the driver": "excluded",
         "Driver accommodation": "excluded",
-        "Driver's meal 20*2*3=120 €": "excluded",
+        "Driver meal expenses 20€/meal": "excluded",
         "Parking fees": "none",
         "Road tolls": "none",
         "City access / ZTL": "none",
