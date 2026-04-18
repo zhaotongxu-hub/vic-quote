@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protected Access</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #eef2f7 0%, #dfe7f1 100%);
+      font-family: 'Open Sans', Arial, sans-serif;
+      color: #111827;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid rgba(203,213,225,0.8);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.15);
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #64748b;
+      text-align: center;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #334155;
+    }
+
+    .input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      font-size: 16px;
+      outline: none;
+      background: #fff;
+    }
+
+    .input:focus {
+      border-color: #111827;
+      box-shadow: 0 0 0 3px rgba(17,24,39,0.08);
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: none;
+      border-radius: 14px;
+      background: #111827;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #0f172a;
+    }
+
+    .error {
+      margin-top: 14px;
+      font-size: 14px;
+      color: #dc2626;
+      text-align: center;
+      min-height: 20px;
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #94a3b8;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1 class="title">Protected Access</h1>
+    <div class="subtitle">
+      This quotation system is password protected.
+    </div>
+
+    <label class="label" for="password">Password</label>
+    <input
+      id="password"
+      class="input"
+      type="password"
+      placeholder="Enter password"
+      autocomplete="current-password"
+    />
+
+    <button class="btn" onclick="checkPassword()">Enter</button>
+    <div id="error" class="error"></div>
+
+    <div class="footer">VIC Quote System</div>
+  </div>
+
+  <script>
+    const ACCESS_PASSWORD = "VIC2026"; 
+    const TARGET_PAGE = "quote.html";
+
+    function checkPassword() {
+      const input = document.getElementById("password").value;
+      const error = document.getElementById("error");
+
+      if (input === ACCESS_PASSWORD) {
+        sessionStorage.setItem("vic_access_granted", "true");
+        window.location.href = TARGET_PAGE;
+      } else {
+        error.textContent = "Incorrect password.";
+      }
+    }
+
+    document.getElementById("password").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        checkPassword();
+      }
+    });
+  </script>
+</body>
+</html>
