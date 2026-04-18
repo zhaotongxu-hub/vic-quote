@@ -5,20 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VIC Quote Generator</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --page-w: 210mm;
       --page-h: 297mm;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       background: #eef2f7;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: 'Open Sans', Arial, sans-serif;
       color: #111;
     }
-    .serif { font-family: Georgia, "Times New Roman", serif; }
-    .shell { min-height: 100vh; padding: 16px; }
+
+    .shell {
+      min-height: 100vh;
+      padding: 16px;
+    }
+
     .layout {
       max-width: 1800px;
       margin: 0 auto;
@@ -27,6 +34,7 @@
       gap: 24px;
       align-items: start;
     }
+
     .panel {
       background: #fff;
       border: 1px solid #e2e8f0;
@@ -35,12 +43,15 @@
       box-shadow: 0 1px 2px rgba(0,0,0,.04);
       margin-bottom: 20px;
     }
+
     .field-label {
       display: block;
       font-size: 14px;
       color: #475569;
       margin-bottom: 6px;
+      font-weight: 600;
     }
+
     .input, .textarea, .select {
       width: 100%;
       border: 1px solid #cbd5e1;
@@ -48,8 +59,14 @@
       padding: 12px 14px;
       font-size: 15px;
       background: #fff;
+      font-family: 'Open Sans', Arial, sans-serif;
     }
-    .textarea { resize: vertical; min-height: 84px; }
+
+    .textarea {
+      resize: vertical;
+      min-height: 84px;
+    }
+
     .btn {
       border: 1px solid #cbd5e1;
       border-radius: 12px;
@@ -57,15 +74,28 @@
       background: #fff;
       cursor: pointer;
       font-size: 14px;
+      font-family: 'Open Sans', Arial, sans-serif;
     }
-    .btn-dark { background: #111; color: #fff; border-color: #111; }
-    .lang-btn.active { background: #111; color: #fff; border-color: #111; }
+
+    .btn-dark {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+
+    .lang-btn.active {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+
     .editor-row {
       display: grid;
       grid-template-columns: 1fr 140px 52px;
       gap: 12px;
       align-items: start;
     }
+
     .option-row {
       display: grid;
       grid-template-columns: 1fr 120px 140px;
@@ -75,7 +105,11 @@
       border-radius: 16px;
       padding: 12px;
     }
-    .preview-wrap { overflow: auto; }
+
+    .preview-wrap {
+      overflow: auto;
+    }
+
     .a4 {
       width: var(--page-w);
       height: var(--page-h);
@@ -86,12 +120,17 @@
       box-shadow: 0 24px 60px rgba(0,0,0,.12);
       border-radius: 24px;
     }
+
     .page-inner {
       position: absolute;
       inset: 0;
       padding: 16mm 13mm 14mm 13mm;
     }
-    .fit-text { word-break: break-word; overflow-wrap: anywhere; }
+
+    .fit-text {
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
 
     /* HEADER */
     .header-grid {
@@ -99,6 +138,7 @@
       grid-template-columns: 36% 64%;
       align-items: start;
     }
+
     .header-right {
       text-align: right;
       padding-top: 1.5mm;
@@ -107,14 +147,16 @@
       flex-direction: column;
       align-items: flex-end;
     }
+
     .doc-title {
       font-size: 40px;
       line-height: 1;
       font-weight: 700;
-      letter-spacing: .15px;
+      letter-spacing: .1px;
       text-align: right;
       width: 100%;
     }
+
     .vehicle-title {
       font-size: 28px;
       line-height: 1.08;
@@ -122,27 +164,32 @@
       font-weight: 700;
       text-align: right;
       width: 100%;
+      min-height: 30px;
     }
+
     .meta {
       margin-top: 3.2mm;
       font-size: 15px;
       line-height: 1.08;
       text-align: right;
       width: 100%;
+      font-weight: 600;
     }
-    .meta div + div { margin-top: 0.8mm; }
-    .meta strong {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 16px;
-      font-weight: 700;
+
+    .meta div + div {
+      margin-top: 0.8mm;
     }
+
     .client-name {
       margin-top: 3mm;
       font-size: 16px;
       text-align: right;
       line-height: 1.1;
       width: 100%;
+      font-weight: 600;
+      min-height: 18px;
     }
+
     .client-address {
       margin-top: 1.1mm;
       font-size: 14px;
@@ -150,6 +197,7 @@
       text-align: right;
       white-space: pre-line;
       width: 100%;
+      min-height: 32px;
     }
 
     /* MIDDLE FRAME */
@@ -161,29 +209,37 @@
       height: 122mm;
       overflow: hidden;
     }
+
     .frame-content {
       transform-origin: top left;
       --content-scale: 1;
       transform: scale(var(--content-scale));
       width: calc(100% / var(--content-scale));
     }
+
     .summary {
-      font-size: 14px;
-      line-height: 1.3;
+      font-size: 13px;
+      line-height: 1.24;
     }
-    .summary div { margin-bottom: 1.5mm; }
+
+    .summary div {
+      margin-bottom: 1.5mm;
+    }
+
     .itinerary-title {
-      margin-top: 8.4mm;
+      margin-top: 4.2mm;
       text-align: center;
       font-size: 24px;
       font-weight: 700;
       line-height: 1;
     }
+
     .service-note {
       margin-top: 2mm;
-      font-size: 12px;
+      font-size: 11px;
       line-height: 1.2;
     }
+
     .itinerary-list {
       margin-top: 6mm;
       display: flex;
@@ -192,39 +248,49 @@
       font-size: 16px;
     }
 
-    /* short dash style */
-    .itinerary-item .middle-line::after {
-      content: "—";
-      color: #666;
-      font-weight: 500;
-      margin: 0 6px;
-    }
-
-    /* middle connector line */
-    .itinerary-item .middle-line {
-      border-bottom: none;
-      width: auto;
-    }
     .itinerary-item {
       display: grid;
-      grid-template-columns: auto auto 90px; /* text | dash | price */
+      grid-template-columns: auto auto 90px;
       gap: 8px;
       align-items: center;
     }
+
     .itinerary-left {
+      display: flex;
+      align-items: center;
       white-space: pre-line;
-      line-height: 1.15;
+      line-height: 1.05;
+      font-size: 16px;
+      font-weight: 400;
     }
+
+    .middle-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+    }
+
+    .middle-line::after {
+      content: "—";
+      color: #666;
+      font-weight: 600;
+      line-height: 1;
+      position: relative;
+      top: -0.5px;
+      margin: 0 4px;
+    }
+
     .itinerary-right {
-      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      width: 90px;
       font-size: 18px;
       font-weight: 700;
-      width: 90px;
-    }
-    .dotted-line {
-      border-bottom: 2px dotted rgba(0,0,0,.78);
-      width: 100%;
-      transform: translateY(8px);
+      white-space: nowrap;
+      line-height: 1;
+      text-align: right;
     }
 
     /* SERVICES */
@@ -236,29 +302,36 @@
       height: 28mm;
       overflow: hidden;
     }
+
     .services-content {
       transform-origin: top left;
       --services-scale: 1;
       transform: scale(var(--services-scale));
       width: calc(100% / var(--services-scale));
     }
+
     .services-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 34px;
-      font-size: 12px;
-      line-height: 1.2;
+      font-size: 11px;
+      line-height: 1.15;
     }
+
     .services-grid h4 {
       margin: 0 0 4px 0;
       font-size: 18px;
       font-weight: 700;
     }
+
     .services-grid ul {
       margin: 0;
       padding-left: 15px;
     }
-    .services-grid li { margin-bottom: 2px; }
+
+    .services-grid li {
+      margin-bottom: 1.4px;
+    }
 
     /* TOTAL */
     .total-row {
@@ -270,16 +343,21 @@
       justify-content: space-between;
       align-items: flex-end;
     }
+
     .total-label {
       font-size: 23px;
       line-height: 1;
       font-weight: 700;
     }
+
     .total-value {
       font-size: 31px;
       line-height: 1;
       font-weight: 700;
+      min-width: 120px;
+      text-align: right;
     }
+
     .notes-row {
       position: absolute;
       left: 17mm;
@@ -290,15 +368,40 @@
     }
 
     @media (max-width: 1280px) {
-      .layout { grid-template-columns: 1fr; }
+      .layout {
+        grid-template-columns: 1fr;
+      }
     }
+
     @media print {
-      @page { size: A4 portrait; margin: 0; }
-      html, body { width: 210mm; height: 297mm; background: #fff; }
-      .shell { padding: 0; }
-      .no-print { display: none !important; }
-      .layout { display: block; max-width: none; }
-      .preview-wrap { overflow: visible; }
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+
+      html, body {
+        width: 210mm;
+        height: 297mm;
+        background: #fff;
+      }
+
+      .shell {
+        padding: 0;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .layout {
+        display: block;
+        max-width: none;
+      }
+
+      .preview-wrap {
+        overflow: visible;
+      }
+
       .a4 {
         width: 210mm;
         height: 297mm;
@@ -307,9 +410,20 @@
         page-break-after: avoid;
         page-break-inside: avoid;
       }
-      body * { visibility: hidden; }
-      .a4, .a4 * { visibility: visible; }
-      .a4 { position: absolute; left: 0; top: 0; }
+
+      body * {
+        visibility: hidden;
+      }
+
+      .a4, .a4 * {
+        visibility: visible;
+      }
+
+      .a4 {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
     }
   </style>
 </head>
@@ -318,8 +432,8 @@
     <div class="layout">
       <div class="no-print">
         <div class="panel">
-          <div style="font-size:32px;font-weight:600;">VIC Quote Generator</div>
-          <div style="color:#64748b;margin-top:8px;">Full version with fixed gray frame, multilingual switch and stable single-page A4 output.</div>
+          <div style="font-size:32px;font-weight:700;">VIC Quote Generator</div>
+          <div style="color:#64748b;margin-top:8px;">Full version with fixed gray frame, multilingual switch and automatic total.</div>
           <div style="margin-top:16px;display:flex;gap:8px;">
             <button class="btn lang-btn" data-lang="en">EN</button>
             <button class="btn lang-btn active" data-lang="fr">FR</button>
@@ -329,24 +443,31 @@
         </div>
 
         <div class="panel">
-          <div id="basicTitle" style="font-size:28px;font-weight:600;margin-bottom:16px;">Informations générales</div>
+          <div id="basicTitle" style="font-size:28px;font-weight:700;margin-bottom:16px;">Informations générales</div>
+
           <label id="labelQuotationNo" class="field-label">N° de devis</label>
           <input id="quotationNo" class="input" value="" />
+
           <div style="height:14px;"></div>
           <label id="labelDate" class="field-label">Date</label>
           <input id="quoteDate" class="input" value="" />
+
           <div style="height:14px;"></div>
           <label id="labelClientName" class="field-label">Nom du client</label>
           <input id="clientName" class="input" value="" />
+
           <div style="height:14px;"></div>
           <label id="labelClientAddress" class="field-label">Adresse du client</label>
           <textarea id="clientAddress" class="textarea"></textarea>
+
           <div style="height:14px;"></div>
           <label id="labelPeriod" class="field-label">Période</label>
           <input id="period" class="input" value="" />
+
           <div style="height:14px;"></div>
           <label class="field-label">PAX</label>
           <input id="pax" class="input" value="" />
+
           <div style="height:14px;"></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div>
@@ -366,14 +487,16 @@
               <input id="sprinterSeats" class="input" value="" />
             </div>
           </div>
+
           <div style="height:14px;"></div>
           <label id="labelVehicleType" class="field-label">Type de véhicule</label>
           <input id="vehicleType" class="input" value="" />
+
           <div style="height:14px;"></div>
           <div style="display:grid;grid-template-columns:1fr 140px;gap:12px;align-items:end;">
             <div>
-              <label id="labelTotalPrice" class="field-label">Prix total</label>
-              <input id="totalPrice" class="input" value="" />
+              <label id="labelTotalPrice" class="field-label">Prix total (auto)</label>
+              <input id="totalPrice" class="input" value="" placeholder="Auto calculated" readonly />
             </div>
             <div>
               <label id="labelCurrency" class="field-label">Devise</label>
@@ -387,9 +510,11 @@
               </select>
             </div>
           </div>
+
           <div style="height:14px;"></div>
           <label id="labelServiceStart" class="field-label">Note de début de service</label>
           <textarea id="serviceStart" class="textarea"></textarea>
+
           <div style="height:14px;"></div>
           <label id="labelNotes" class="field-label">Remarques</label>
           <textarea id="notes" class="textarea"></textarea>
@@ -397,14 +522,14 @@
 
         <div class="panel">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-            <div id="itineraryTitle" style="font-size:28px;font-weight:600;">Programme quotidien</div>
+            <div id="itineraryTitle" style="font-size:28px;font-weight:700;">Programme quotidien</div>
             <button id="addItinerary" class="btn">Ajouter</button>
           </div>
           <div id="itineraryEditor" style="display:flex;flex-direction:column;gap:12px;"></div>
         </div>
 
         <div class="panel">
-          <div id="optionTitle" style="font-size:28px;font-weight:600;">Options incluses / non incluses</div>
+          <div id="optionTitle" style="font-size:28px;font-weight:700;">Options incluses / non incluses</div>
           <div id="optionHint" style="font-size:14px;color:#64748b;margin-top:8px;margin-bottom:16px;">Chaque poste ne peut avoir qu’un seul état actif : Inclus ou Non inclus.</div>
           <div id="optionEditor" style="display:flex;flex-direction:column;gap:12px;"></div>
         </div>
@@ -416,12 +541,14 @@
             <div class="header-grid">
               <div></div>
               <div class="header-right">
-                <div id="previewDocTitle" class="serif doc-title">DEVIS</div>
-                <div id="previewTitle" class="serif vehicle-title"></div>
+                <div id="previewDocTitle" class="doc-title">DEVIS</div>
+                <div id="previewTitle" class="vehicle-title"></div>
+
                 <div class="meta">
                   <div><strong id="previewNoLabel">ND:</strong> <span id="previewNo"></span></div>
                   <div><strong id="previewDateLabel">DATE:</strong> <span id="previewDate"></span></div>
                 </div>
+
                 <div id="previewClient" class="client-name fit-text"></div>
                 <div id="previewAddress" class="client-address fit-text"></div>
               </div>
@@ -435,7 +562,7 @@
                   <div>PAX : <span id="previewPax"></span></div>
                 </div>
 
-                <div id="previewItineraryTitle" class="serif itinerary-title">DAILY ITINERARY</div>
+                <div id="previewItineraryTitle" class="itinerary-title">DAILY ITINERARY</div>
 
                 <div id="previewServiceStartWrap" class="service-note hidden">
                   <div id="previewServiceStart" class="fit-text" style="white-space:pre-line;"></div>
@@ -461,12 +588,12 @@
             </div>
 
             <div class="total-row" id="totalRow">
-              <div id="previewTotalLabel" class="serif total-label">PRIX TOTAL</div>
-              <div id="previewTotal" class="serif total-value"></div>
+              <div id="previewTotalLabel" class="total-label">PRIX TOTAL</div>
+              <div id="previewTotal" class="total-value"></div>
             </div>
 
             <div id="previewNotesWrap" class="notes-row hidden">
-              <span id="previewNotesLabel" style="font-weight:600;">Remarques :</span>
+              <span id="previewNotesLabel" style="font-weight:700;">Remarques :</span>
               <span id="previewNotes"></span>
             </div>
           </div>
@@ -478,29 +605,102 @@
   <script>
     const texts = {
       en: {
-        docTitle: 'QUOTATION', quotationNo: 'Quotation No.', date: 'Date', clientName: 'Client Name', clientAddress: 'Client Address',
-        period: 'Period', vehicleType: 'Vehicle Type Line', currency: 'Currency', totalPrice: 'Total Price', serviceStart: 'Service Start Note', notes: 'Notes',
-        coachQty: 'Coach Qty', coachSeats: 'Coach Seats', sprinterQty: 'Sprinter Qty', sprinterSeats: 'Sprinter Seats', basicInfo: 'Basic Information', itinerary: 'Daily Itinerary',
-        addItem: 'Add item', options: 'Included / Not Included Options', optionHint: 'Each item can only have one active state: Included or Not Included.',
-        included: 'Included :', excluded: 'Not included:', total: 'TOTAL PRICE', previewPeriod: 'Period', previewVehicle: 'Type of vehicle', previewItinerary: 'DAILY ITINERARY', previewNo: 'ND:', previewDate: 'DATE:', previewNotes: 'Notes:'
+        docTitle: 'QUOTATION',
+        quotationNo: 'Quotation No.',
+        date: 'Date',
+        clientName: 'Client Name',
+        clientAddress: 'Client Address',
+        period: 'Period',
+        vehicleType: 'Vehicle Type',
+        currency: 'Currency',
+        totalPrice: 'Total Price (auto)',
+        serviceStart: 'Service Start Note',
+        notes: 'Notes',
+        coachQty: 'Coach Qty',
+        coachSeats: 'Coach Seats',
+        sprinterQty: 'Sprinter Qty',
+        sprinterSeats: 'Sprinter Seats',
+        basicInfo: 'Basic Information',
+        itinerary: 'Daily Itinerary',
+        addItem: 'Add item',
+        options: 'Included / Not Included Options',
+        optionHint: 'Each item can only have one active state: Included or Not Included.',
+        included: 'Included :',
+        excluded: 'Not included :',
+        total: 'TOTAL PRICE',
+        previewPeriod: 'Period',
+        previewVehicle: 'Type of vehicle',
+        previewItinerary: 'DAILY ITINERARY',
+        previewNo: 'ND:',
+        previewDate: 'DATE:',
+        previewNotes: 'Notes:'
       },
       fr: {
-        docTitle: 'DEVIS', quotationNo: 'N° de devis', date: 'Date', clientName: 'Nom du client', clientAddress: 'Adresse du client',
-        period: 'Période', vehicleType: 'Type de véhicule', currency: 'Devise', totalPrice: 'Prix total', serviceStart: 'Note de début de service', notes: 'Remarques',
-        coachQty: 'Nb de coach', coachSeats: 'Places coach', sprinterQty: 'Nb de sprinter', sprinterSeats: 'Places sprinter', basicInfo: 'Informations générales', itinerary: 'Programme quotidien',
-        addItem: 'Ajouter', options: 'Options incluses / non incluses', optionHint: 'Chaque poste ne peut avoir qu’un seul état actif : Inclus ou Non inclus.',
-        included: 'Inclus :', excluded: 'Non inclus :', total: 'PRIX TOTAL', previewPeriod: 'Période', previewVehicle: 'Type de véhicule', previewItinerary: 'DAILY ITINERARY', previewNo: 'ND:', previewDate: 'DATE:', previewNotes: 'Remarques :'
+        docTitle: 'DEVIS',
+        quotationNo: 'N° de devis',
+        date: 'Date',
+        clientName: 'Nom du client',
+        clientAddress: 'Adresse du client',
+        period: 'Période',
+        vehicleType: 'Type de véhicule',
+        currency: 'Devise',
+        totalPrice: 'Prix total (auto)',
+        serviceStart: 'Note de début de service',
+        notes: 'Remarques',
+        coachQty: 'Nb de coach',
+        coachSeats: 'Places coach',
+        sprinterQty: 'Nb de sprinter',
+        sprinterSeats: 'Places sprinter',
+        basicInfo: 'Informations générales',
+        itinerary: 'Programme quotidien',
+        addItem: 'Ajouter',
+        options: 'Options incluses / non incluses',
+        optionHint: 'Chaque poste ne peut avoir qu’un seul état actif : Inclus ou Non inclus.',
+        included: 'Inclus :',
+        excluded: 'Non inclus :',
+        total: 'PRIX TOTAL',
+        previewPeriod: 'Période',
+        previewVehicle: 'Type de véhicule',
+        previewItinerary: 'DAILY ITINERARY',
+        previewNo: 'ND:',
+        previewDate: 'DATE:',
+        previewNotes: 'Remarques :'
       },
       zh: {
-        docTitle: '报价单', quotationNo: '报价编号', date: '日期', clientName: '客户名称', clientAddress: '客户地址',
-        period: '服务期间', vehicleType: '车型说明', currency: '货币', totalPrice: '总价', serviceStart: '服务开始说明', notes: '备注',
-        coachQty: '大巴数量', coachSeats: '大巴座位', sprinterQty: '商务车数量', sprinterSeats: '商务车座位', basicInfo: '基础信息', itinerary: '每日行程',
-        addItem: '新增一项', options: '包含 / 不包含选项', optionHint: '每个项目只能有一个状态：包含或不包含。',
-        included: '包含：', excluded: '不包含：', total: '总价', previewPeriod: '服务期间', previewVehicle: '车型', previewItinerary: '每日行程', previewNo: '编号：', previewDate: '日期：', previewNotes: '备注：'
+        docTitle: '报价单',
+        quotationNo: '报价编号',
+        date: '日期',
+        clientName: '客户名称',
+        clientAddress: '客户地址',
+        period: '服务期间',
+        vehicleType: '车型',
+        currency: '货币',
+        totalPrice: '总价（自动）',
+        serviceStart: '服务开始说明',
+        notes: '备注',
+        coachQty: '大巴数量',
+        coachSeats: '大巴座位',
+        sprinterQty: '商务车数量',
+        sprinterSeats: '商务车座位',
+        basicInfo: '基础信息',
+        itinerary: '每日行程',
+        addItem: '新增一项',
+        options: '包含 / 不包含选项',
+        optionHint: '每个项目只能有一个状态：包含或不包含。',
+        included: '包含：',
+        excluded: '不包含：',
+        total: '总价',
+        previewPeriod: '服务期间',
+        previewVehicle: '车型',
+        previewItinerary: '每日行程',
+        previewNo: '编号：',
+        previewDate: '日期：',
+        previewNotes: '备注：'
       }
     };
 
     let currentLang = 'fr';
+
     const optionCatalog = [
       'Professional English speaking driver',
       'Complete vehicle insurance',
@@ -519,7 +719,9 @@
     ];
 
     const data = {
-      itinerary: [{ left: '', right: '' }],
+      itinerary: [
+        { left: '', right: '' }
+      ],
       options: {
         'Professional English speaking driver': 'none',
         'Complete vehicle insurance': 'none',
@@ -541,14 +743,30 @@
 
     const $ = (id) => document.getElementById(id);
 
+    function parsePrice(value) {
+      if (!value) return 0;
+      const cleaned = String(value).replace(/[^\d.,-]/g, '').replace(',', '.');
+      const num = parseFloat(cleaned);
+      return Number.isFinite(num) ? num : 0;
+    }
+
+    function formatTotal(value, currency) {
+      if (!value) return '';
+      const formatted = Number.isInteger(value)
+        ? value.toLocaleString('en-US')
+        : value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return currency === '€' ? `${formatted} €` : `${formatted} ${currency}`;
+    }
+
     function buildTitle() {
       const coachQty = $('coachQty').value.trim();
       const coachSeats = $('coachSeats').value.trim();
       const sprinterQty = $('sprinterQty').value.trim();
       const sprinterSeats = $('sprinterSeats').value.trim();
+
       const parts = [];
-      if (coachQty) parts.push(`${coachQty} COACH ${coachSeats} ${currentLang === 'fr' ? 'PLACES' : 'SEATS'}`);
-      if (sprinterQty) parts.push(`${sprinterQty} SPRINTER ${sprinterSeats} ${currentLang === 'fr' ? 'PLACES' : 'SEATS'}`);
+      if (coachQty) parts.push(`${coachQty} COACH ${coachSeats} ${currentLang === 'fr' ? 'PLACES' : currentLang === 'zh' ? '座' : 'SEATS'}`);
+      if (sprinterQty) parts.push(`${sprinterQty} SPRINTER ${sprinterSeats} ${currentLang === 'fr' ? 'PLACES' : currentLang === 'zh' ? '座' : 'SEATS'}`);
       return parts.join(' + ');
     }
 
@@ -592,6 +810,7 @@
 
     function applyLanguage() {
       const t = texts[currentLang];
+
       $('basicTitle').textContent = t.basicInfo;
       $('labelQuotationNo').textContent = t.quotationNo;
       $('labelDate').textContent = t.date;
@@ -611,6 +830,7 @@
       $('addItinerary').textContent = t.addItem;
       $('optionTitle').textContent = t.options;
       $('optionHint').textContent = t.optionHint;
+
       $('previewDocTitle').textContent = t.docTitle;
       $('previewIncludedTitle').textContent = t.included;
       $('previewExcludedTitle').textContent = t.excluded;
@@ -621,7 +841,11 @@
       $('previewNoLabel').textContent = t.previewNo;
       $('previewDateLabel').textContent = t.previewDate;
       $('previewNotesLabel').textContent = t.previewNotes;
-      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === currentLang));
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === currentLang);
+      });
+
       renderOptionEditor();
       renderPreview();
     }
@@ -629,6 +853,7 @@
     function renderOptionEditor() {
       const wrap = $('optionEditor');
       wrap.innerHTML = '';
+
       optionCatalog.forEach(item => {
         const state = data.options[item] || 'none';
         const row = document.createElement('div');
@@ -638,16 +863,19 @@
           <button class="includedBtn btn ${state === 'included' ? 'btn-dark' : ''}">Included</button>
           <button class="excludedBtn btn ${state === 'excluded' ? 'btn-dark' : ''}">Not Included</button>
         `;
+
         row.querySelector('.includedBtn').onclick = () => {
           data.options[item] = data.options[item] === 'included' ? 'none' : 'included';
           renderOptionEditor();
           renderPreview();
         };
+
         row.querySelector('.excludedBtn').onclick = () => {
           data.options[item] = data.options[item] === 'excluded' ? 'none' : 'excluded';
           renderOptionEditor();
           renderPreview();
         };
+
         wrap.appendChild(row);
       });
 
@@ -658,6 +886,7 @@
         <input id="otherTextInput" class="input" value="${data.otherText || ''}" ${data.options['Other'] === 'none' ? 'disabled' : ''} />
       `;
       wrap.appendChild(otherRow);
+
       const otherInput = document.getElementById('otherTextInput');
       otherInput.addEventListener('input', (e) => {
         data.otherText = e.target.value;
@@ -668,6 +897,7 @@
     function renderItineraryEditor() {
       const wrap = $('itineraryEditor');
       wrap.innerHTML = '';
+
       data.itinerary.forEach((item, index) => {
         const row = document.createElement('div');
         row.className = 'editor-row';
@@ -676,14 +906,24 @@
           <input class="input right" value="${item.right}">
           <button class="btn remove">×</button>
         `;
-        row.querySelector('.left').oninput = (e) => { data.itinerary[index].left = e.target.value; renderPreview(); };
-        row.querySelector('.right').oninput = (e) => { data.itinerary[index].right = e.target.value; renderPreview(); };
+
+        row.querySelector('.left').oninput = (e) => {
+          data.itinerary[index].left = e.target.value;
+          renderPreview();
+        };
+
+        row.querySelector('.right').oninput = (e) => {
+          data.itinerary[index].right = e.target.value;
+          renderPreview();
+        };
+
         row.querySelector('.remove').onclick = () => {
           data.itinerary.splice(index, 1);
           if (data.itinerary.length === 0) data.itinerary.push({ left: '', right: '' });
           renderItineraryEditor();
           renderPreview();
         };
+
         wrap.appendChild(row);
       });
     }
@@ -691,6 +931,7 @@
     function fitFrame() {
       const content = $('frameContent');
       content.style.setProperty('--content-scale', '1');
+
       requestAnimationFrame(() => {
         const box = document.querySelector('.itinerary-frame');
         const available = box.clientHeight;
@@ -725,7 +966,7 @@
         const baseTop = 213;
         const upwardShift = Math.min(18, freeSpace / 3.7795 * 0.55);
         zone.style.top = `${baseTop - upwardShift}mm`;
-        totalRow.style.bottom = `${42 - Math.min(8, upwardShift * 0.35)}mm`;
+        totalRow.style.bottom = `${62 - Math.min(8, upwardShift * 0.35)}mm`;
       });
     }
 
@@ -738,7 +979,6 @@
       $('previewPeriod').textContent = $('period').value;
       $('previewVehicleType').textContent = $('vehicleType').value;
       $('previewPax').textContent = $('pax').value;
-      $('previewTotal').textContent = $('totalPrice').value ? `${$('totalPrice').value}${$('currency').value === '€' ? ' €' : ' ' + $('currency').value}` : '';
 
       const serviceStart = $('serviceStart').value.trim();
       $('previewServiceStart').textContent = serviceStart;
@@ -750,21 +990,47 @@
 
       const itineraryWrap = $('previewItinerary');
       itineraryWrap.innerHTML = '';
+
+      let total = 0;
+
       data.itinerary.forEach(item => {
         const row = document.createElement('div');
         row.className = 'itinerary-item';
-        row.innerHTML = `
-          <div class="itinerary-left fit-text">${(item.left || '').replace(/</g,'&lt;')}</div>
-          <div class="dotted-line"></div>
-          <div class="itinerary-right">${item.right || ''}</div>
-        `;
+
+        const left = document.createElement('div');
+        left.className = 'itinerary-left fit-text';
+        left.textContent = item.left || '';
+
+        const middle = document.createElement('div');
+        middle.className = 'middle-line';
+
+        const right = document.createElement('div');
+        right.className = 'itinerary-right';
+        right.textContent = item.right || '';
+
+        row.appendChild(left);
+        row.appendChild(middle);
+        row.appendChild(right);
         itineraryWrap.appendChild(row);
+
+        total += parsePrice(item.right);
       });
+
+      const currency = $('currency').value;
+      const totalFormatted = formatTotal(total, currency);
+      $('previewTotal').textContent = totalFormatted;
+      $('totalPrice').value = totalFormatted;
 
       const included = optionCatalog.filter(x => data.options[x] === 'included');
       const excluded = optionCatalog.filter(x => data.options[x] === 'excluded');
-      $('previewIncluded').innerHTML = included.map(x => `<li>${x === 'Other' && data.otherText ? data.otherText : localizeOption(x)}</li>`).join('');
-      $('previewExcluded').innerHTML = excluded.map(x => `<li>${x === 'Other' && data.otherText ? data.otherText : localizeOption(x)}</li>`).join('');
+
+      $('previewIncluded').innerHTML = included
+        .map(x => `<li>${x === 'Other' && data.otherText ? data.otherText : localizeOption(x)}</li>`)
+        .join('');
+
+      $('previewExcluded').innerHTML = excluded
+        .map(x => `<li>${x === 'Other' && data.otherText ? data.otherText : localizeOption(x)}</li>`)
+        .join('');
 
       requestAnimationFrame(() => {
         fitFrame();
@@ -785,13 +1051,20 @@
       };
     });
 
-    ['quotationNo','quoteDate','clientName','clientAddress','period','pax','coachQty','coachSeats','sprinterQty','sprinterSeats','vehicleType','totalPrice','currency','serviceStart','notes'].forEach(id => {
+    [
+      'quotationNo', 'quoteDate', 'clientName', 'clientAddress',
+      'period', 'pax', 'coachQty', 'coachSeats', 'sprinterQty',
+      'sprinterSeats', 'vehicleType', 'currency', 'serviceStart', 'notes'
+    ].forEach(id => {
       $(id).addEventListener('input', renderPreview);
       $(id).addEventListener('change', renderPreview);
     });
 
     $('printBtn').onclick = () => window.print();
-    window.addEventListener('resize', () => { fitFrame(); fitServicesAndPosition(); });
+    window.addEventListener('resize', () => {
+      fitFrame();
+      fitServicesAndPosition();
+    });
 
     renderItineraryEditor();
     renderOptionEditor();
