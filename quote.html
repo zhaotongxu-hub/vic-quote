@@ -385,6 +385,11 @@
   </style>
 </head>
 <body>
+  <script>
+    if (sessionStorage.getItem("vic_access_granted") !== "true") {
+      window.location.href = "index.html";
+    }
+  </script>
   <div class="shell">
     <div class="layout">
       <div class="no-print">
