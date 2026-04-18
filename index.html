@@ -93,58 +93,62 @@
     }
     .fit-text { word-break: break-word; overflow-wrap: anywhere; }
 
-    /* header */
+    /* ====== RIGHT HEADER ====== */
     .header-grid {
       display: grid;
       grid-template-columns: 36% 64%;
       align-items: start;
     }
     .header-right {
-      text-align: center;
+      text-align: right;
       padding-top: 2mm;
+      padding-right: 4mm;
     }
     .doc-title {
-      font-size: 41px;
+      font-size: 40px;
       line-height: 1;
       font-weight: 700;
+      letter-spacing: .2px;
     }
     .vehicle-title {
-      font-size: 30px;
-      line-height: 1.15;
-      margin-top: 10mm;
+      font-size: 28px;
+      line-height: 1.08;
+      margin-top: 5mm;
       font-weight: 700;
     }
     .meta {
-      margin-top: 6mm;
+      margin-top: 4mm;
+      font-size: 15px;
+      line-height: 1.15;
       text-align: right;
-      padding-right: 8mm;
-      font-size: 16px;
-      line-height: 1.55;
     }
+    .meta div + div { margin-top: 1.2mm; }
     .meta strong {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 17px;
+      font-size: 16px;
+      font-weight: 700;
     }
     .client-name {
-      margin-top: 7mm;
-      font-size: 17px;
-      text-align: center;
+      margin-top: 4mm;
+      font-size: 16px;
+      text-align: right;
+      line-height: 1.15;
     }
     .client-address {
-      margin-top: 2.5mm;
-      font-size: 15px;
-      line-height: 1.55;
-      text-align: center;
+      margin-top: 1.6mm;
+      font-size: 14px;
+      line-height: 1.25;
+      text-align: right;
       white-space: pre-line;
     }
 
-    /* middle gray frame area */
+    /* ====== MIDDLE FIXED FRAME ====== */
     .itinerary-frame {
       position: absolute;
       left: 17mm;
       right: 17mm;
       top: 81mm;
-      bottom: 105mm;
+      height: 122mm;
       overflow: hidden;
     }
     .frame-content {
@@ -156,41 +160,41 @@
     }
     .summary {
       font-size: 13px;
-      line-height: 1.4;
+      line-height: 1.28;
     }
-    .summary div { margin-bottom: 2.2mm; }
+    .summary div { margin-bottom: 1.8mm; }
     .itinerary-title {
-      margin-top: 7mm;
+      margin-top: 5mm;
       text-align: center;
-      font-size: 23px;
+      font-size: 22px;
       font-weight: 700;
       line-height: 1;
     }
     .service-note {
-      margin-top: 3mm;
-      font-size: 12px;
-      line-height: 1.35;
+      margin-top: 2.2mm;
+      font-size: 11px;
+      line-height: 1.25;
     }
     .itinerary-list {
-      margin-top: 5mm;
+      margin-top: 4mm;
       display: flex;
       flex-direction: column;
-      gap: 2.2mm;
-      font-size: 12px;
+      gap: 1.7mm;
+      font-size: 11px;
     }
     .itinerary-item {
       display: grid;
-      grid-template-columns: 1fr 165px 70px;
-      gap: 10px;
+      grid-template-columns: 1fr 150px 65px;
+      gap: 8px;
       align-items: start;
     }
     .itinerary-left {
       white-space: pre-line;
-      line-height: 1.28;
+      line-height: 1.18;
     }
     .itinerary-right {
       text-align: right;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       white-space: nowrap;
       padding-top: 1px;
@@ -198,16 +202,16 @@
     .dotted-line {
       border-bottom: 2px dotted rgba(0,0,0,.78);
       width: 100%;
-      transform: translateY(7px);
+      transform: translateY(6px);
     }
 
-    /* bottom fixed zones */
+    /* ====== SERVICES ZONE, MOVES UP WHEN ITINERARY IS SHORT ====== */
     .services-zone {
       position: absolute;
       left: 17mm;
       right: 17mm;
       top: 213mm;
-      height: 33mm;
+      height: 28mm;
       overflow: hidden;
     }
     .services-content {
@@ -219,32 +223,33 @@
     .services-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 42px;
-      font-size: 12px;
-      line-height: 1.32;
+      gap: 34px;
+      font-size: 11px;
+      line-height: 1.18;
     }
     .services-grid h4 {
-      margin: 0 0 4px 0;
-      font-size: 11px;
+      margin: 0 0 3px 0;
+      font-size: 10px;
       font-weight: 700;
     }
     .services-grid ul {
       margin: 0;
-      padding-left: 17px;
+      padding-left: 15px;
     }
-    .services-grid li { margin-bottom: 2px; }
+    .services-grid li { margin-bottom: 1.4px; }
 
+    /* ====== TOTAL ALWAYS FIXED ABOVE FOOTER ====== */
     .total-row {
       position: absolute;
       left: 17mm;
-      right: 25mm;
+      right: 23mm;
       bottom: 42mm;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
     }
     .total-label {
-      font-size: 24px;
+      font-size: 23px;
       line-height: 1;
       font-weight: 700;
     }
@@ -257,9 +262,9 @@
       position: absolute;
       left: 17mm;
       right: 17mm;
-      bottom: 35mm;
-      font-size: 10px;
-      line-height: 1.3;
+      bottom: 34mm;
+      font-size: 9px;
+      line-height: 1.2;
     }
 
     @media (max-width: 1280px) {
@@ -292,31 +297,31 @@
       <div class="no-print">
         <div class="panel">
           <div style="font-size:32px;font-weight:600;">VIC Quote Generator</div>
-          <div style="color:#64748b;margin-top:8px;">Itinerary always stays inside the gray VIC frame.</div>
+          <div style="color:#64748b;margin-top:8px;">Full version with fixed gray frame, multilingual switch and stable single-page A4 output.</div>
           <div style="margin-top:16px;display:flex;gap:8px;">
-            <button class="btn lang-btn active" data-lang="en">EN</button>
-            <button class="btn lang-btn" data-lang="fr">FR</button>
+            <button class="btn lang-btn" data-lang="en">EN</button>
+            <button class="btn lang-btn active" data-lang="fr">FR</button>
             <button class="btn lang-btn" data-lang="zh">中文</button>
           </div>
           <button id="printBtn" class="btn btn-dark" style="width:100%;margin-top:16px;padding:14px 16px;font-size:18px;">Print / Save PDF</button>
         </div>
 
         <div class="panel">
-          <div id="basicTitle" style="font-size:28px;font-weight:600;margin-bottom:16px;">Basic Information</div>
-          <label id="labelQuotationNo" class="field-label">Quotation No.</label>
+          <div id="basicTitle" style="font-size:28px;font-weight:600;margin-bottom:16px;">Informations générales</div>
+          <label id="labelQuotationNo" class="field-label">N° de devis</label>
           <input id="quotationNo" class="input" value="ZX04042604" />
           <div style="height:14px;"></div>
           <label id="labelDate" class="field-label">Date</label>
           <input id="quoteDate" class="input" value="04/04/2026" />
           <div style="height:14px;"></div>
-          <label id="labelClientName" class="field-label">Client Name</label>
+          <label id="labelClientName" class="field-label">Nom du client</label>
           <input id="clientName" class="input" value="CFA Voyage" />
           <div style="height:14px;"></div>
-          <label id="labelClientAddress" class="field-label">Client Address</label>
+          <label id="labelClientAddress" class="field-label">Adresse du client</label>
           <textarea id="clientAddress" class="textarea">13 Rue des Frères d'Astier de la Vigeries 75013
 France</textarea>
           <div style="height:14px;"></div>
-          <label id="labelPeriod" class="field-label">Period</label>
+          <label id="labelPeriod" class="field-label">Période</label>
           <input id="period" class="input" value="09/07/2026 - 20/07/2026" />
           <div style="height:14px;"></div>
           <label class="field-label">PAX</label>
@@ -324,33 +329,33 @@ France</textarea>
           <div style="height:14px;"></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div>
-              <label id="labelCoachQty" class="field-label">Coach Qty</label>
+              <label id="labelCoachQty" class="field-label">Nb de coach</label>
               <input id="coachQty" class="input" value="1" />
             </div>
             <div>
-              <label id="labelCoachSeats" class="field-label">Coach Seats</label>
+              <label id="labelCoachSeats" class="field-label">Places coach</label>
               <input id="coachSeats" class="input" value="44-55" />
             </div>
             <div>
-              <label id="labelSprinterQty" class="field-label">Sprinter Qty</label>
+              <label id="labelSprinterQty" class="field-label">Nb de sprinter</label>
               <input id="sprinterQty" class="input" value="" />
             </div>
             <div>
-              <label id="labelSprinterSeats" class="field-label">Sprinter Seats</label>
+              <label id="labelSprinterSeats" class="field-label">Places sprinter</label>
               <input id="sprinterSeats" class="input" value="19" />
             </div>
           </div>
           <div style="height:14px;"></div>
-          <label id="labelVehicleType" class="field-label">Vehicle Type Line</label>
+          <label id="labelVehicleType" class="field-label">Type de véhicule</label>
           <input id="vehicleType" class="input" value="1 Coach 44-55 places" />
           <div style="height:14px;"></div>
           <div style="display:grid;grid-template-columns:1fr 140px;gap:12px;align-items:end;">
             <div>
-              <label id="labelTotalPrice" class="field-label">Total Price</label>
+              <label id="labelTotalPrice" class="field-label">Prix total</label>
               <input id="totalPrice" class="input" value="7,500" />
             </div>
             <div>
-              <label id="labelCurrency" class="field-label">Currency</label>
+              <label id="labelCurrency" class="field-label">Devise</label>
               <select id="currency" class="select">
                 <option>€</option>
                 <option>EUR</option>
@@ -362,24 +367,24 @@ France</textarea>
             </div>
           </div>
           <div style="height:14px;"></div>
-          <label id="labelServiceStart" class="field-label">Service Start Note</label>
+          <label id="labelServiceStart" class="field-label">Note de début de service</label>
           <textarea id="serviceStart" class="textarea"></textarea>
           <div style="height:14px;"></div>
-          <label id="labelNotes" class="field-label">Notes</label>
+          <label id="labelNotes" class="field-label">Remarques</label>
           <textarea id="notes" class="textarea"></textarea>
         </div>
 
         <div class="panel">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-            <div id="itineraryTitle" style="font-size:28px;font-weight:600;">Daily Itinerary</div>
-            <button id="addItinerary" class="btn">Add item</button>
+            <div id="itineraryTitle" style="font-size:28px;font-weight:600;">Programme quotidien</div>
+            <button id="addItinerary" class="btn">Ajouter</button>
           </div>
           <div id="itineraryEditor" style="display:flex;flex-direction:column;gap:12px;"></div>
         </div>
 
         <div class="panel">
-          <div id="optionTitle" style="font-size:28px;font-weight:600;">Included / Not Included Options</div>
-          <div id="optionHint" style="font-size:14px;color:#64748b;margin-top:8px;margin-bottom:16px;">Each item can only have one active state: Included or Not Included.</div>
+          <div id="optionTitle" style="font-size:28px;font-weight:600;">Options incluses / non incluses</div>
+          <div id="optionHint" style="font-size:14px;color:#64748b;margin-top:8px;margin-bottom:16px;">Chaque poste ne peut avoir qu’un seul état actif : Inclus ou Non inclus.</div>
           <div id="optionEditor" style="display:flex;flex-direction:column;gap:12px;"></div>
         </div>
       </div>
@@ -419,7 +424,7 @@ France</textarea>
               </div>
             </div>
 
-            <div class="services-zone">
+            <div class="services-zone" id="servicesZone">
               <div class="services-content" id="servicesContent">
                 <div class="services-grid">
                   <div>
@@ -427,20 +432,20 @@ France</textarea>
                     <ul id="previewIncluded"></ul>
                   </div>
                   <div>
-                    <h4 id="previewExcludedTitle">Not included:</h4>
+                    <h4 id="previewExcludedTitle">Non inclus :</h4>
                     <ul id="previewExcluded"></ul>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="total-row">
+            <div class="total-row" id="totalRow">
               <div id="previewTotalLabel" class="serif total-label">PRIX TOTAL</div>
               <div id="previewTotal" class="serif total-value">7,500€</div>
             </div>
 
             <div id="previewNotesWrap" class="notes-row hidden">
-              <span id="previewNotesLabel" style="font-weight:600;">Notes:</span>
+              <span id="previewNotesLabel" style="font-weight:600;">Remarques :</span>
               <span id="previewNotes"></span>
             </div>
           </div>
@@ -476,15 +481,19 @@ France</textarea>
 
     let currentLang = 'fr';
     const optionCatalog = [
-      'Professionnel English speaking driver',
-      'Assurance complète du véhicule',
+      'Professional English speaking driver',
+      'Complete vehicle insurance',
       'Service 11h/day',
       'Extra hours : 80 € / h / coach',
-      'Tips : 2 € * 11 days * 36 passagers = 792 €',
+      'Tips : 2 € / day / passenger / vehicle',
       'Paid directly to the driver',
       'Driver accommodation',
-      'Driver meal : 20 € * 11 days * 2 = 440 €',
-      'Parking'
+      'Driver meal expenses 20€/meal',
+      'Parking fees',
+      'Road tolls',
+      'City access / ZTL',
+      'Meet & greet sign',
+      'Drinks on board'
     ];
 
     const data = {
@@ -503,15 +512,19 @@ France</textarea>
         { left: '20/07 Paris - CDG Transfer', right: '350 €' }
       ],
       options: {
-        'Professionnel English speaking driver': 'included',
-        'Assurance complète du véhicule': 'included',
+        'Professional English speaking driver': 'included',
+        'Complete vehicle insurance': 'included',
         'Service 11h/day': 'included',
         'Extra hours : 80 € / h / coach': 'excluded',
-        'Tips : 2 € * 11 days * 36 passagers = 792 €': 'excluded',
+        'Tips : 2 € / day / passenger / vehicle': 'excluded',
         'Paid directly to the driver': 'excluded',
         'Driver accommodation': 'excluded',
-        'Driver meal : 20 € * 11 days * 2 = 440 €': 'excluded',
-        'Parking': 'excluded'
+        'Driver meal expenses 20€/meal': 'excluded',
+        'Parking fees': 'excluded',
+        'Road tolls': 'none',
+        'City access / ZTL': 'none',
+        'Meet & greet sign': 'none',
+        'Drinks on board': 'none'
       }
     };
 
@@ -523,9 +536,45 @@ France</textarea>
       const sprinterQty = $('sprinterQty').value.trim();
       const sprinterSeats = $('sprinterSeats').value.trim();
       const parts = [];
-      if (coachQty) parts.push(`${coachQty} COACH ${coachSeats} PLACES`);
-      if (sprinterQty) parts.push(`${sprinterQty} SPRINTER ${sprinterSeats} PLACES`);
+      if (coachQty) parts.push(`${coachQty} COACH ${coachSeats} ${currentLang === 'fr' ? 'PLACES' : 'SEATS'}`);
+      if (sprinterQty) parts.push(`${sprinterQty} SPRINTER ${sprinterSeats} ${currentLang === 'fr' ? 'PLACES' : 'SEATS'}`);
       return parts.join(' + ') || texts[currentLang].docTitle;
+    }
+
+    function localizeOption(item) {
+      const map = {
+        fr: {
+          'Professional English speaking driver': 'Professionnel English speaking driver',
+          'Complete vehicle insurance': 'Assurance complète du véhicule',
+          'Service 11h/day': 'Service 11h/day',
+          'Extra hours : 80 € / h / coach': 'Extra hours : 80 € / h / coach',
+          'Tips : 2 € / day / passenger / vehicle': 'Tips : 2 € / day / passenger / vehicle',
+          'Paid directly to the driver': 'Paid directly to the driver',
+          'Driver accommodation': 'Driver accommodation',
+          'Driver meal expenses 20€/meal': 'Driver meal expenses 20€/meal',
+          'Parking fees': 'Parking fees',
+          'Road tolls': 'Road tolls',
+          'City access / ZTL': 'City access / ZTL',
+          'Meet & greet sign': 'Meet & greet sign',
+          'Drinks on board': 'Drinks on board'
+        },
+        zh: {
+          'Professional English speaking driver': '英文司机服务',
+          'Complete vehicle insurance': '车辆全险',
+          'Service 11h/day': '每日11小时服务',
+          'Extra hours : 80 € / h / coach': '超时费：80 € / 小时 / 车',
+          'Tips : 2 € / day / passenger / vehicle': '小费：2 € / 人 / 天 / 车',
+          'Paid directly to the driver': '直接支付给司机',
+          'Driver accommodation': '司机住宿',
+          'Driver meal expenses 20€/meal': '司机餐费 20€/餐',
+          'Parking fees': '停车费',
+          'Road tolls': '过路费',
+          'City access / ZTL': '进城费 / ZTL',
+          'Meet & greet sign': '接站牌',
+          'Drinks on board': '车上饮品'
+        }
+      };
+      return (map[currentLang] && map[currentLang][item]) || item;
     }
 
     function applyLanguage() {
@@ -560,6 +609,7 @@ France</textarea>
       $('previewDateLabel').textContent = t.previewDate;
       $('previewNotesLabel').textContent = t.previewNotes;
       document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === currentLang));
+      renderOptionEditor();
       renderPreview();
     }
 
@@ -571,7 +621,7 @@ France</textarea>
         const row = document.createElement('div');
         row.className = 'option-row';
         row.innerHTML = `
-          <div style="font-size:14px;color:#1e293b;">${item}</div>
+          <div style="font-size:14px;color:#1e293b;">${localizeOption(item)}</div>
           <button class="includedBtn btn ${state === 'included' ? 'btn-dark' : ''}">Included</button>
           <button class="excludedBtn btn ${state === 'excluded' ? 'btn-dark' : ''}">Not Included</button>
         `;
@@ -620,22 +670,35 @@ France</textarea>
         const needed = content.scrollHeight;
         let scale = 1;
         if (needed > available) scale = available / needed;
-        scale = Math.max(0.62, Math.min(1, scale));
+        scale = Math.max(0.58, Math.min(1, scale));
         content.style.setProperty('--content-scale', scale.toFixed(4));
       });
     }
 
-    function fitServices() {
+    function fitServicesAndPosition() {
       const content = $('servicesContent');
+      const zone = $('servicesZone');
+      const totalRow = $('totalRow');
       content.style.setProperty('--services-scale', '1');
+
       requestAnimationFrame(() => {
-        const box = document.querySelector('.services-zone');
-        const available = box.clientHeight;
+        const available = zone.clientHeight;
         const needed = content.scrollHeight;
         let scale = 1;
         if (needed > available) scale = available / needed;
-        scale = Math.max(0.78, Math.min(1, scale));
+        scale = Math.max(0.72, Math.min(1, scale));
         content.style.setProperty('--services-scale', scale.toFixed(4));
+
+        const frame = document.querySelector('.itinerary-frame');
+        const frameContent = $('frameContent');
+        const frameScale = parseFloat(getComputedStyle(frameContent).getPropertyValue('--content-scale')) || 1;
+        const usedHeight = frameContent.scrollHeight * frameScale;
+        const freeSpace = Math.max(0, frame.clientHeight - usedHeight);
+
+        const baseTop = 213;
+        const upwardShift = Math.min(18, freeSpace / 3.7795 * 0.55);
+        zone.style.top = `${baseTop - upwardShift}mm`;
+        totalRow.style.bottom = `${42 - Math.min(8, upwardShift * 0.35)}mm`;
       });
     }
 
@@ -673,12 +736,12 @@ France</textarea>
 
       const included = optionCatalog.filter(x => data.options[x] === 'included');
       const excluded = optionCatalog.filter(x => data.options[x] === 'excluded');
-      $('previewIncluded').innerHTML = included.map(x => `<li>${x}</li>`).join('');
-      $('previewExcluded').innerHTML = excluded.map(x => `<li>${x}</li>`).join('');
+      $('previewIncluded').innerHTML = included.map(x => `<li>${localizeOption(x)}</li>`).join('');
+      $('previewExcluded').innerHTML = excluded.map(x => `<li>${localizeOption(x)}</li>`).join('');
 
       requestAnimationFrame(() => {
         fitFrame();
-        fitServices();
+        setTimeout(fitServicesAndPosition, 20);
       });
     }
 
@@ -701,7 +764,7 @@ France</textarea>
     });
 
     $('printBtn').onclick = () => window.print();
-    window.addEventListener('resize', () => { fitFrame(); fitServices(); });
+    window.addEventListener('resize', () => { fitFrame(); fitServicesAndPosition(); });
 
     renderItineraryEditor();
     renderOptionEditor();
