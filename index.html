@@ -10,7 +10,6 @@
       --page-w: 210mm;
       --page-h: 297mm;
     }
-
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -18,16 +17,8 @@
       font-family: Arial, sans-serif;
       color: #111;
     }
-
-    .serif {
-      font-family: Georgia, "Times New Roman", serif;
-    }
-
-    .shell {
-      min-height: 100vh;
-      padding: 16px;
-    }
-
+    .serif { font-family: Georgia, "Times New Roman", serif; }
+    .shell { min-height: 100vh; padding: 16px; }
     .layout {
       max-width: 1800px;
       margin: 0 auto;
@@ -36,7 +27,6 @@
       gap: 24px;
       align-items: start;
     }
-
     .panel {
       background: #fff;
       border: 1px solid #e2e8f0;
@@ -44,14 +34,12 @@
       padding: 24px;
       box-shadow: 0 1px 2px rgba(0,0,0,.04);
     }
-
     .field-label {
       display: block;
       font-size: 14px;
       color: #475569;
       margin-bottom: 6px;
     }
-
     .input, .textarea, .select {
       width: 100%;
       border: 1px solid #cbd5e1;
@@ -60,12 +48,7 @@
       font-size: 15px;
       background: #fff;
     }
-
-    .textarea {
-      resize: vertical;
-      min-height: 84px;
-    }
-
+    .textarea { resize: vertical; min-height: 84px; }
     .btn {
       border: 1px solid #cbd5e1;
       border-radius: 12px;
@@ -74,26 +57,14 @@
       cursor: pointer;
       font-size: 14px;
     }
-
-    .btn-dark {
-      background: #111;
-      color: #fff;
-      border-color: #111;
-    }
-
-    .lang-btn.active {
-      background: #111;
-      color: #fff;
-      border-color: #111;
-    }
-
+    .btn-dark { background: #111; color: #fff; border-color: #111; }
+    .lang-btn.active { background: #111; color: #fff; border-color: #111; }
     .editor-row {
       display: grid;
       grid-template-columns: 1fr 140px 52px;
       gap: 12px;
       align-items: start;
     }
-
     .option-row {
       display: grid;
       grid-template-columns: 1fr 120px 140px;
@@ -103,15 +74,19 @@
       border-radius: 16px;
       padding: 12px;
     }
-
-    .preview-wrap {
-      overflow: auto;
-    }
-
-    .a4 {
+    .preview-wrap { overflow: auto; }
+    .preview-scale {
       width: var(--page-w);
       height: var(--page-h);
       margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: visible;
+    }
+    .a4 {
+      width: var(--page-w);
+      height: var(--page-h);
       position: relative;
       overflow: hidden;
       background-image: url('./bg.png');
@@ -120,204 +95,164 @@
       background-size: 100% 100%;
       box-shadow: 0 24px 60px rgba(0,0,0,.12);
       border-radius: 24px;
+      transform-origin: top center;
+      --fit-scale: 1;
+      transform: scale(var(--fit-scale));
     }
-
     .page-inner {
       position: absolute;
       inset: 0;
       padding: 22mm 18mm 18mm 18mm;
     }
-
     .fit-text {
       word-break: break-word;
       overflow-wrap: anywhere;
     }
-
     .dotted-line {
       border-bottom: 3px dotted rgba(0,0,0,.72);
       width: 100%;
-      transform: translateY(10px);
+      transform: translateY(8px);
     }
-
     .top-grid {
       display: grid;
       grid-template-columns: 43% 57%;
       align-items: start;
     }
-
     .hero-right {
       text-align: right;
       padding-right: 16px;
       padding-top: 2px;
     }
-
     .doc-title {
       font-size: 40px;
       line-height: 1;
       letter-spacing: .4px;
     }
-
     .vehicle-title {
       margin-top: 26px;
       font-size: 31px;
       line-height: 1.15;
     }
-
     .meta {
       margin-top: 28px;
       font-size: 18px;
       line-height: 1.8;
     }
-
     .client-name {
       margin-top: 34px;
       font-size: 21px;
     }
-
     .client-address {
       margin-top: 16px;
       font-size: 16px;
-      line-height: 2;
+      line-height: 1.75;
       white-space: pre-line;
     }
-
-    .mid-block {
+    .content-flow {
       margin-top: 74px;
-      padding: 0 22px;
+      padding: 0 20px;
     }
-
     .summary {
       font-size: 18px;
-      line-height: 1.95;
+      line-height: 1.8;
     }
-
     .itinerary-title {
-      margin-top: 48px;
+      margin-top: 40px;
       text-align: center;
       font-size: 31px;
       line-height: 1;
       letter-spacing: .5px;
     }
-
     .service-note {
-      margin-top: 26px;
-      font-size: 16px;
-      line-height: 1.75;
+      margin-top: 18px;
+      font-size: 15px;
+      line-height: 1.55;
     }
-
     .itinerary-list {
-      margin-top: 28px;
+      margin-top: 22px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      font-size: 16px;
+      gap: 12px;
+      font-size: 15px;
     }
-
     .itinerary-item {
       display: grid;
       grid-template-columns: 1fr 180px 100px;
-      gap: 16px;
+      gap: 10px;
       align-items: start;
     }
-
     .itinerary-left {
       white-space: pre-line;
-      line-height: 1.75;
+      line-height: 1.45;
     }
-
     .itinerary-right {
       text-align: right;
       font-size: 17px;
       font-weight: 600;
       white-space: nowrap;
     }
-
+    .footer-fixed {
+      position: absolute;
+      left: 18mm;
+      right: 18mm;
+      bottom: 18mm;
+    }
     .bottom-grid {
-      margin-top: 34px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 58px;
-      padding: 0 20px;
-      font-size: 15px;
-      line-height: 1.6;
+      gap: 48px;
+      font-size: 14px;
+      line-height: 1.45;
     }
-
     .bottom-grid h4 {
       margin: 0 0 8px 0;
       font-size: 16px;
       font-weight: 700;
     }
-
     .bottom-grid ul {
       margin: 0;
       padding-left: 18px;
     }
-
-    .bottom-grid li {
-      margin-bottom: 4px;
-    }
-
+    .bottom-grid li { margin-bottom: 3px; }
     .total-row {
-      margin-top: 34px;
-      padding: 0 20px;
+      margin-top: 24px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
     }
-
     .total-label {
       font-size: 29px;
       line-height: 1;
       letter-spacing: .4px;
     }
-
     .total-value {
       font-size: 37px;
       line-height: 1;
     }
-
     .notes-row {
-      margin-top: 18px;
-      padding: 0 20px;
-      font-size: 13px;
-      line-height: 1.6;
+      margin-top: 10px;
+      font-size: 12px;
+      line-height: 1.45;
     }
-
     @media (max-width: 1280px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
+      .layout { grid-template-columns: 1fr; }
     }
-
     @media print {
-      @page {
-        size: A4 portrait;
-        margin: 0;
-      }
-
+      @page { size: A4 portrait; margin: 0; }
       html, body {
         width: 210mm;
         height: 297mm;
         background: #fff;
       }
-
-      .shell {
-        padding: 0;
+      .shell { padding: 0; }
+      .no-print { display: none !important; }
+      .layout { display: block; max-width: none; }
+      .preview-wrap { overflow: visible; }
+      .preview-scale {
+        width: 210mm;
+        height: 297mm;
+        margin: 0;
       }
-
-      .no-print {
-        display: none !important;
-      }
-
-      .layout {
-        display: block;
-        max-width: none;
-      }
-
-      .preview-wrap {
-        overflow: visible;
-      }
-
       .a4 {
         width: 210mm;
         height: 297mm;
@@ -327,16 +262,9 @@
         page-break-after: avoid;
         page-break-inside: avoid;
       }
-
-      body * {
-        visibility: hidden;
-      }
-
-      .a4, .a4 * {
-        visibility: visible;
-      }
-
-      .a4 {
+      body * { visibility: hidden; }
+      .preview-scale, .preview-scale * { visibility: visible; }
+      .preview-scale {
         position: absolute;
         left: 0;
         top: 0;
@@ -350,45 +278,34 @@
       <div class="no-print">
         <div class="panel" style="margin-bottom:20px;">
           <div style="font-size:32px;font-weight:600;">VIC Quote Generator</div>
-          <div style="color:#64748b;margin-top:8px;">Single-page A4 version with Chinese / English / French switch.</div>
-
+          <div style="color:#64748b;margin-top:8px;">Auto-fit single-page A4 with Chinese / English / French switch.</div>
           <div style="margin-top:16px;display:flex;gap:8px;">
             <button class="btn lang-btn active" data-lang="en">EN</button>
             <button class="btn lang-btn" data-lang="fr">FR</button>
             <button class="btn lang-btn" data-lang="zh">中文</button>
           </div>
-
-          <button id="printBtn" class="btn btn-dark" style="width:100%;margin-top:16px;padding:14px 16px;font-size:18px;">
-            Print / Save PDF
-          </button>
+          <button id="printBtn" class="btn btn-dark" style="width:100%;margin-top:16px;padding:14px 16px;font-size:18px;">Print / Save PDF</button>
         </div>
 
         <div class="panel" style="margin-bottom:20px;">
           <div id="basicTitle" style="font-size:28px;font-weight:600;margin-bottom:16px;">Basic Information</div>
-
           <label id="labelQuotationNo" class="field-label">Quotation No.</label>
           <input id="quotationNo" class="input" value="ZX11042601" />
-
           <div style="height:14px;"></div>
           <label id="labelDate" class="field-label">Date</label>
           <input id="quoteDate" class="input" value="11/04/2026" />
-
           <div style="height:14px;"></div>
           <label id="labelClientName" class="field-label">Client Name</label>
           <input id="clientName" class="input" value="VIC CHINA" />
-
           <div style="height:14px;"></div>
           <label id="labelClientAddress" class="field-label">Client Address</label>
           <textarea id="clientAddress" class="textarea">9 zhonghe str,B.D.A,Beijing,China</textarea>
-
           <div style="height:14px;"></div>
           <label id="labelPeriod" class="field-label">Period</label>
           <input id="period" class="input" value="15 April 2026 - 17 April 2026" />
-
           <div style="height:14px;"></div>
           <label class="field-label">PAX</label>
           <input id="pax" class="input" value="17+1" />
-
           <div style="height:14px;"></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div>
@@ -408,11 +325,9 @@
               <input id="sprinterSeats" class="input" value="19" />
             </div>
           </div>
-
           <div style="height:14px;"></div>
           <label id="labelVehicleType" class="field-label">Vehicle Type Line</label>
           <input id="vehicleType" class="input" value="Coach 45-55 places" />
-
           <div style="height:14px;"></div>
           <div style="display:grid;grid-template-columns:1fr 140px;gap:12px;align-items:end;">
             <div>
@@ -431,11 +346,9 @@
               </select>
             </div>
           </div>
-
           <div style="height:14px;"></div>
           <label id="labelServiceStart" class="field-label">Service Start Note</label>
           <textarea id="serviceStart" class="textarea"></textarea>
-
           <div style="height:14px;"></div>
           <label id="labelNotes" class="field-label">Notes</label>
           <textarea id="notes" class="textarea"></textarea>
@@ -451,65 +364,67 @@
 
         <div class="panel">
           <div id="optionTitle" style="font-size:28px;font-weight:600;">Included / Not Included Options</div>
-          <div id="optionHint" style="font-size:14px;color:#64748b;margin-top:8px;margin-bottom:16px;">
-            Each item can only have one active state: Included or Not Included.
-          </div>
+          <div id="optionHint" style="font-size:14px;color:#64748b;margin-top:8px;margin-bottom:16px;">Each item can only have one active state: Included or Not Included.</div>
           <div id="optionEditor" style="display:flex;flex-direction:column;gap:12px;"></div>
         </div>
       </div>
 
       <div class="preview-wrap">
-        <div class="a4">
-          <div class="page-inner">
-            <div class="top-grid">
-              <div></div>
-              <div class="hero-right">
-                <div id="previewDocTitle" class="serif doc-title">QUOTATION</div>
-                <div id="previewTitle" class="serif vehicle-title">1 COACH 45-55 SEATS</div>
-                <div class="meta">
-                  <div><span id="previewNoLabel" style="font-weight:600;">ND:</span> <span id="previewNo"></span></div>
-                  <div><span id="previewDateLabel" style="font-weight:600;">DATE:</span> <span id="previewDate"></span></div>
+        <div class="preview-scale" id="previewScale">
+          <div class="a4" id="a4Page">
+            <div class="page-inner">
+              <div class="top-grid">
+                <div></div>
+                <div class="hero-right">
+                  <div id="previewDocTitle" class="serif doc-title">QUOTATION</div>
+                  <div id="previewTitle" class="serif vehicle-title">1 COACH 45-55 SEATS</div>
+                  <div class="meta">
+                    <div><span id="previewNoLabel" style="font-weight:600;">ND:</span> <span id="previewNo"></span></div>
+                    <div><span id="previewDateLabel" style="font-weight:600;">DATE:</span> <span id="previewDate"></span></div>
+                  </div>
+                  <div id="previewClient" class="client-name fit-text"></div>
+                  <div id="previewAddress" class="client-address fit-text"></div>
                 </div>
-                <div id="previewClient" class="client-name fit-text"></div>
-                <div id="previewAddress" class="client-address fit-text"></div>
-              </div>
-            </div>
-
-            <div class="mid-block">
-              <div class="summary fit-text">
-                <div><span id="previewPeriodLabel">Period</span> : <span id="previewPeriod"></span></div>
-                <div><span id="previewVehicleTypeLabel">Type of vehicle</span> : <span id="previewVehicleType"></span></div>
-                <div>PAX : <span id="previewPax"></span></div>
               </div>
 
-              <div id="previewItineraryTitle" class="serif itinerary-title">DAILY ITINERARY</div>
+              <div class="content-flow" id="contentFlow">
+                <div class="summary fit-text">
+                  <div><span id="previewPeriodLabel">Period</span> : <span id="previewPeriod"></span></div>
+                  <div><span id="previewVehicleTypeLabel">Type of vehicle</span> : <span id="previewVehicleType"></span></div>
+                  <div>PAX : <span id="previewPax"></span></div>
+                </div>
 
-              <div id="previewServiceStartWrap" class="service-note hidden">
-                <div id="previewServiceStart" class="fit-text" style="white-space:pre-line;"></div>
+                <div id="previewItineraryTitle" class="serif itinerary-title">DAILY ITINERARY</div>
+
+                <div id="previewServiceStartWrap" class="service-note hidden">
+                  <div id="previewServiceStart" class="fit-text" style="white-space:pre-line;"></div>
+                </div>
+
+                <div id="previewItinerary" class="itinerary-list"></div>
               </div>
 
-              <div id="previewItinerary" class="itinerary-list"></div>
-            </div>
+              <div class="footer-fixed" id="footerFixed">
+                <div class="bottom-grid">
+                  <div>
+                    <h4 id="previewIncludedTitle">Included :</h4>
+                    <ul id="previewIncluded"></ul>
+                  </div>
+                  <div>
+                    <h4 id="previewExcludedTitle">Not included:</h4>
+                    <ul id="previewExcluded"></ul>
+                  </div>
+                </div>
 
-            <div class="bottom-grid">
-              <div>
-                <h4 id="previewIncludedTitle">Included :</h4>
-                <ul id="previewIncluded"></ul>
+                <div class="total-row">
+                  <div id="previewTotalLabel" class="serif total-label">PRIX TOTAL</div>
+                  <div id="previewTotal" class="serif total-value">1,950 €</div>
+                </div>
+
+                <div id="previewNotesWrap" class="notes-row hidden">
+                  <span id="previewNotesLabel" style="font-weight:600;">Notes:</span>
+                  <span id="previewNotes"></span>
+                </div>
               </div>
-              <div>
-                <h4 id="previewExcludedTitle">Not included:</h4>
-                <ul id="previewExcluded"></ul>
-              </div>
-            </div>
-
-            <div class="total-row">
-              <div id="previewTotalLabel" class="serif total-label">PRIX TOTAL</div>
-              <div id="previewTotal" class="serif total-value">1,950 €</div>
-            </div>
-
-            <div id="previewNotesWrap" class="notes-row hidden">
-              <span id="previewNotesLabel" style="font-weight:600;">Notes:</span>
-              <span id="previewNotes"></span>
             </div>
           </div>
         </div>
@@ -520,102 +435,32 @@
   <script>
     const texts = {
       en: {
-        docTitle: 'QUOTATION',
-        quotationNo: 'Quotation No.',
-        date: 'Date',
-        clientName: 'Client Name',
-        clientAddress: 'Client Address',
-        period: 'Period',
-        vehicleType: 'Vehicle Type Line',
-        currency: 'Currency',
-        totalPrice: 'Total Price',
-        serviceStart: 'Service Start Note',
-        notes: 'Notes',
-        coachQty: 'Coach Qty',
-        coachSeats: 'Coach Seats',
-        sprinterQty: 'Sprinter Qty',
-        sprinterSeats: 'Sprinter Seats',
-        basicInfo: 'Basic Information',
-        itinerary: 'Daily Itinerary',
-        addItem: 'Add item',
-        options: 'Included / Not Included Options',
-        optionHint: 'Each item can only have one active state: Included or Not Included.',
-        included: 'Included :',
-        excluded: 'Not included:',
-        total: 'TOTAL PRICE',
-        previewPeriod: 'Period',
-        previewVehicle: 'Type of vehicle',
-        previewItinerary: 'DAILY ITINERARY',
-        previewNo: 'ND:',
-        previewDate: 'DATE:',
-        previewNotes: 'Notes:'
+        docTitle: 'QUOTATION', quotationNo: 'Quotation No.', date: 'Date', clientName: 'Client Name', clientAddress: 'Client Address',
+        period: 'Period', vehicleType: 'Vehicle Type Line', currency: 'Currency', totalPrice: 'Total Price', serviceStart: 'Service Start Note', notes: 'Notes',
+        coachQty: 'Coach Qty', coachSeats: 'Coach Seats', sprinterQty: 'Sprinter Qty', sprinterSeats: 'Sprinter Seats', basicInfo: 'Basic Information', itinerary: 'Daily Itinerary',
+        addItem: 'Add item', options: 'Included / Not Included Options', optionHint: 'Each item can only have one active state: Included or Not Included.',
+        included: 'Included :', excluded: 'Not included:', total: 'TOTAL PRICE', previewPeriod: 'Period', previewVehicle: 'Type of vehicle', previewItinerary: 'DAILY ITINERARY',
+        previewNo: 'ND:', previewDate: 'DATE:', previewNotes: 'Notes:'
       },
       fr: {
-        docTitle: 'DEVIS',
-        quotationNo: 'N° de devis',
-        date: 'Date',
-        clientName: 'Nom du client',
-        clientAddress: 'Adresse du client',
-        period: 'Période',
-        vehicleType: 'Type de véhicule',
-        currency: 'Devise',
-        totalPrice: 'Prix total',
-        serviceStart: 'Note de début de service',
-        notes: 'Remarques',
-        coachQty: 'Nb de coach',
-        coachSeats: 'Places coach',
-        sprinterQty: 'Nb de sprinter',
-        sprinterSeats: 'Places sprinter',
-        basicInfo: 'Informations générales',
-        itinerary: 'Programme quotidien',
-        addItem: 'Ajouter',
-        options: 'Options incluses / non incluses',
-        optionHint: 'Chaque poste ne peut avoir qu’un seul état actif : Inclus ou Non inclus.',
-        included: 'Inclus :',
-        excluded: 'Non inclus :',
-        total: 'PRIX TOTAL',
-        previewPeriod: 'Periode',
-        previewVehicle: 'Type of vehicule',
-        previewItinerary: 'DAILY ITINERARY',
-        previewNo: 'ND:',
-        previewDate: 'DATE:',
-        previewNotes: 'Remarques :'
+        docTitle: 'DEVIS', quotationNo: 'N° de devis', date: 'Date', clientName: 'Nom du client', clientAddress: 'Adresse du client',
+        period: 'Période', vehicleType: 'Type de véhicule', currency: 'Devise', totalPrice: 'Prix total', serviceStart: 'Note de début de service', notes: 'Remarques',
+        coachQty: 'Nb de coach', coachSeats: 'Places coach', sprinterQty: 'Nb de sprinter', sprinterSeats: 'Places sprinter', basicInfo: 'Informations générales', itinerary: 'Programme quotidien',
+        addItem: 'Ajouter', options: 'Options incluses / non incluses', optionHint: 'Chaque poste ne peut avoir qu’un seul état actif : Inclus ou Non inclus.',
+        included: 'Inclus :', excluded: 'Non inclus :', total: 'PRIX TOTAL', previewPeriod: 'Periode', previewVehicle: 'Type of vehicule', previewItinerary: 'DAILY ITINERARY',
+        previewNo: 'ND:', previewDate: 'DATE:', previewNotes: 'Remarques :'
       },
       zh: {
-        docTitle: '报价单',
-        quotationNo: '报价编号',
-        date: '日期',
-        clientName: '客户名称',
-        clientAddress: '客户地址',
-        period: '服务期间',
-        vehicleType: '车型说明',
-        currency: '货币',
-        totalPrice: '总价',
-        serviceStart: '服务开始说明',
-        notes: '备注',
-        coachQty: '大巴数量',
-        coachSeats: '大巴座位',
-        sprinterQty: '商务车数量',
-        sprinterSeats: '商务车座位',
-        basicInfo: '基础信息',
-        itinerary: '每日行程',
-        addItem: '新增一项',
-        options: '包含 / 不包含选项',
-        optionHint: '每个项目只能有一个状态：包含或不包含。',
-        included: '包含：',
-        excluded: '不包含：',
-        total: '总价',
-        previewPeriod: '服务期间',
-        previewVehicle: '车型',
-        previewItinerary: '每日行程',
-        previewNo: '编号：',
-        previewDate: '日期：',
-        previewNotes: '备注：'
+        docTitle: '报价单', quotationNo: '报价编号', date: '日期', clientName: '客户名称', clientAddress: '客户地址',
+        period: '服务期间', vehicleType: '车型说明', currency: '货币', totalPrice: '总价', serviceStart: '服务开始说明', notes: '备注',
+        coachQty: '大巴数量', coachSeats: '大巴座位', sprinterQty: '商务车数量', sprinterSeats: '商务车座位', basicInfo: '基础信息', itinerary: '每日行程',
+        addItem: '新增一项', options: '包含 / 不包含选项', optionHint: '每个项目只能有一个状态：包含或不包含。',
+        included: '包含：', excluded: '不包含：', total: '总价', previewPeriod: '服务期间', previewVehicle: '车型', previewItinerary: '每日行程',
+        previewNo: '编号：', previewDate: '日期：', previewNotes: '备注：'
       }
     };
 
     let currentLang = 'en';
-
     const optionCatalog = [
       'Professional English speaking driver',
       'Complete vehicle insurance',
@@ -751,6 +596,32 @@
       });
     }
 
+    function autoFitPage() {
+      const page = $('a4Page');
+      const content = $('contentFlow');
+      const footer = $('footerFixed');
+      page.style.setProperty('--fit-scale', '1');
+
+      const pageInnerHeight = page.clientHeight - 0;
+      const contentTop = content.offsetTop;
+      const footerTop = footer.offsetTop;
+      const footerHeight = footer.offsetHeight;
+      const safeBottomGap = 8;
+      const availableBottom = footerTop - safeBottomGap;
+      const contentHeight = content.offsetHeight;
+      const neededBottom = contentTop + contentHeight;
+
+      let scale = 1;
+      if (neededBottom > availableBottom) {
+        scale = availableBottom / neededBottom;
+      }
+
+      const minScale = 0.72;
+      if (scale < minScale) scale = minScale;
+      if (scale > 1) scale = 1;
+      page.style.setProperty('--fit-scale', scale.toFixed(4));
+    }
+
     function renderPreview() {
       $('previewTitle').textContent = buildTitle();
       $('previewNo').textContent = $('quotationNo').value;
@@ -787,6 +658,8 @@
       const excluded = optionCatalog.filter(x => data.options[x] === 'excluded');
       $('previewIncluded').innerHTML = included.map(x => `<li>${x}</li>`).join('');
       $('previewExcluded').innerHTML = excluded.map(x => `<li>${x}</li>`).join('');
+
+      requestAnimationFrame(autoFitPage);
     }
 
     $('addItinerary').onclick = () => {
@@ -808,6 +681,7 @@
     });
 
     $('printBtn').onclick = () => window.print();
+    window.addEventListener('resize', autoFitPage);
 
     renderItineraryEditor();
     renderOptionEditor();
