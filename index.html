@@ -14,7 +14,7 @@
     body {
       margin: 0;
       background: #eef2f7;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       color: #111;
     }
     .serif { font-family: Georgia, "Times New Roman", serif; }
@@ -79,9 +79,6 @@
       width: var(--page-w);
       height: var(--page-h);
       margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
       overflow: visible;
     }
     .a4 {
@@ -95,148 +92,184 @@
       background-size: 100% 100%;
       box-shadow: 0 24px 60px rgba(0,0,0,.12);
       border-radius: 24px;
-      transform-origin: top center;
-      --fit-scale: 1;
-      transform: scale(var(--fit-scale));
     }
     .page-inner {
       position: absolute;
       inset: 0;
-      padding: 22mm 18mm 18mm 18mm;
+      padding: 20mm 13mm 15mm 13mm;
     }
-    .fit-text {
-      word-break: break-word;
-      overflow-wrap: anywhere;
-    }
-    .dotted-line {
-      border-bottom: 3px dotted rgba(0,0,0,.72);
-      width: 100%;
-      transform: translateY(8px);
-    }
+    .fit-text { word-break: break-word; overflow-wrap: anywhere; }
+
+    /* header */
     .top-grid {
       display: grid;
-      grid-template-columns: 43% 57%;
+      grid-template-columns: 42% 58%;
       align-items: start;
     }
     .hero-right {
-      text-align: right;
-      padding-right: 16px;
-      padding-top: 2px;
+      text-align: center;
+      padding-top: 2mm;
+      padding-right: 2mm;
     }
     .doc-title {
-      font-size: 40px;
+      font-size: 39px;
       line-height: 1;
-      letter-spacing: .4px;
+      letter-spacing: .2px;
+      font-weight: 600;
     }
     .vehicle-title {
-      margin-top: 26px;
-      font-size: 31px;
-      line-height: 1.15;
+      margin-top: 9mm;
+      font-size: 27px;
+      line-height: 1.12;
+      font-weight: 600;
     }
     .meta {
-      margin-top: 28px;
-      font-size: 18px;
-      line-height: 1.8;
+      margin-top: 7mm;
+      font-size: 16px;
+      line-height: 1.5;
+      text-align: right;
+      padding-right: 10mm;
+    }
+    .meta strong {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 700;
+      letter-spacing: .2px;
     }
     .client-name {
-      margin-top: 34px;
-      font-size: 21px;
+      margin-top: 8mm;
+      font-size: 17px;
+      font-weight: 500;
     }
     .client-address {
-      margin-top: 16px;
-      font-size: 16px;
-      line-height: 1.75;
+      margin-top: 4mm;
+      font-size: 15px;
+      line-height: 1.6;
       white-space: pre-line;
     }
-    .content-flow {
-      margin-top: 74px;
-      padding: 0 20px;
+
+    /* summary + itinerary dynamic zone */
+    .content-viewport {
+      position: absolute;
+      left: 18mm;
+      right: 18mm;
+      top: 82mm;
+      bottom: 65mm;
+      overflow: hidden;
+    }
+    .content-scale {
+      transform-origin: top left;
+      --content-scale: 1;
+      transform: scale(var(--content-scale));
+      width: calc(100% / var(--content-scale));
     }
     .summary {
-      font-size: 18px;
-      line-height: 1.8;
+      font-size: 13px;
+      line-height: 1.35;
     }
+    .summary div { margin-bottom: 2mm; }
     .itinerary-title {
-      margin-top: 40px;
+      margin-top: 8mm;
       text-align: center;
-      font-size: 31px;
+      font-size: 23px;
       line-height: 1;
-      letter-spacing: .5px;
+      letter-spacing: .3px;
+      font-weight: 700;
     }
     .service-note {
-      margin-top: 18px;
-      font-size: 15px;
-      line-height: 1.55;
+      margin-top: 4mm;
+      font-size: 12px;
+      line-height: 1.35;
     }
     .itinerary-list {
-      margin-top: 22px;
+      margin-top: 6mm;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      font-size: 15px;
+      gap: 2.2mm;
+      font-size: 12px;
     }
     .itinerary-item {
       display: grid;
-      grid-template-columns: 1fr 180px 100px;
+      grid-template-columns: 1fr 170px 74px;
       gap: 10px;
       align-items: start;
     }
     .itinerary-left {
       white-space: pre-line;
-      line-height: 1.45;
+      line-height: 1.28;
     }
     .itinerary-right {
       text-align: right;
-      font-size: 17px;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 700;
       white-space: nowrap;
+      padding-top: 1px;
     }
+    .dotted-line {
+      border-bottom: 2px dotted rgba(0,0,0,.75);
+      width: 100%;
+      transform: translateY(8px);
+    }
+
+    /* fixed footer zone */
     .footer-fixed {
       position: absolute;
-      left: 18mm;
-      right: 18mm;
-      bottom: 18mm;
+      left: 15mm;
+      right: 15mm;
+      bottom: 12mm;
+    }
+    .footer-scale {
+      transform-origin: bottom left;
+      --footer-scale: 1;
+      transform: scale(var(--footer-scale));
+      width: calc(100% / var(--footer-scale));
     }
     .bottom-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      font-size: 14px;
-      line-height: 1.45;
+      gap: 36px;
+      font-size: 12px;
+      line-height: 1.28;
     }
     .bottom-grid h4 {
-      margin: 0 0 8px 0;
-      font-size: 16px;
+      margin: 0 0 4px 0;
+      font-size: 11px;
       font-weight: 700;
     }
     .bottom-grid ul {
       margin: 0;
-      padding-left: 18px;
+      padding-left: 17px;
     }
-    .bottom-grid li { margin-bottom: 3px; }
+    .bottom-grid li { margin-bottom: 2px; }
     .total-row {
-      margin-top: 24px;
+      margin-top: 9mm;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
+      min-height: 16mm;
     }
     .total-label {
-      font-size: 29px;
+      font-size: 24px;
       line-height: 1;
-      letter-spacing: .4px;
+      letter-spacing: .2px;
+      font-weight: 700;
     }
     .total-value {
-      font-size: 37px;
+      font-size: 30px;
       line-height: 1;
+      padding-right: 12mm;
+      margin-bottom: 1mm;
+      font-weight: 700;
     }
     .notes-row {
-      margin-top: 10px;
-      font-size: 12px;
-      line-height: 1.45;
+      margin-top: 2mm;
+      font-size: 10px;
+      line-height: 1.25;
     }
+
     @media (max-width: 1280px) {
       .layout { grid-template-columns: 1fr; }
     }
+
     @media print {
       @page { size: A4 portrait; margin: 0; }
       html, body {
@@ -278,7 +311,7 @@
       <div class="no-print">
         <div class="panel" style="margin-bottom:20px;">
           <div style="font-size:32px;font-weight:600;">VIC Quote Generator</div>
-          <div style="color:#64748b;margin-top:8px;">Auto-fit single-page A4 with Chinese / English / French switch.</div>
+          <div style="color:#64748b;margin-top:8px;">Reference-PDF style, auto-fit single page A4.</div>
           <div style="margin-top:16px;display:flex;gap:8px;">
             <button class="btn lang-btn active" data-lang="en">EN</button>
             <button class="btn lang-btn" data-lang="fr">FR</button>
@@ -370,7 +403,7 @@
       </div>
 
       <div class="preview-wrap">
-        <div class="preview-scale" id="previewScale">
+        <div class="preview-scale">
           <div class="a4" id="a4Page">
             <div class="page-inner">
               <div class="top-grid">
@@ -379,50 +412,54 @@
                   <div id="previewDocTitle" class="serif doc-title">QUOTATION</div>
                   <div id="previewTitle" class="serif vehicle-title">1 COACH 45-55 SEATS</div>
                   <div class="meta">
-                    <div><span id="previewNoLabel" style="font-weight:600;">ND:</span> <span id="previewNo"></span></div>
-                    <div><span id="previewDateLabel" style="font-weight:600;">DATE:</span> <span id="previewDate"></span></div>
+                    <div><strong id="previewNoLabel">ND:</strong> <span id="previewNo"></span></div>
+                    <div><strong id="previewDateLabel">DATE:</strong> <span id="previewDate"></span></div>
                   </div>
                   <div id="previewClient" class="client-name fit-text"></div>
                   <div id="previewAddress" class="client-address fit-text"></div>
                 </div>
               </div>
 
-              <div class="content-flow" id="contentFlow">
-                <div class="summary fit-text">
-                  <div><span id="previewPeriodLabel">Period</span> : <span id="previewPeriod"></span></div>
-                  <div><span id="previewVehicleTypeLabel">Type of vehicle</span> : <span id="previewVehicleType"></span></div>
-                  <div>PAX : <span id="previewPax"></span></div>
+              <div class="content-viewport">
+                <div class="content-scale" id="contentScale">
+                  <div class="summary fit-text">
+                    <div><span id="previewPeriodLabel">Period</span> : <span id="previewPeriod"></span></div>
+                    <div><span id="previewVehicleTypeLabel">Type of vehicle</span> : <span id="previewVehicleType"></span></div>
+                    <div>PAX : <span id="previewPax"></span></div>
+                  </div>
+
+                  <div id="previewItineraryTitle" class="serif itinerary-title">DAILY ITINERARY</div>
+
+                  <div id="previewServiceStartWrap" class="service-note hidden">
+                    <div id="previewServiceStart" class="fit-text" style="white-space:pre-line;"></div>
+                  </div>
+
+                  <div id="previewItinerary" class="itinerary-list"></div>
                 </div>
-
-                <div id="previewItineraryTitle" class="serif itinerary-title">DAILY ITINERARY</div>
-
-                <div id="previewServiceStartWrap" class="service-note hidden">
-                  <div id="previewServiceStart" class="fit-text" style="white-space:pre-line;"></div>
-                </div>
-
-                <div id="previewItinerary" class="itinerary-list"></div>
               </div>
 
-              <div class="footer-fixed" id="footerFixed">
-                <div class="bottom-grid">
-                  <div>
-                    <h4 id="previewIncludedTitle">Included :</h4>
-                    <ul id="previewIncluded"></ul>
+              <div class="footer-fixed">
+                <div class="footer-scale" id="footerScale">
+                  <div class="bottom-grid">
+                    <div>
+                      <h4 id="previewIncludedTitle">Included :</h4>
+                      <ul id="previewIncluded"></ul>
+                    </div>
+                    <div>
+                      <h4 id="previewExcludedTitle">Not included:</h4>
+                      <ul id="previewExcluded"></ul>
+                    </div>
                   </div>
-                  <div>
-                    <h4 id="previewExcludedTitle">Not included:</h4>
-                    <ul id="previewExcluded"></ul>
+
+                  <div class="total-row">
+                    <div id="previewTotalLabel" class="serif total-label">PRIX TOTAL</div>
+                    <div id="previewTotal" class="serif total-value">1,950 €</div>
                   </div>
-                </div>
 
-                <div class="total-row">
-                  <div id="previewTotalLabel" class="serif total-label">PRIX TOTAL</div>
-                  <div id="previewTotal" class="serif total-value">1,950 €</div>
-                </div>
-
-                <div id="previewNotesWrap" class="notes-row hidden">
-                  <span id="previewNotesLabel" style="font-weight:600;">Notes:</span>
-                  <span id="previewNotes"></span>
+                  <div id="previewNotesWrap" class="notes-row hidden">
+                    <span id="previewNotesLabel" style="font-weight:600;">Notes:</span>
+                    <span id="previewNotes"></span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -597,29 +634,36 @@
     }
 
     function autoFitPage() {
-      const page = $('a4Page');
-      const content = $('contentFlow');
-      const footer = $('footerFixed');
-      page.style.setProperty('--fit-scale', '1');
+      const contentScale = $('contentScale');
+      const footerScale = $('footerScale');
+      const a4Page = $('a4Page');
+      const footerFixed = document.querySelector('.footer-fixed');
+      const contentViewport = document.querySelector('.content-viewport');
 
-      const pageInnerHeight = page.clientHeight - 0;
-      const contentTop = content.offsetTop;
-      const footerTop = footer.offsetTop;
-      const footerHeight = footer.offsetHeight;
-      const safeBottomGap = 8;
-      const availableBottom = footerTop - safeBottomGap;
-      const contentHeight = content.offsetHeight;
-      const neededBottom = contentTop + contentHeight;
+      contentScale.style.setProperty('--content-scale', '1');
+      footerScale.style.setProperty('--footer-scale', '1');
 
-      let scale = 1;
-      if (neededBottom > availableBottom) {
-        scale = availableBottom / neededBottom;
+      // Step 1: scale footer if needed, but keep it readable
+      const footerMaxHeight = 62 * 3.7795;
+      const footerNaturalHeight = footerScale.scrollHeight;
+      let footerScaleValue = 1;
+      if (footerNaturalHeight > footerMaxHeight) {
+        footerScaleValue = Math.max(0.82, footerMaxHeight / footerNaturalHeight);
       }
+      footerScale.style.setProperty('--footer-scale', footerScaleValue.toFixed(4));
 
-      const minScale = 0.72;
-      if (scale < minScale) scale = minScale;
-      if (scale > 1) scale = 1;
-      page.style.setProperty('--fit-scale', scale.toFixed(4));
+      requestAnimationFrame(() => {
+        const footerHeight = footerFixed.getBoundingClientRect().height;
+        const availableHeight = a4Page.clientHeight - contentViewport.offsetTop - footerHeight - 12;
+        const contentNaturalHeight = contentScale.scrollHeight;
+
+        let contentScaleValue = 1;
+        if (contentNaturalHeight > availableHeight) {
+          contentScaleValue = availableHeight / contentNaturalHeight;
+        }
+        contentScaleValue = Math.max(0.68, Math.min(1, contentScaleValue));
+        contentScale.style.setProperty('--content-scale', contentScaleValue.toFixed(4));
+      });
     }
 
     function renderPreview() {
