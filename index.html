@@ -132,7 +132,6 @@
       overflow-wrap: anywhere;
     }
 
-    /* HEADER */
     .header-grid {
       display: grid;
       grid-template-columns: 36% 64%;
@@ -200,7 +199,6 @@
       min-height: 32px;
     }
 
-    /* MIDDLE FRAME */
     .itinerary-frame {
       position: absolute;
       left: 17mm;
@@ -284,7 +282,6 @@
       text-align: right;
     }
 
-    /* SERVICES */
     .services-zone {
       position: absolute;
       left: 17mm;
@@ -324,7 +321,6 @@
       margin-bottom: 1.4px;
     }
 
-    /* TOTAL */
     .total-row {
       position: absolute;
       left: 17mm;
@@ -455,13 +451,6 @@
           <div style="height:14px;"></div>
           <label id="labelVehicleType" class="field-label">Type de véhicule</label>
           <input id="vehicleType" class="input" value="" />
-
-          <div style="height:14px;"></div>
-          <label id="labelServiceHours" class="field-label">Heures de service</label>
-          <select id="serviceHours" class="select">
-            <option value="11 h / day">11 h / day</option>
-            <option value="12 h / day">12 h / day</option>
-          </select>
 
           <div style="height:14px;"></div>
           <div style="display:grid;grid-template-columns:1fr 140px;gap:12px;align-items:end;">
@@ -605,7 +594,8 @@
         previewItinerary: 'DAILY ITINERARY',
         previewNo: 'ND:',
         previewDate: 'DATE:',
-        previewNotes: 'Notes:'
+        previewNotes: 'Notes:',
+        alwaysIncluded: 'Always included'
       },
       fr: {
         docTitle: 'DEVIS',
@@ -637,7 +627,8 @@
         previewItinerary: 'DAILY ITINERARY',
         previewNo: 'ND:',
         previewDate: 'DATE:',
-        previewNotes: 'Remarques :'
+        previewNotes: 'Remarques :',
+        alwaysIncluded: 'Toujours inclus'
       },
       zh: {
         docTitle: '报价单',
@@ -669,7 +660,8 @@
         previewItinerary: '每日行程',
         previewNo: '编号：',
         previewDate: '日期：',
-        previewNotes: '备注：'
+        previewNotes: '备注：',
+        alwaysIncluded: '固定包含'
       }
     };
 
@@ -704,7 +696,8 @@
         'Drinks on board': 'none',
         'Other': 'none'
       },
-      otherText: ''
+      otherText: '',
+      serviceHours: '11 h / day'
     };
 
     const $ = (id) => document.getElementById(id);
@@ -821,13 +814,26 @@
       const fixedWrap = document.createElement('div');
       fixedWrap.style.marginTop = '14px';
       fixedWrap.innerHTML = `
-        <label class="field-label">${currentLang === 'fr' ? 'Toujours inclus' : currentLang === 'zh' ? '固定包含' : 'Always included'}</label>
+        <label class="field-label">${texts[currentLang].alwaysIncluded}</label>
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div class="input" style="background:#f8fafc;">${displayOption('Professional English speaking driver', 'included')}</div>
           <div class="input" style="background:#f8fafc;">${displayOption('Complete vehicle insurance', 'included')}</div>
+          <div style="display:grid;grid-template-columns:140px 1fr;gap:10px;align-items:center;">
+            <div class="field-label" style="margin:0;">${texts[currentLang].serviceHours}</div>
+            <select id="serviceHours" class="select">
+              <option value="11 h / day" ${data.serviceHours === '11 h / day' ? 'selected' : ''}>11 h / day</option>
+              <option value="12 h / day" ${data.serviceHours === '12 h / day' ? 'selected' : ''}>12 h / day</option>
+            </select>
+          </div>
         </div>
       `;
       wrap.appendChild(fixedWrap);
+
+      const serviceHoursSelect = document.getElementById('serviceHours');
+      serviceHoursSelect.addEventListener('change', (e) => {
+        data.serviceHours = e.target.value;
+        renderPreview();
+      });
 
       const otherRow = document.createElement('div');
       otherRow.style.marginTop = '12px';
@@ -974,7 +980,7 @@
       const fixedIncluded = [
         displayOption('Professional English speaking driver', 'included'),
         displayOption('Complete vehicle insurance', 'included'),
-        $('serviceHours').value
+        data.serviceHours
       ];
 
       const included = optionalCatalog.filter(x => data.options[x] === 'included');
@@ -1007,7 +1013,6 @@
       $('labelTotalPrice').textContent = t.totalPrice;
       $('labelServiceStart').textContent = t.serviceStart;
       $('labelNotes').textContent = t.notes;
-      $('labelServiceHours').textContent = t.serviceHours;
       $('labelCoachQty').textContent = t.coachQty;
       $('labelCoachSeats').textContent = t.coachSeats;
       $('labelSprinterQty').textContent = t.sprinterQty;
@@ -1052,14 +1057,14 @@
     [
       'quotationNo', 'quoteDate', 'clientName', 'clientAddress',
       'period', 'pax', 'coachQty', 'coachSeats', 'sprinterQty',
-      'sprinterSeats', 'vehicleType', 'currency', 'serviceStart',
-      'notes', 'serviceHours'
+      'sprinterSeats', 'vehicleType', 'currency', 'serviceStart', 'notes'
     ].forEach(id => {
       $(id).addEventListener('input', renderPreview);
       $(id).addEventListener('change', renderPreview);
     });
 
     $('printBtn').onclick = () => window.print();
+
     window.addEventListener('resize', () => {
       fitFrame();
       fitServicesAndPosition();
