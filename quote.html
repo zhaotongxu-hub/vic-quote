@@ -1067,54 +1067,63 @@
       });
     }
 
-    function applyLanguage() {
-      const t = texts[currentLang];
-
-      $('basicTitle').textContent = t.basicInfo;
-      $('labelQuotationNo').textContent = t.quotationNo;
-      $('labelDate').textContent = t.date;
-      $('labelClientName').textContent = t.clientName;
-      $('labelClientAddress').textContent = t.clientAddress;
-      $('labelProjectName').textContent = t.projectName;
-      $('labelPeriod').textContent = t.period;
-      $('labelPax').textContent = t.pax;
-      $('labelVehicleType').textContent = t.vehicleType;
-      $('labelCurrency').textContent = t.currency;
-      $('labelTotalPrice').textContent = t.totalPrice;
-      $('labelServiceStart').textContent = t.serviceStart;
-      $('labelNotes').textContent = t.notes;
-      $('labelCoachQty').textContent = t.coachQty;
-      $('labelCoachSeats').textContent = t.coachSeats;
-      $('labelSprinterQty').textContent = t.sprinterQty;
-      $('labelSprinterSeats').textContent = t.sprinterSeats;
-      $('itineraryEditorTitle').textContent = t.itineraryEditor;
-      $('addItinerary').textContent = t.addItem;
-      $('optionTitle').textContent = t.options;
-      $('optionHint').textContent = t.optionHint;
-      $('showFileNameBtn').textContent = t.showFileName;
-
-      $('previewDocTitle').textContent = t.docTitle;
-      $('previewIncludedTitle').textContent = t.included;
-      $('previewExcludedTitle').textContent = t.excluded;
-      $('previewTotalLabel').textContent = t.total;
-      $('previewProjectLabel').textContent = t.previewProject;
-      $('previewPeriodLabel').textContent = t.previewPeriod;
-      $('previewPaxLabel').textContent = t.previewPax;
-      $('previewItineraryTitle').textContent = t.previewItinerary;
-      $('previewNoLabel').textContent = t.previewNo;
-      $('previewDateLabel').textContent = t.previewDate;
-      $('previewNotesLabel').textContent = t.previewNotes;
-
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === currentLang);
-      });
-
-      renderOptionEditor();
-      renderPreview();
-    }
-
     <script>
+  function applyLanguage() {
+    const t = texts[currentLang];
+
+    $('basicTitle').textContent = t.basicInfo;
+    $('labelQuotationNo').textContent = t.quotationNo;
+    $('labelDate').textContent = t.date;
+    $('labelClientName').textContent = t.clientName;
+    $('labelClientAddress').textContent = t.clientAddress;
+    $('labelProjectName').textContent = t.projectName;
+    $('labelPeriod').textContent = t.period;
+    $('labelPax').textContent = t.pax;
+    $('labelVehicleType').textContent = t.vehicleType;
+    $('labelCurrency').textContent = t.currency;
+    $('labelTotalPrice').textContent = t.totalPrice;
+    $('labelServiceStart').textContent = t.serviceStart;
+    $('labelNotes').textContent = t.notes;
+    $('labelCoachQty').textContent = t.coachQty;
+    $('labelCoachSeats').textContent = t.coachSeats;
+    $('labelSprinterQty').textContent = t.sprinterQty;
+    $('labelSprinterSeats').textContent = t.sprinterSeats;
+    $('itineraryEditorTitle').textContent = t.itineraryEditor;
+    $('addItinerary').textContent = t.addItem;
+    $('optionTitle').textContent = t.options;
+    $('optionHint').textContent = t.optionHint;
+    $('showFileNameBtn').textContent = t.showFileName;
+
+    $('previewDocTitle').textContent = t.docTitle;
+    $('previewIncludedTitle').textContent = t.included;
+    $('previewExcludedTitle').textContent = t.excluded;
+    $('previewTotalLabel').textContent = t.total;
+    $('previewProjectLabel').textContent = t.previewProject;
+    $('previewPeriodLabel').textContent = t.previewPeriod;
+    $('previewPaxLabel').textContent = t.previewPax;
+    $('previewItineraryTitle').textContent = t.previewItinerary;
+    $('previewNoLabel').textContent = t.previewNo;
+    $('previewDateLabel').textContent = t.previewDate;
+    $('previewNotesLabel').textContent = t.previewNotes;
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === currentLang);
+    });
+
+    renderOptionEditor();
+    renderPreview();
+  }
+
   function sendToSheet() {
+    alert("sendToSheet 执行了");
+
+    fetch("https://script.google.com/macros/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
+      method: "POST",
+      mode: "no-cors",
+      body: "test"
+    });
+  }
+
   $('addItinerary').onclick = () => {
     data.itinerary.push({ left: '', right: '' });
     renderItineraryEditor();
