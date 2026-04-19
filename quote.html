@@ -1114,6 +1114,14 @@
     }
 
     function sendToSheet() {
+  alert("sendToSheet 执行了"); // 👈 就加在这里
+
+  fetch("https://script.google.com/macros/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
+    method: "POST",
+    mode: "no-cors",
+    body: "test"
+  });
+}
   const data = {
     quoteId: document.getElementById("quotationNo")?.value || "",
     client: document.getElementById("clientName")?.value || "",
