@@ -1113,15 +1113,36 @@
       renderPreview();
     }
 
-    function sendToSheet() {
-      alert("sendToSheet 执行了");
+function sendToSheet() {
+  const data = {
+    quoteId: $('quotationNo')?.value || "",
+    client: $('clientName')?.value || "",
+    project: $('projectName')?.value || "",
+    service: $('period')?.value || "",
+    pax: $('pax')?.value || "",
+    vehicle: $('vehicleType')?.value || "",
+    price: $('totalPrice')?.value || "",
 
-      fetch("https://script.google.com/macros/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: "test"
-      });
-    }
+    vehicleCost: "",
+    meal: "",
+    tip: "",
+    parking: "",
+    hotel: "",
+    other: "",
+
+    link: ""
+  };
+
+fetch("https://script.google.com/macros/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(data)
+})
+.then(res => console.log("sent"))
+.catch(err => console.error(err));
+}
 
     $('addItinerary').onclick = () => {
       data.itinerary.push({ left: '', right: '' });
