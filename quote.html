@@ -1139,9 +1139,33 @@
   });
 }
 
-/* =========================
-   打印按钮（最终稳定版）
-========================= */
+$('addItinerary').onclick = () => {
+  data.itinerary.push({ left: '', right: '' });
+  renderItineraryEditor();
+  renderPreview();
+};
+
+$('showFileNameBtn').onclick = () => {
+  $('fileNamePreview').textContent = generateFileName() + '.pdf';
+};
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.onclick = () => {
+    currentLang = btn.dataset.lang;
+    applyLanguage();
+  };
+});
+
+[
+  'quotationNo', 'quoteDate', 'clientName', 'clientAddress',
+  'projectName', 'period', 'pax', 'coachQty', 'coachSeats',
+  'sprinterQty', 'sprinterSeats', 'vehicleType', 'currency',
+  'serviceStart', 'notes'
+].forEach(id => {
+  $(id).addEventListener('input', renderPreview);
+  $(id).addEventListener('change', renderPreview);
+});
+
 window.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("printBtn");
 
@@ -1152,13 +1176,21 @@ window.addEventListener("DOMContentLoaded", () => {
 
       window.print();
 
-      // 延迟写入（关键）
       setTimeout(() => {
         sendToSheet();
       }, 1000);
     };
   }
 });
+
+window.addEventListener('resize', () => {
+  fitFrame();
+  fitServicesAndPosition();
+});
+
+renderItineraryEditor();
+renderOptionEditor();
+applyLanguage();
 </script>
 </body>
 </html>
