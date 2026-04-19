@@ -414,7 +414,13 @@
             <button class="btn lang-btn" data-lang="zh">中文</button>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
-            <button id="printBtn" class="btn btn-dark" style="padding:14px 16px;font-size:18px;">Print / Save PDF</button>
+            $('printBtn').onclick = () => {
+  sendToSheet();
+
+  const fileName = generateFileName() + '.pdf';
+  document.title = fileName.replace(/\.pdf$/,'');
+  window.print();
+};
             <button id="showFileNameBtn" class="btn" style="padding:14px 16px;font-size:16px;">Show export filename</button>
           </div>
           <div id="fileNamePreview" style="margin-top:12px;font-size:13px;color:#475569;word-break:break-all;"></div>
@@ -1148,6 +1154,48 @@
     renderItineraryEditor();
     renderOptionEditor();
     applyLanguage();
-  </script>
+  <script>
+renderItineraryEditor();
+renderOptionEditor();
+applyLanguage();
+
+function sendToSheet() {
+  const data = {
+    quoteId: document.getElementById("quotationNo")?.value || "",
+    client: document.getElementById("clientName")?.value || "",
+    project: document.getElementById("projectName")?.value || "",
+    service: document.getElementById("period")?.value || "",
+    pax: document.getElementById("pax")?.value || "",
+    vehicle: document.getElementById("vehicleType")?.value || "",
+    price: document.getElementById("totalPrice")?.value || "",
+
+    vehicleCost: document.getElementById("costVehicle")?.value || "",
+    meal: document.getElementById("costMeal")?.value || "",
+    tip: document.getElementById("costTip")?.value || "",
+    parking: document.getElementById("costParking")?.value || "",
+    hotel: document.getElementById("costHotel")?.value || "",
+    other: document.getElementById("costOther")?.value || "",
+
+    link: ""
+  };
+
+  fetch("https://script.google.com/a/macros/adsese.fr/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.text())
+  .then(res => {
+    console.log("写入成功:", res);
+    alert("已写入表格");
+  })
+  .catch(err => {
+    console.error("写入失败:", err);
+    alert("写入失败，请检查权限或字段");
+  });
+}
+</script>
 </body>
 </html>
