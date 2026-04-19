@@ -991,168 +991,23 @@
       });
     }
 
-    function renderPreview() {
-      $('previewTitle').textContent = buildTitle();
-      $('previewNo').textContent = $('quotationNo').value;
-      $('previewDate').textContent = $('quoteDate').value;
-      $('previewClient').textContent = $('clientName').value;
-      $('previewAddress').textContent = $('clientAddress').value;
-      $('previewProjectName').textContent = $('projectName').value;
-      $('previewPeriod').textContent = $('period').value;
-      $('previewPax').textContent = $('pax').value;
-
-      const serviceStart = $('serviceStart').value.trim();
-      $('previewServiceStart').textContent = serviceStart;
-      $('previewServiceStartWrap').classList.toggle('hidden', !serviceStart);
-
-      const notes = $('notes').value.trim();
-      $('previewNotes').textContent = notes;
-      $('previewNotesWrap').classList.toggle('hidden', !notes);
-
-      const itineraryWrap = $('previewItinerary');
-      itineraryWrap.innerHTML = '';
-
-      let total = 0;
-
-      data.itinerary.forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'itinerary-item';
-
-        const left = document.createElement('div');
-        left.className = 'itinerary-left fit-text';
-        left.textContent = item.left || '';
-
-        const middle = document.createElement('div');
-        middle.className = 'middle-line';
-
-        const right = document.createElement('div');
-        right.className = 'itinerary-right';
-        right.textContent = item.right || '';
-
-        row.appendChild(left);
-        row.appendChild(middle);
-        row.appendChild(right);
-        itineraryWrap.appendChild(row);
-
-        total += parsePrice(item.right);
-      });
-
-      const currency = $('currency').value;
-      const totalFormatted = formatTotal(total, currency);
-      $('previewTotal').textContent = totalFormatted;
-      $('totalPrice').value = totalFormatted;
-
-      const t = texts[currentLang];
-      const fixedIncluded = [
-        t.driverService,
-        t.vehicleInsurance,
-        t.serviceHoursValue(data.serviceHours)
-      ];
-
-      const included = optionKeys.filter(x => data.options[x] === 'included');
-      const excluded = optionKeys.filter(x => data.options[x] === 'excluded');
-
-      $('previewIncluded').innerHTML =
-        fixedIncluded.map(x => `<li>${x}</li>`).join('') +
-        included.map(x => `<li>${x === 'other' && data.otherText ? data.otherText : displayOption(x, 'included')}</li>`).join('');
-
-      $('previewExcluded').innerHTML =
-        excluded.map(x => `<li>${x === 'other' && data.otherText ? data.otherText : displayOption(x, 'excluded')}</li>`).join('');
-
-      $('fileNamePreview').textContent = generateFileName() + '.pdf';
-
-      requestAnimationFrame(() => {
-        fitFrame();
-        setTimeout(fitServicesAndPosition, 20);
-      });
-    }
-
-    function applyLanguage() {
-      const t = texts[currentLang];
-
-      $('basicTitle').textContent = t.basicInfo;
-      $('labelQuotationNo').textContent = t.quotationNo;
-      $('labelDate').textContent = t.date;
-      $('labelClientName').textContent = t.clientName;
-      $('labelClientAddress').textContent = t.clientAddress;
-      $('labelProjectName').textContent = t.projectName;
-      $('labelPeriod').textContent = t.period;
-      $('labelPax').textContent = t.pax;
-      $('labelVehicleType').textContent = t.vehicleType;
-      $('labelCurrency').textContent = t.currency;
-      $('labelTotalPrice').textContent = t.totalPrice;
-      $('labelServiceStart').textContent = t.serviceStart;
-      $('labelNotes').textContent = t.notes;
-      $('labelCoachQty').textContent = t.coachQty;
-      $('labelCoachSeats').textContent = t.coachSeats;
-      $('labelSprinterQty').textContent = t.sprinterQty;
-      $('labelSprinterSeats').textContent = t.sprinterSeats;
-      $('itineraryEditorTitle').textContent = t.itineraryEditor;
-      $('addItinerary').textContent = t.addItem;
-      $('optionTitle').textContent = t.options;
-      $('optionHint').textContent = t.optionHint;
-      $('showFileNameBtn').textContent = t.showFileName;
-
-      $('previewDocTitle').textContent = t.docTitle;
-      $('previewIncludedTitle').textContent = t.included;
-      $('previewExcludedTitle').textContent = t.excluded;
-      $('previewTotalLabel').textContent = t.total;
-      $('previewProjectLabel').textContent = t.previewProject;
-      $('previewPeriodLabel').textContent = t.previewPeriod;
-      $('previewPaxLabel').textContent = t.previewPax;
-      $('previewItineraryTitle').textContent = t.previewItinerary;
-      $('previewNoLabel').textContent = t.previewNo;
-      $('previewDateLabel').textContent = t.previewDate;
-      $('previewNotesLabel').textContent = t.previewNotes;
-
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === currentLang);
-      });
-
-      renderOptionEditor();
-      renderPreview();
-    }
-
-    <script>
-/* =========================
-   工具函数
-========================= */
-function $(id) {
-  return document.getElementById(id);
-}
-
-/* =========================
-   生成文件名
-========================= */
-function generateFileName() {
-  const quoteNo = $('quotationNo')?.value || 'NO';
-  const client = $('clientName')?.value || 'CLIENT';
-  const project = $('projectName')?.value || 'PROJECT';
-  const period = $('period')?.value || 'DATE';
-  const vehicle = $('vehicleType')?.value || 'VEHICLE';
-
-  return `${quoteNo} - ${client} - ${project} - ${period} - ${vehicle}`;
-}
-
-/* =========================
-   写入 Google Sheet
-========================= */
+   <script>
 function sendToSheet() {
   const data = {
-    quoteId: $('quotationNo')?.value || "",
-    client: $('clientName')?.value || "",
-    project: $('projectName')?.value || "",
-    service: $('period')?.value || "",
-    pax: $('pax')?.value || "",
-    vehicle: $('vehicleType')?.value || "",
-    price: $('totalPrice')?.value || "",
+    quoteId: document.getElementById("quotationNo")?.value || "",
+    client: document.getElementById("clientName")?.value || "",
+    project: document.getElementById("projectName")?.value || "",
+    service: document.getElementById("period")?.value || "",
+    pax: document.getElementById("pax")?.value || "",
+    vehicle: document.getElementById("vehicleType")?.value || "",
+    price: document.getElementById("totalPrice")?.value || "",
 
-    vehicleCost: $('costVehicle')?.value || "",
-    meal: $('costMeal')?.value || "",
-    tip: $('costTip')?.value || "",
-    parking: $('costParking')?.value || "",
-    hotel: $('costHotel')?.value || "",
-    other: $('costOther')?.value || "",
+    vehicleCost: document.getElementById("costVehicle")?.value || "",
+    meal: document.getElementById("costMeal")?.value || "",
+    tip: document.getElementById("costTip")?.value || "",
+    parking: document.getElementById("costParking")?.value || "",
+    hotel: document.getElementById("costHotel")?.value || "",
+    other: document.getElementById("costOther")?.value || "",
 
     link: ""
   };
@@ -1164,18 +1019,10 @@ function sendToSheet() {
   });
 }
 
-/* =========================
-   打印按钮（核心）
-========================= */
-$('printBtn').onclick = () => {
+document.getElementById('printBtn').onclick = () => {
   sendToSheet();
-
-  const fileName = generateFileName() + '.pdf';
-  document.title = fileName.replace('.pdf', '');
-
   window.print();
 };
 </script>
-
 </body>
 </html>
