@@ -119,23 +119,21 @@
       box-shadow: 0 24px 60px rgba(0,0,0,.12);
       border-radius: 24px;
     }
-    .page-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
 
-.page-inner {
-  position: relative;
-  z-index: 1;
-}
+    .page-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      pointer-events: none;
+    }
 
     .page-inner {
       position: absolute;
       inset: 0;
+      z-index: 1;
       padding: 16mm 13mm 14mm 13mm;
     }
 
@@ -373,15 +371,18 @@
 
     @media print {
       @page { size: A4 portrait; margin: 0; }
+
       html, body {
         width: 210mm;
         height: 297mm;
         background: #fff;
       }
+
       .shell { padding: 0; }
       .no-print { display: none !important; }
       .layout { display: block; max-width: none; }
       .preview-wrap { overflow: visible; }
+
       .a4 {
         width: 210mm;
         height: 297mm;
@@ -390,6 +391,7 @@
         page-break-after: avoid;
         page-break-inside: avoid;
       }
+
       body * { visibility: hidden; }
       .a4, .a4 * { visibility: visible; }
       .a4 { position: absolute; left: 0; top: 0; }
@@ -402,27 +404,25 @@
       window.location.href = "index.html";
     }
   </script>
+
   <div class="shell">
     <div class="layout">
       <div class="no-print">
         <div class="panel">
           <div style="font-size:32px;font-weight:700;">VIC Quote Generator</div>
           <div style="color:#64748b;margin-top:8px;">Full version with multilingual content, auto total and export filename.</div>
+
           <div style="margin-top:16px;display:flex;gap:8px;">
             <button class="btn lang-btn" data-lang="en">EN</button>
             <button class="btn lang-btn active" data-lang="fr">FR</button>
             <button class="btn lang-btn" data-lang="zh">中文</button>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
-            $('printBtn').onclick = () => {
-  sendToSheet();
 
-  const fileName = generateFileName() + '.pdf';
-  document.title = fileName.replace(/\.pdf$/,'');
-  window.print();
-};
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+            <button id="printBtn" class="btn btn-dark" style="padding:14px 16px;font-size:18px;">Print / Save PDF</button>
             <button id="showFileNameBtn" class="btn" style="padding:14px 16px;font-size:16px;">Show export filename</button>
           </div>
+
           <div id="fileNamePreview" style="margin-top:12px;font-size:13px;color:#475569;word-break:break-all;"></div>
         </div>
 
@@ -523,11 +523,11 @@
         </div>
       </div>
 
-<div class="preview-wrap">
-  <div class="a4" id="a4Page">
-    <img src="./bg.png" class="page-bg">
-    <div class="page-inner">
-      <div class="header-grid">
+      <div class="preview-wrap">
+        <div class="a4" id="a4Page">
+          <img src="./bg.png" class="page-bg" alt="">
+          <div class="page-inner">
+            <div class="header-grid">
               <div></div>
               <div class="header-right">
                 <div id="previewDocTitle" class="doc-title">DEVIS</div>
@@ -1113,6 +1113,44 @@
       renderPreview();
     }
 
+    function sendToSheet() {
+      const data = {
+        quoteId: document.getElementById("quotationNo")?.value || "",
+        client: document.getElementById("clientName")?.value || "",
+        project: document.getElementById("projectName")?.value || "",
+        service: document.getElementById("period")?.value || "",
+        pax: document.getElementById("pax")?.value || "",
+        vehicle: document.getElementById("vehicleType")?.value || "",
+        price: document.getElementById("totalPrice")?.value || "",
+
+        vehicleCost: document.getElementById("costVehicle")?.value || "",
+        meal: document.getElementById("costMeal")?.value || "",
+        tip: document.getElementById("costTip")?.value || "",
+        parking: document.getElementById("costParking")?.value || "",
+        hotel: document.getElementById("costHotel")?.value || "",
+        other: document.getElementById("costOther")?.value || "",
+
+        link: ""
+      };
+
+      fetch("https://script.google.com/a/macros/adsese.fr/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.text())
+      .then(res => {
+        console.log("写入成功:", res);
+        alert("已写入表格");
+      })
+      .catch(err => {
+        console.error("写入失败:", err);
+        alert("写入失败，请检查权限或字段");
+      });
+    }
+
     $('addItinerary').onclick = () => {
       data.itinerary.push({ left: '', right: '' });
       renderItineraryEditor();
@@ -1141,6 +1179,7 @@
     });
 
     $('printBtn').onclick = () => {
+      sendToSheet();
       const fileName = generateFileName() + '.pdf';
       document.title = fileName.replace(/\.pdf$/,'');
       window.print();
@@ -1154,48 +1193,6 @@
     renderItineraryEditor();
     renderOptionEditor();
     applyLanguage();
-  <script>
-renderItineraryEditor();
-renderOptionEditor();
-applyLanguage();
-
-function sendToSheet() {
-  const data = {
-    quoteId: document.getElementById("quotationNo")?.value || "",
-    client: document.getElementById("clientName")?.value || "",
-    project: document.getElementById("projectName")?.value || "",
-    service: document.getElementById("period")?.value || "",
-    pax: document.getElementById("pax")?.value || "",
-    vehicle: document.getElementById("vehicleType")?.value || "",
-    price: document.getElementById("totalPrice")?.value || "",
-
-    vehicleCost: document.getElementById("costVehicle")?.value || "",
-    meal: document.getElementById("costMeal")?.value || "",
-    tip: document.getElementById("costTip")?.value || "",
-    parking: document.getElementById("costParking")?.value || "",
-    hotel: document.getElementById("costHotel")?.value || "",
-    other: document.getElementById("costOther")?.value || "",
-
-    link: ""
-  };
-
-  fetch("https://script.google.com/a/macros/adsese.fr/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  })
-  .then(res => res.text())
-  .then(res => {
-    console.log("写入成功:", res);
-    alert("已写入表格");
-  })
-  .catch(err => {
-    console.error("写入失败:", err);
-    alert("写入失败，请检查权限或字段");
-  });
-}
-</script>
+  </script>
 </body>
 </html>
