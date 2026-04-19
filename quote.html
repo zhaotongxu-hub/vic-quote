@@ -1122,12 +1122,14 @@
     pax: $('pax')?.value || "",
     vehicle: $('vehicleType')?.value || "",
     price: $('totalPrice')?.value || "",
+
     vehicleCost: "",
     meal: "",
     tip: "",
     parking: "",
     hotel: "",
     other: "",
+
     link: ""
   };
 
@@ -1137,54 +1139,27 @@
     body: JSON.stringify(data)
   });
 }
-    }
 
-    $('addItinerary').onclick = () => {
-      data.itinerary.push({ left: '', right: '' });
-      renderItineraryEditor();
-      renderPreview();
+/* =========================
+   打印按钮（最终稳定版）
+========================= */
+window.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("printBtn");
+
+  if (btn) {
+    btn.onclick = function () {
+      const fileName = generateFileName() + '.pdf';
+      document.title = fileName.replace('.pdf', '');
+
+      window.print();
+
+      // 延迟写入（关键）
+      setTimeout(() => {
+        sendToSheet();
+      }, 1000);
     };
-
-    $('showFileNameBtn').onclick = () => {
-      $('fileNamePreview').textContent = generateFileName() + '.pdf';
-    };
-
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.onclick = () => {
-        currentLang = btn.dataset.lang;
-        applyLanguage();
-      };
-    });
-
-    [
-      'quotationNo', 'quoteDate', 'clientName', 'clientAddress',
-      'projectName', 'period', 'pax', 'coachQty', 'coachSeats',
-      'sprinterQty', 'sprinterSeats', 'vehicleType', 'currency',
-      'serviceStart', 'notes'
-    ].forEach(id => {
-      $(id).addEventListener('input', renderPreview);
-      $(id).addEventListener('change', renderPreview);
-    });
-
-    $('printBtn').onclick = () => {
-  const fileName = generateFileName() + '.pdf';
-  document.title = fileName.replace(/\.pdf$/, '');
-
-  window.print();
-
-  setTimeout(() => {
-    sendToSheet();
-  }, 800);
-};
-
-    window.addEventListener('resize', () => {
-      fitFrame();
-      fitServicesAndPosition();
-    });
-
-    renderItineraryEditor();
-    renderOptionEditor();
-    applyLanguage();
-  </script>
+  }
+});
+</script>
 </body>
 </html>
