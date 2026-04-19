@@ -1114,24 +1114,6 @@
     }
 
     function sendToSheet() {
-  document.getElementById("sheet_quoteId").value = document.getElementById("quotationNo")?.value || "";
-  document.getElementById("sheet_client").value = document.getElementById("clientName")?.value || "";
-  document.getElementById("sheet_project").value = document.getElementById("projectName")?.value || "";
-  document.getElementById("sheet_service").value = document.getElementById("period")?.value || "";
-  document.getElementById("sheet_pax").value = document.getElementById("pax")?.value || "";
-  document.getElementById("sheet_vehicle").value = document.getElementById("vehicleType")?.value || "";
-  document.getElementById("sheet_price").value = document.getElementById("totalPrice")?.value || "";
-
-  document.getElementById("sheet_vehicleCost").value = document.getElementById("costVehicle")?.value || "";
-  document.getElementById("sheet_meal").value = document.getElementById("costMeal")?.value || "";
-  document.getElementById("sheet_tip").value = document.getElementById("costTip")?.value || "";
-  document.getElementById("sheet_parking").value = document.getElementById("costParking")?.value || "";
-  document.getElementById("sheet_hotel").value = document.getElementById("costHotel")?.value || "";
-  document.getElementById("sheet_other").value = document.getElementById("costOther")?.value || "";
-  document.getElementById("sheet_link").value = "";
-
-  document.getElementById("sheetForm").submit();
-}
   const data = {
     quoteId: document.getElementById("quotationNo")?.value || "",
     client: document.getElementById("clientName")?.value || "",
@@ -1208,28 +1190,6 @@
     renderOptionEditor();
     applyLanguage();
   </script>
-  <iframe name="hiddenSheetFrame" style="display:none;"></iframe>
-
-<form id="sheetForm"
-      action="https://script.google.com/macros/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec"
-      method="POST"
-      target="hiddenSheetFrame"
-      style="display:none;">
-  <input type="hidden" name="quoteId" id="sheet_quoteId">
-  <input type="hidden" name="client" id="sheet_client">
-  <input type="hidden" name="project" id="sheet_project">
-  <input type="hidden" name="service" id="sheet_service">
-  <input type="hidden" name="pax" id="sheet_pax">
-  <input type="hidden" name="vehicle" id="sheet_vehicle">
-  <input type="hidden" name="price" id="sheet_price">
-  <input type="hidden" name="vehicleCost" id="sheet_vehicleCost">
-  <input type="hidden" name="meal" id="sheet_meal">
-  <input type="hidden" name="tip" id="sheet_tip">
-  <input type="hidden" name="parking" id="sheet_parking">
-  <input type="hidden" name="hotel" id="sheet_hotel">
-  <input type="hidden" name="other" id="sheet_other">
-  <input type="hidden" name="link" id="sheet_link">
-</form>
 </body>
 </html>
 
