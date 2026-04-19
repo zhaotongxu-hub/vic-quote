@@ -1113,59 +1113,69 @@
       renderPreview();
     }
 
-    function sendToSheet() {
-      alert("sendToSheet 执行了");
+    <script>
+/* =========================
+   工具函数
+========================= */
+function $(id) {
+  return document.getElementById(id);
+}
 
-      fetch("https://script.google.com/macros/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: "test"
-      });
-    }
+/* =========================
+   生成文件名
+========================= */
+function generateFileName() {
+  const quoteNo = $('quotationNo')?.value || 'NO';
+  const client = $('clientName')?.value || 'CLIENT';
+  const project = $('projectName')?.value || 'PROJECT';
+  const period = $('period')?.value || 'DATE';
+  const vehicle = $('vehicleType')?.value || 'VEHICLE';
 
-    $('addItinerary').onclick = () => {
-      data.itinerary.push({ left: '', right: '' });
-      renderItineraryEditor();
-      renderPreview();
-    };
+  return `${quoteNo} - ${client} - ${project} - ${period} - ${vehicle}`;
+}
 
-    $('showFileNameBtn').onclick = () => {
-      $('fileNamePreview').textContent = generateFileName() + '.pdf';
-    };
+/* =========================
+   写入 Google Sheet
+========================= */
+function sendToSheet() {
+  const data = {
+    quoteId: $('quotationNo')?.value || "",
+    client: $('clientName')?.value || "",
+    project: $('projectName')?.value || "",
+    service: $('period')?.value || "",
+    pax: $('pax')?.value || "",
+    vehicle: $('vehicleType')?.value || "",
+    price: $('totalPrice')?.value || "",
 
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.onclick = () => {
-        currentLang = btn.dataset.lang;
-        applyLanguage();
-      };
-    });
+    vehicleCost: $('costVehicle')?.value || "",
+    meal: $('costMeal')?.value || "",
+    tip: $('costTip')?.value || "",
+    parking: $('costParking')?.value || "",
+    hotel: $('costHotel')?.value || "",
+    other: $('costOther')?.value || "",
 
-    [
-      'quotationNo', 'quoteDate', 'clientName', 'clientAddress',
-      'projectName', 'period', 'pax', 'coachQty', 'coachSeats',
-      'sprinterQty', 'sprinterSeats', 'vehicleType', 'currency',
-      'serviceStart', 'notes'
-    ].forEach(id => {
-      $(id).addEventListener('input', renderPreview);
-      $(id).addEventListener('change', renderPreview);
-    });
+    link: ""
+  };
 
-    $('printBtn').onclick = () => {
-      sendToSheet();
+  fetch("https://script.google.com/macros/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(data)
+  });
+}
 
-      const fileName = generateFileName() + '.pdf';
-      document.title = fileName.replace(/\.pdf$/, '');
-      window.print();
-    };
+/* =========================
+   打印按钮（核心）
+========================= */
+$('printBtn').onclick = () => {
+  sendToSheet();
 
-    window.addEventListener('resize', () => {
-      fitFrame();
-      fitServicesAndPosition();
-    });
+  const fileName = generateFileName() + '.pdf';
+  document.title = fileName.replace('.pdf', '');
 
-    renderItineraryEditor();
-    renderOptionEditor();
-    applyLanguage();
-  </script>
+  window.print();
+};
+</script>
+
 </body>
 </html>
