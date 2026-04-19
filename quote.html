@@ -1113,98 +1113,61 @@
       renderPreview();
     }
 
-    function sendToSheet() {
-  alert("sendToSheet 执行了"); // 👈 就加在这里
+    <script>
+  function sendToSheet() {
+    alert("sendToSheet 执行了");
 
-  fetch("https://script.google.com/macros/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
-    method: "POST",
-    mode: "no-cors",
-    body: "test"
-  });
-}
-  const data = {
-    quoteId: document.getElementById("quotationNo")?.value || "",
-    client: document.getElementById("clientName")?.value || "",
-    project: document.getElementById("projectName")?.value || "",
-    service: document.getElementById("period")?.value || "",
-    pax: document.getElementById("pax")?.value || "",
-    vehicle: document.getElementById("vehicleType")?.value || "",
-    price: document.getElementById("totalPrice")?.value || "",
+    fetch("https://script.google.com/macros/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
+      method: "POST",
+      mode: "no-cors",
+      body: "test"
+    });
+  }
 
-    vehicleCost: document.getElementById("costVehicle")?.value || "",
-    meal: document.getElementById("costMeal")?.value || "",
-    tip: document.getElementById("costTip")?.value || "",
-    parking: document.getElementById("costParking")?.value || "",
-    hotel: document.getElementById("costHotel")?.value || "",
-    other: document.getElementById("costOther")?.value || "",
-
-    link: ""
+  $('addItinerary').onclick = () => {
+    data.itinerary.push({ left: '', right: '' });
+    renderItineraryEditor();
+    renderPreview();
   };
 
-  fetch("https://script.google.com/macros/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
-    method: "POST",
-    body: JSON.stringify(data)
-  })
-  .then(response => response.text())
-  .then(result => {
-    console.log("写入成功:", result);
-    alert("已写入表格");
-  })
-  .catch(error => {
-    console.error("写入失败:", error);
-    alert("写入失败，请检查 Apps Script 部署或登录账号");
+  $('showFileNameBtn').onclick = () => {
+    $('fileNamePreview').textContent = generateFileName() + '.pdf';
+  };
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.onclick = () => {
+      currentLang = btn.dataset.lang;
+      applyLanguage();
+    };
   });
-}
-    $('addItinerary').onclick = () => {
-      data.itinerary.push({ left: '', right: '' });
-      renderItineraryEditor();
-      renderPreview();
-    };
 
-    $('showFileNameBtn').onclick = () => {
-      $('fileNamePreview').textContent = generateFileName() + '.pdf';
-    };
-
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.onclick = () => {
-        currentLang = btn.dataset.lang;
-        applyLanguage();
-      };
-    });
-
-    [
-      'quotationNo', 'quoteDate', 'clientName', 'clientAddress',
-      'projectName', 'period', 'pax', 'coachQty', 'coachSeats',
-      'sprinterQty', 'sprinterSeats', 'vehicleType', 'currency',
-      'serviceStart', 'notes'
-    ].forEach(id => {
-      $(id).addEventListener('input', renderPreview);
-      $(id).addEventListener('change', renderPreview);
-    });
-
-    $('printBtn').onclick = () => {
-      sendToSheet();
-      const fileName = generateFileName() + '.pdf';
-      document.title = fileName.replace(/\.pdf$/,'');
-      window.print();
-    };
-
-    window.addEventListener('resize', () => {
-      fitFrame();
-      fitServicesAndPosition();
-    });
-
-    renderItineraryEditor();
-    renderOptionEditor();
-    applyLanguage();
-    function sendToSheet() {
-  fetch("https://script.google.com/macros/s/AKfycbzfSTP3a5t4Gf2kXRwUmsm28nC1NRiBKQwsUy83ONQQ4PG-BfbbMAqURp06NHZ9mlOE/exec", {
-    method: "POST",
-    mode: "no-cors",
-    body: "test"
+  [
+    'quotationNo', 'quoteDate', 'clientName', 'clientAddress',
+    'projectName', 'period', 'pax', 'coachQty', 'coachSeats',
+    'sprinterQty', 'sprinterSeats', 'vehicleType', 'currency',
+    'serviceStart', 'notes'
+  ].forEach(id => {
+    $(id).addEventListener('input', renderPreview);
+    $(id).addEventListener('change', renderPreview);
   });
-}
-  </script>
+
+  $('printBtn').onclick = () => {
+    sendToSheet();
+
+    const fileName = generateFileName() + '.pdf';
+    document.title = fileName.replace(/\.pdf$/, '');
+    window.print();
+  };
+
+  window.addEventListener('resize', () => {
+    fitFrame();
+    fitServicesAndPosition();
+  });
+
+  renderItineraryEditor();
+  renderOptionEditor();
+  applyLanguage();
+</script>
 </body>
 </html>
 
