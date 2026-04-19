@@ -1122,14 +1122,12 @@
     pax: $('pax')?.value || "",
     vehicle: $('vehicleType')?.value || "",
     price: $('totalPrice')?.value || "",
-
     vehicleCost: "",
     meal: "",
     tip: "",
     parking: "",
     hotel: "",
     other: "",
-
     link: ""
   };
 
@@ -1169,12 +1167,15 @@
     });
 
     $('printBtn').onclick = () => {
-      sendToSheet();
+  const fileName = generateFileName() + '.pdf';
+  document.title = fileName.replace(/\.pdf$/, '');
 
-      const fileName = generateFileName() + '.pdf';
-      document.title = fileName.replace(/\.pdf$/, '');
-      window.print();
-    };
+  window.print();
+
+  setTimeout(() => {
+    sendToSheet();
+  }, 800);
+};
 
     window.addEventListener('resize', () => {
       fitFrame();
